@@ -13,9 +13,12 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 501.0
-offset_bottom = 294.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="VBoxContainer"]
 layout_mode = 2
@@ -30,20 +33,32 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/ColorRect/VBoxContainer"]
+[node name="Question" type="VBoxContainer" parent="VBoxContainer/ColorRect/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="VBoxContainer/ColorRect/VBoxContainer/VBoxContainer2"]
+[node name="Label" type="Label" parent="VBoxContainer/ColorRect/VBoxContainer/Question"]
+custom_minimum_size = Vector2(4, 4)
 layout_mode = 2
 size_flags_vertical = 6
-text = "You are fragmented, and lost.... the only one who can put you back together is yourself. Let's get started."
+text = "You are fragmented, and lost.... the only one who can put you back together is yourself. Let's begin."
+horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Option1" type="Button" parent="VBoxContainer/ColorRect/VBoxContainer"]
+[node name="Awnsers" type="VBoxContainer" parent="VBoxContainer/ColorRect/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="Option2" type="Button" parent="VBoxContainer/ColorRect/VBoxContainer"]
+[node name="Option1" type="Button" parent="VBoxContainer/ColorRect/VBoxContainer/Awnsers"]
+custom_minimum_size = Vector2(1, 1)
 layout_mode = 2
+text = "Option 1"
 
-[node name="Option3" type="Button" parent="VBoxContainer/ColorRect/VBoxContainer"]
+[node name="Option2" type="Button" parent="VBoxContainer/ColorRect/VBoxContainer/Awnsers"]
 layout_mode = 2
+text = "Option 2"
+
+[node name="Option3" type="Button" parent="VBoxContainer/ColorRect/VBoxContainer/Awnsers"]
+layout_mode = 2
+text = "Option 3"
