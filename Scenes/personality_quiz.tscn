@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://b5fjvqprdog0b"]
+[gd_scene load_steps=2 format=3 uid="uid://b5fjvqprdog0b"]
+
+[ext_resource type="Script" uid="uid://uov4yvx61f2m" path="res://Scenes/v_box_container.gd" id="1_lmto2"]
 
 [node name="PersonalityQuiz" type="Control"]
 layout_mode = 3
@@ -32,6 +34,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_lmto2")
 
 [node name="Question" type="VBoxContainer" parent="VBoxContainer/ColorRect/VBoxContainer"]
 layout_mode = 2
@@ -41,7 +44,7 @@ size_flags_vertical = 3
 custom_minimum_size = Vector2(4, 4)
 layout_mode = 2
 size_flags_vertical = 6
-text = "You are fragmented, and lost.... the only one who can put you back together is yourself. Let's begin."
+text = "You are fragmented, and lost.... the only one who can put you back together is yourself. You're going to answer a series of questions soon, awnser honestly."
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -53,12 +56,12 @@ size_flags_vertical = 3
 [node name="Option1" type="Button" parent="VBoxContainer/ColorRect/VBoxContainer/Awnsers"]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 2
-text = "Option 1"
+text = "What?"
 
 [node name="Option2" type="Button" parent="VBoxContainer/ColorRect/VBoxContainer/Awnsers"]
 layout_mode = 2
-text = "Option 2"
+text = "I don't want to"
 
 [node name="Option3" type="Button" parent="VBoxContainer/ColorRect/VBoxContainer/Awnsers"]
 layout_mode = 2
-text = "Option 3"
+text = "okay"
