@@ -5,7 +5,7 @@ extends VBoxContainer
 @onready var buttons = [$Awnsers/Option1, $Awnsers/Option2, $Awnsers/Option3] 
 
 #sets currentquestion to 1 for now
-var current_question_id = 0
+var current_question_id = 1
 # traits dict to increase based on options
 var traits = {
 	"Inquisitive": 0,
@@ -13,8 +13,7 @@ var traits = {
 	"Nuerotic": 0,
 	"Passionate": 0,
 	"Ambitious": 0,
-	"Relaxed": 0,
-	"Null": 0
+	"Relaxed": 0
 }
 
 # dictionary of question and options
@@ -22,13 +21,6 @@ var traits = {
 #each option matches to the corresponding trait in order.
 
 var personality_questions = {
-	0: {
-		"question": "You are fragmented, and lost.... 
-		the only one who can put you back together is yourself. 
-		You're going to answer a series of questions soon, awnser honestly.",
-		"options": ["What?","I don't want to","okay"],
-		"traits": ["Null","Null","Null"]
-	},
 	1:{
 		"question": "When starting something new what's your first instinct?",
 		"options": ["Research the task until you discover a way to do it", "Worry about what could go wrong", "Jump into the challenge" ],
@@ -106,10 +98,22 @@ func _on_option_pressed() -> void:
 	if option_index == -1:
 		return
 	apply_answer(option_index)
-	if current_question_id != 7:
+	if current_question_id != 8:
 		current_question_id += 1
 		load_question(current_question_id)
-	
+	else:
+		print("current highest trait:", trait_reveal())
+
+func trait_reveal() -> String:
+	var highest_score = -1
+	var highest_trait = ""
+	for item in traits.keys():
+		if traits[item] > highest_score:
+			highest_score = traits[item]
+			highest_trait = item
+	return highest_trait
+		
+
 func apply_answer(option_index: int):
 	var question = personality_questions[current_question_id]
 	var traitz = question["traits"][option_index]
