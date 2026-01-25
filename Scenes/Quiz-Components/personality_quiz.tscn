@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b5fjvqprdog0b"]
+[gd_scene load_steps=3 format=3 uid="uid://b5fjvqprdog0b"]
 
 [ext_resource type="Script" uid="uid://uov4yvx61f2m" path="res://Scenes/Quiz-Components/v_box_container.gd" id="1_lmto2"]
+[ext_resource type="Script" uid="uid://cb2djwcuckjvg" path="res://Scenes/Quiz-Components/global.gd" id="1_nq5ic"]
 
 [node name="PersonalityQuiz" type="Control"]
 layout_mode = 3
@@ -14,20 +15,21 @@ offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Quiz" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_nq5ic")
 
-[node name="ColorRect" type="ColorRect" parent="VBoxContainer"]
+[node name="ColorRect" type="ColorRect" parent="Quiz"]
 layout_mode = 2
 size_flags_vertical = 3
 color = Color(2.8609513e-05, 1.8910216e-05, 0.0010138117, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ColorRect"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Quiz/ColorRect"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,11 +38,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_lmto2")
 
-[node name="Question" type="VBoxContainer" parent="VBoxContainer/ColorRect/VBoxContainer"]
+[node name="Question" type="VBoxContainer" parent="Quiz/ColorRect/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Prompt" type="Label" parent="VBoxContainer/ColorRect/VBoxContainer/Question"]
+[node name="Prompt" type="Label" parent="Quiz/ColorRect/VBoxContainer/Question"]
 custom_minimum_size = Vector2(4, 4)
 layout_mode = 2
 size_flags_vertical = 6
@@ -49,23 +51,23 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Awnsers" type="VBoxContainer" parent="VBoxContainer/ColorRect/VBoxContainer"]
+[node name="Awnsers" type="VBoxContainer" parent="Quiz/ColorRect/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Option1" type="Button" parent="VBoxContainer/ColorRect/VBoxContainer/Awnsers"]
+[node name="Option1" type="Button" parent="Quiz/ColorRect/VBoxContainer/Awnsers"]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 2
 text = "What?"
 
-[node name="Option2" type="Button" parent="VBoxContainer/ColorRect/VBoxContainer/Awnsers"]
+[node name="Option2" type="Button" parent="Quiz/ColorRect/VBoxContainer/Awnsers"]
 layout_mode = 2
 text = "I don't want to"
 
-[node name="Option3" type="Button" parent="VBoxContainer/ColorRect/VBoxContainer/Awnsers"]
+[node name="Option3" type="Button" parent="Quiz/ColorRect/VBoxContainer/Awnsers"]
 layout_mode = 2
 text = "okay"
 
-[connection signal="pressed" from="VBoxContainer/ColorRect/VBoxContainer/Awnsers/Option1" to="VBoxContainer/ColorRect/VBoxContainer" method="_on_option_pressed"]
-[connection signal="pressed" from="VBoxContainer/ColorRect/VBoxContainer/Awnsers/Option2" to="VBoxContainer/ColorRect/VBoxContainer" method="_on_option_pressed"]
-[connection signal="pressed" from="VBoxContainer/ColorRect/VBoxContainer/Awnsers/Option3" to="VBoxContainer/ColorRect/VBoxContainer" method="_on_option_pressed"]
+[connection signal="pressed" from="Quiz/ColorRect/VBoxContainer/Awnsers/Option1" to="Quiz/ColorRect/VBoxContainer" method="_on_option_pressed"]
+[connection signal="pressed" from="Quiz/ColorRect/VBoxContainer/Awnsers/Option2" to="Quiz/ColorRect/VBoxContainer" method="_on_option_pressed"]
+[connection signal="pressed" from="Quiz/ColorRect/VBoxContainer/Awnsers/Option3" to="Quiz/ColorRect/VBoxContainer" method="_on_option_pressed"]

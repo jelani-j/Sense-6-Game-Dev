@@ -74,7 +74,6 @@ grow_vertical = 2
 [node name="Label" type="Label" parent="PanelContainer"]
 layout_mode = 2
 size_flags_vertical = 1
-text = "Sample Text"
 label_settings = SubResource("LabelSettings_hckgo")
 
 [connection signal="mouse_entered" from="VBoxContainer/Options_Button" to="." method="_on_options_button_mouse_entered"]

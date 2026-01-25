@@ -102,7 +102,10 @@ func _on_option_pressed() -> void:
 		current_question_id += 1
 		load_question(current_question_id)
 	else:
-		print("current highest trait:", trait_reveal())
+		var result_trait = trait_reveal()
+		Global.dominant_trait = result_trait
+		get_tree().change_scene_to_file("res://Scenes/Quiz-Components/Personality_results.tscn")
+		
 
 func trait_reveal() -> String:
 	var highest_score = -1
