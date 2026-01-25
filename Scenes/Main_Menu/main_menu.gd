@@ -22,3 +22,13 @@ func _on_options_button_pressed() -> void:
 
 func _on_other_button_pressed() -> void:
 	pass # Replace with function body.
+
+#change label for text when mouse entered
+func _on_new_game_button_mouse_entered() -> void:
+	menu_label.text = "Start a new Game"
+	
+func _on_other_button_mouse_entered() -> void:
+	menu_label.text = "Select to see available special episodes"
+
+func _on_options_button_mouse_entered() -> void:
+	menu_label.text = "Select to see options such as game text, speed, and view controls"
