@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1c2bu8k00s3g"
-path="res://.godot/imported/16x32 Rotate-Sheet.png-3c9ea0294df7c13700c6b2ba9872d645.ctex"
+uid="uid://m0m07ik1xamu"
+path="res://.godot/imported/16x32 All Animations.png-acfcb6111e0e13f1c5beb29bd213482e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://16x32/16x32 Rotate-Sheet.png"
-dest_files=["res://.godot/imported/16x32 Rotate-Sheet.png-3c9ea0294df7c13700c6b2ba9872d645.ctex"]
+source_file="res://Sprite_Textures/16x32/16x32 All Animations.png"
+dest_files=["res://.godot/imported/16x32 All Animations.png-acfcb6111e0e13f1c5beb29bd213482e.ctex"]
 
 [params]
 
