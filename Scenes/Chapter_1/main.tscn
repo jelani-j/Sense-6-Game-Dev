@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxcbasala18g8"]
+
+[ext_resource type="PackedScene" uid="uid://dina6es4n3qe" path="res://Scenes/Backgrounds/Stony Peaks/stony_peaks_open_area.tscn" id="1_ex4qd"]
+[ext_resource type="PackedScene" uid="uid://ektw0nue1o2j" path="res://Scenes/Main_character/walking_test.tscn" id="2_71ae7"]
+
+[node name="Main" type="Node2D"]
+
+[node name="StonyPeaksVillage" parent="." instance=ExtResource("1_ex4qd")]
+
+[node name="Main_Character" parent="." instance=ExtResource("2_71ae7")]
