@@ -10,7 +10,7 @@
 position = Vector2(549, 514)
 
 [node name="Main_Character" parent="." instance=ExtResource("2_71ae7")]
-position = Vector2(280, 3)
+position = Vector2(1458, 1177)
 
 [node name="Monster" parent="." instance=ExtResource("3_71ae7")]
-position = Vector2(419, 0)
+position = Vector2(1698, 1121)
