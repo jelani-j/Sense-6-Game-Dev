@@ -1,15 +1,26 @@
 extends CharacterBody2D
 
 
-const SPEED = 25.0
+var speed = 25.0
 var player_chase = false
 var player = null
 signal battle_triggered
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+
+func setup(frames: SpriteFrames, new_speed: float = 25.0):
+	$AnimatedSprite2D.sprite_frames = frames
+	speed = new_speed
 
 func _physics_process(delta):
-	if player_chase == true:
-		position += (player.position - position)/SPEED
+	if player_chase and player:
+		var direction = (player.position - position).normalized()
+		position += direction * speed * delta
 		move_and_slide()
+		animated_sprite.play("walk_forward")
+	else:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		animated_sprite.play("idle")
 
 func _on_detection_zone_body_entered(body: Node2D):
 	player = body
