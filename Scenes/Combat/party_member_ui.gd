@@ -51,13 +51,9 @@ func animate_to(target_y: float):
 
 func _on_mouse_entered() -> void:
 	animate_to(base_position.y - 20)
-	#tween.tween_property(self, "position:y", position.y - 20, 0.3).set_trans(Tween.TRANS_QUAD)\
-	#.set_ease(Tween.EASE_OUT)
 
 func _on_mouse_exited() -> void:
 	animate_to(base_position.y)
-	#tween.tween_property(self, "position:y", position.y + 20, 0.3).set_trans(Tween.TRANS_QUAD)\
-	#.set_ease(Tween.EASE_OUT)
 
 func _on_pressed() -> void:
 	extra_stats.visible = true

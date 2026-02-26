@@ -12,8 +12,10 @@ script = ExtResource("1_cnown")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 284.0
-offset_bottom = 128.0
+offset_left = 11.0
+offset_top = 26.0
+offset_right = 404.0
+offset_bottom = 154.0
 
 [node name="Icon" type="TextureRect" parent="HBoxContainer"]
 custom_minimum_size = Vector2(60, 60)
@@ -38,6 +40,7 @@ size_flags_vertical = 1
 
 [node name="Extra_Stats" type="HBoxContainer" parent="HBoxContainer/Status"]
 layout_mode = 2
+size_flags_horizontal = 0
 size_flags_vertical = 3
 
 [node name="Fight_btn" type="Button" parent="HBoxContainer/Status/Extra_Stats"]
