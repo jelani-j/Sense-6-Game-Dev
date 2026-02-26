@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://q6as3assiu7x"]
+[gd_scene load_steps=6 format=3 uid="uid://q6as3assiu7x"]
 
 [ext_resource type="Texture2D" uid="uid://b05pgt2pw0tp1" path="res://Sprite_Textures/main_character_sprite/main_character_base.png" id="1_8h7dl"]
 [ext_resource type="Texture2D" uid="uid://cpudx66m1bpsu" path="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Characters/sprGhost3.png" id="2_vgq8a"]
 [ext_resource type="Texture2D" uid="uid://j7yc4kiss86o" path="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Characters/sprMinotaur1.png" id="3_gfi2s"]
+[ext_resource type="PackedScene" uid="uid://uouy4r2hdrph" path="res://Scenes/Combat/PartyMemberUI.tscn" id="4_vgq8a"]
 
 [sub_resource type="Theme" id="Theme_8h7dl"]
 
@@ -33,18 +34,20 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.10011808, 0.073204525, 0.18715522, 1)
 
-[node name="Main_Character" type="Sprite2D" parent="ColorRect"]
-position = Vector2(151, 211)
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Main_Character" type="Sprite2D" parent="Node2D"]
+position = Vector2(150, 212)
 scale = Vector2(5, 4.75)
 texture = ExtResource("1_8h7dl")
 
-[node name="Enemy#1" type="Sprite2D" parent="ColorRect"]
-position = Vector2(969.00006, 98.99999)
+[node name="Enemy#1" type="Sprite2D" parent="Node2D"]
+position = Vector2(968.00006, 99.99999)
 scale = Vector2(2.4868422, 3.2857144)
 texture = ExtResource("2_vgq8a")
 
-[node name="Enemy#2" type="Sprite2D" parent="ColorRect"]
-position = Vector2(974, 269)
+[node name="Enemy#2" type="Sprite2D" parent="Node2D"]
+position = Vector2(973, 270)
 scale = Vector2(2.1048386, 4.375)
 texture = ExtResource("3_gfi2s")
 
@@ -54,8 +57,9 @@ anchors_preset = -1
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -249.0
-offset_bottom = -201.0
+offset_top = -266.0
+offset_right = 2.0
+offset_bottom = -119.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/margin_left = 4
@@ -68,20 +72,14 @@ clip_contents = true
 layout_mode = 2
 theme_override_constants/separation = 80
 
-[node name="Button" type="Button" parent="MarginContainer/HBoxContainer"]
+[node name="PartyMemberUi" parent="MarginContainer/HBoxContainer" instance=ExtResource("4_vgq8a")]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Fight"
 
-[node name="Button2" type="Button" parent="MarginContainer/HBoxContainer"]
+[node name="PartyMemberUi2" parent="MarginContainer/HBoxContainer" instance=ExtResource("4_vgq8a")]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Act"
 
-[node name="Button3" type="Button" parent="MarginContainer/HBoxContainer"]
+[node name="PartyMemberUi3" parent="MarginContainer/HBoxContainer" instance=ExtResource("4_vgq8a")]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Item"
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -89,16 +87,12 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -185.0
+offset_top = -149.0
 offset_bottom = 9.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = SubResource("Theme_8h7dl")
 
-[node name="Label" type="Label" parent="PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+top_level = true
 layout_mode = 2
-size_flags_vertical = 1
-text = "You have a bad feeling about this..."
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
