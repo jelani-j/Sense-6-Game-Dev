@@ -19,6 +19,7 @@ var flow = 30
 @onready var extra_stats = $HBoxContainer/Status/Extra_Stats
 var base_position : Vector2
 var tween : Tween
+var is_selected:= false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -50,10 +51,17 @@ func animate_to(target_y: float):
 		.set_ease(Tween.EASE_OUT)
 
 func _on_mouse_entered() -> void:
-	animate_to(base_position.y - 20)
+	if not is_selected:
+		animate_to(base_position.y - 20)
 
 func _on_mouse_exited() -> void:
-	animate_to(base_position.y)
+	if not is_selected:
+		animate_to(base_position.y)
+	#extra_stats.visible = false
 
 func _on_pressed() -> void:
+	is_selected = true
+	animate_to(base_position.y - 20)
 	extra_stats.visible = true
+	
+	

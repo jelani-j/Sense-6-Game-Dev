@@ -45,15 +45,15 @@ size_flags_vertical = 3
 
 [node name="Fight_btn" type="Button" parent="HBoxContainer/Status/Extra_Stats"]
 layout_mode = 2
-text = "Fight"
+text = "Atk"
 
 [node name="Def_btn" type="Button" parent="HBoxContainer/Status/Extra_Stats"]
 layout_mode = 2
-text = "Defend"
+text = "Def"
 
 [node name="Skill_btn" type="Button" parent="HBoxContainer/Status/Extra_Stats"]
 layout_mode = 2
-text = "Ability"
+text = "Abl"
 
 [node name="Bag_btn" type="Button" parent="HBoxContainer/Status/Extra_Stats"]
 layout_mode = 2
