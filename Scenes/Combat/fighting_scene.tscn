@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://q6as3assiu7x"]
+[gd_scene load_steps=7 format=3 uid="uid://q6as3assiu7x"]
 
 [ext_resource type="Texture2D" uid="uid://b05pgt2pw0tp1" path="res://Sprite_Textures/main_character_sprite/main_character_base.png" id="1_8h7dl"]
+[ext_resource type="Script" uid="uid://f3dcpo7ydln5" path="res://Scenes/Combat/Battle_Ui.gd" id="1_gfi2s"]
 [ext_resource type="Texture2D" uid="uid://cpudx66m1bpsu" path="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Characters/sprGhost3.png" id="2_vgq8a"]
 [ext_resource type="Texture2D" uid="uid://j7yc4kiss86o" path="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Characters/sprMinotaur1.png" id="3_gfi2s"]
 [ext_resource type="PackedScene" uid="uid://uouy4r2hdrph" path="res://Scenes/Combat/PartyMemberUI.tscn" id="4_vgq8a"]
@@ -20,6 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("1_gfi2s")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
