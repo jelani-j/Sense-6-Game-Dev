@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MonsterData" load_steps=3 format=3 uid="uid://bps46rla8fr2t"]
+
+[ext_resource type="Script" uid="uid://bklrb16e7lbgp" path="res://Scenes/Combat/monster_data.gd" id="1_jqe68"]
+[ext_resource type="Texture2D" uid="uid://qa5cf1mperuf" path="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Characters/sprGhost1.png" id="2_xawmo"]
+
+[resource]
+script = ExtResource("1_jqe68")
+name = "goblin_test"
+max_hp = 10
+attack = 2
+defense = 2
+texture = ExtResource("2_xawmo")
+metadata/_custom_type_script = "uid://bklrb16e7lbgp"
