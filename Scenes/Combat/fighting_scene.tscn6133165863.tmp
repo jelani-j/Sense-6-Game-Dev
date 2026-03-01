@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://q6as3assiu7x"]
+[gd_scene load_steps=5 format=3 uid="uid://q6as3assiu7x"]
 
 [ext_resource type="Script" uid="uid://f3dcpo7ydln5" path="res://Scenes/Combat/Battle_Ui.gd" id="1_gfi2s"]
 [ext_resource type="Resource" uid="uid://bps46rla8fr2t" path="res://Scenes/Monsters/goblin.tres" id="2_8h7dl"]
-[ext_resource type="Resource" uid="uid://hapk1guai8mn" path="res://Scenes/Players/main_character.tres" id="3_vgq8a"]
 [ext_resource type="PackedScene" uid="uid://uouy4r2hdrph" path="res://Scenes/Combat/PartyMemberUI.tscn" id="4_vgq8a"]
 
 [sub_resource type="Theme" id="Theme_8h7dl"]
@@ -22,7 +21,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_gfi2s")
 monster_test = ExtResource("2_8h7dl")
-player_test = ExtResource("3_vgq8a")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -75,34 +73,34 @@ top_level = true
 layout_mode = 2
 
 [node name="EnemyContainer" type="Node2D" parent="."]
-position = Vector2(1081, 160)
+position = Vector2(1006, 153)
 
 [node name="Marker2D" type="Marker2D" parent="EnemyContainer"]
-position = Vector2(-365, 65)
+position = Vector2(-266, -43)
 
 [node name="Marker2D2" type="Marker2D" parent="EnemyContainer"]
-position = Vector2(-246, -11)
+position = Vector2(-123, 62)
 
 [node name="Marker2D3" type="Marker2D" parent="EnemyContainer"]
-position = Vector2(-246, 144)
+position = Vector2(-268, 164)
 
 [node name="Marker2D4" type="Marker2D" parent="EnemyContainer"]
-position = Vector2(-154, 65)
+position = Vector2(-398, 63)
 
 [node name="PlayerContainer" type="Node2D" parent="."]
-position = Vector2(258, 212)
+position = Vector2(269, 216)
 
 [node name="Marker2D" type="Marker2D" parent="PlayerContainer"]
-position = Vector2(189, 15)
+position = Vector2(-187, -1)
 
 [node name="Marker2D2" type="Marker2D" parent="PlayerContainer"]
-position = Vector2(104, -56)
+position = Vector2(74, 6)
 
 [node name="Marker2D3" type="Marker2D" parent="PlayerContainer"]
-position = Vector2(141, 93)
+position = Vector2(-81, 87)
 
 [node name="Marker2D4" type="Marker2D" parent="PlayerContainer"]
-position = Vector2(64, 41)
+position = Vector2(-81, -101)
 
 [connection signal="bag" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_bag"]
 [connection signal="defend" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_defend"]

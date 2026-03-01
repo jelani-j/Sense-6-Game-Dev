@@ -15,7 +15,9 @@ var is_enemy: bool = false
 func _ready():
 	area.input_event.connect(_on_input_event)
 
-func setup(data: MonsterData):
+func setup(data):
+	if data == MonsterData:
+		is_enemy = true
 	unit_name = data.name
 	max_hp = data.max_hp
 	current_hp = max_hp

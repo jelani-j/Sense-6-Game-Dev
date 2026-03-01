@@ -1,6 +1,9 @@
 extends Control
 @onready var member_button1 = $MarginContainer/HBoxContainer/PartyMemberUi
 @export var monster_test: MonsterData
+@export var player_test: PlayerData
+@onready var enemy_slots = $EnemyContainer.get_children()
+@onready var player_slots = $PlayerContainer.get_children()
 
 enum BattleState {
 	IDLE,
@@ -20,12 +23,22 @@ var enemies = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	spawn_monster(monster_test)
+	spawn_monster([monster_test])
+	spawn_player([player_test])
 	
-func spawn_monster(monster_data: MonsterData):
-	var unit = preload("res://Scenes/Combat/Battle_Unit.tscn").instantiate()
-	add_child(unit)
-	unit.setup(monster_data)
+func spawn_monster(monster_data: Array[MonsterData]):
+	for i in monster_data.size():
+		var unit = preload("res://Scenes/Combat/Battle_Unit.tscn").instantiate()
+		$EnemyContainer.add_child(unit)
+		unit.setup(monster_data[i])
+		unit.global_position = enemy_slots[i].global_position
+
+func spawn_player(player_data: Array[PlayerData]):
+	for i in player_data.size():
+		var unit = preload("res://Scenes/Combat/Battle_Unit.tscn").instantiate()
+		$PlayerContainer.add_child(unit)
+		unit.setup(player_data[i])
+		unit.global_position = player_slots[i].global_position
 	
 # For First Button Press 
 func _process(delta: float) -> void:

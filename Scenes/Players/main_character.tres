@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PlayerData" load_steps=3 format=3 uid="uid://hapk1guai8mn"]
+
+[ext_resource type="Script" uid="uid://d7qhwar4tx1a" path="res://Scenes/Players/player_data.gd" id="1_k3ba2"]
+[ext_resource type="Texture2D" uid="uid://b05pgt2pw0tp1" path="res://Sprite_Textures/main_character_sprite/main_character_base.png" id="2_5mp8e"]
+
+[resource]
+script = ExtResource("1_k3ba2")
+name = "Sol"
+max_hp = 10
+attack = 3
+defense = 2
+texture = ExtResource("2_5mp8e")
+metadata/_custom_type_script = "uid://d7qhwar4tx1a"
