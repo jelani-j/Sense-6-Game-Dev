@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://q6as3assiu7x"]
+[gd_scene load_steps=5 format=3 uid="uid://q6as3assiu7x"]
 
 [ext_resource type="Script" uid="uid://f3dcpo7ydln5" path="res://Scenes/Combat/Battle_Ui.gd" id="1_gfi2s"]
+[ext_resource type="Resource" uid="uid://bps46rla8fr2t" path="res://Scenes/Monsters/goblin.tres" id="2_8h7dl"]
 [ext_resource type="PackedScene" uid="uid://uouy4r2hdrph" path="res://Scenes/Combat/PartyMemberUI.tscn" id="4_vgq8a"]
 
 [sub_resource type="Theme" id="Theme_8h7dl"]
@@ -19,6 +20,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_gfi2s")
+monster_test = ExtResource("2_8h7dl")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1

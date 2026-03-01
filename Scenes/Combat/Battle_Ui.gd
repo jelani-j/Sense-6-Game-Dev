@@ -1,5 +1,6 @@
 extends Control
 @onready var member_button1 = $MarginContainer/HBoxContainer/PartyMemberUi
+@export var monster_test: MonsterData
 
 enum BattleState {
 	IDLE,
@@ -19,12 +20,21 @@ var enemies = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
-
+	spawn_monster(monster_test)
+	
+func spawn_monster(monster_data: MonsterData):
+	var unit = preload("res://Scenes/Combat/Battle_Unit.tscn").instantiate()
+	add_child(unit)
+	unit.setup(monster_data)
+	
 # For First Button Press 
 func _process(delta: float) -> void:
 	pass
 
+#Spawn in enemies & players into scene 
+
+
+# Button logic for party member ui
 func _on_party_member_ui_pressed() -> void:
 	if battle_state != BattleState.IDLE:
 		return

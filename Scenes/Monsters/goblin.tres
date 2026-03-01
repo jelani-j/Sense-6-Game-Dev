@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="MonsterData" load_steps=3 format=3 uid="uid://bps46rla8fr2t"]
+
+[ext_resource type="Script" uid="uid://bklrb16e7lbgp" path="res://Scenes/Monsters/monster_data.gd" id="1_hc7ia"]
+[ext_resource type="Texture2D" uid="uid://djbworqs7x50" path="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Characters/sprGoblin1.png" id="2_hc7ia"]
+
+[resource]
+script = ExtResource("1_hc7ia")
+name = "goblin_test"
+max_hp = 10
+current_hp = 10
+attack = 2
+defense = 2
+texture = ExtResource("2_hc7ia")
+metadata/_custom_type_script = "uid://bklrb16e7lbgp"

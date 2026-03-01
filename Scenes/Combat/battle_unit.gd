@@ -3,7 +3,7 @@ extends Node2D
 signal unit_clicked(unit)
 
 @onready var sprite: Sprite2D = $Sprite2D
-@onready var area: Area2D = $Area2D
+@onready var area: Area2D = $Sprite2D/Area2D
 
 var unit_name: String
 var max_hp: int
@@ -15,7 +15,7 @@ var is_enemy: bool = false
 func _ready():
 	area.input_event.connect(_on_input_event)
 
-func setup(data: Dictionary):
+func setup(data: MonsterData):
 	unit_name = data.name
 	max_hp = data.max_hp
 	current_hp = max_hp
