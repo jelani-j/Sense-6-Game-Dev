@@ -1,9 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://q6as3assiu7x"]
+[gd_scene load_steps=4 format=3 uid="uid://q6as3assiu7x"]
 
-[ext_resource type="Texture2D" uid="uid://b05pgt2pw0tp1" path="res://Sprite_Textures/main_character_sprite/main_character_base.png" id="1_8h7dl"]
 [ext_resource type="Script" uid="uid://f3dcpo7ydln5" path="res://Scenes/Combat/Battle_Ui.gd" id="1_gfi2s"]
-[ext_resource type="Texture2D" uid="uid://cpudx66m1bpsu" path="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Characters/sprGhost3.png" id="2_vgq8a"]
-[ext_resource type="Texture2D" uid="uid://j7yc4kiss86o" path="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Characters/sprMinotaur1.png" id="3_gfi2s"]
 [ext_resource type="PackedScene" uid="uid://uouy4r2hdrph" path="res://Scenes/Combat/PartyMemberUI.tscn" id="4_vgq8a"]
 
 [sub_resource type="Theme" id="Theme_8h7dl"]
@@ -36,23 +33,6 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.10011808, 0.073204525, 0.18715522, 1)
 
-[node name="Node2D" type="Node2D" parent="."]
-
-[node name="Main_Character" type="Sprite2D" parent="Node2D"]
-position = Vector2(150, 212)
-scale = Vector2(5, 4.75)
-texture = ExtResource("1_8h7dl")
-
-[node name="Enemy#1" type="Sprite2D" parent="Node2D"]
-position = Vector2(968.00006, 99.99999)
-scale = Vector2(2.4868422, 3.2857144)
-texture = ExtResource("2_vgq8a")
-
-[node name="Enemy#2" type="Sprite2D" parent="Node2D"]
-position = Vector2(973, 270)
-scale = Vector2(2.1048386, 4.375)
-texture = ExtResource("3_gfi2s")
-
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
@@ -74,12 +54,6 @@ theme_override_constants/separation = 80
 [node name="PartyMemberUi" parent="MarginContainer/HBoxContainer" instance=ExtResource("4_vgq8a")]
 layout_mode = 2
 
-[node name="PartyMemberUi2" parent="MarginContainer/HBoxContainer" instance=ExtResource("4_vgq8a")]
-layout_mode = 2
-
-[node name="PartyMemberUi3" parent="MarginContainer/HBoxContainer" instance=ExtResource("4_vgq8a")]
-layout_mode = 2
-
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 12
@@ -95,3 +69,10 @@ theme = SubResource("Theme_8h7dl")
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
 top_level = true
 layout_mode = 2
+
+[connection signal="bag" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_bag"]
+[connection signal="defend" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_defend"]
+[connection signal="fight" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_fight"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_pressed"]
+[connection signal="run" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_run"]
+[connection signal="skill" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_skill"]

@@ -66,3 +66,8 @@ text = "Run"
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]
+[connection signal="pressed" from="HBoxContainer/Status/Extra_Stats/Fight_btn" to="." method="_on_fight_btn_pressed"]
+[connection signal="pressed" from="HBoxContainer/Status/Extra_Stats/Def_btn" to="." method="_on_def_btn_pressed"]
+[connection signal="pressed" from="HBoxContainer/Status/Extra_Stats/Skill_btn" to="." method="_on_skill_btn_pressed"]
+[connection signal="pressed" from="HBoxContainer/Status/Extra_Stats/Bag_btn" to="." method="_on_bag_btn_pressed"]
+[connection signal="pressed" from="HBoxContainer/Status/Extra_Stats/Run_btn" to="." method="_on_run_btn_pressed"]

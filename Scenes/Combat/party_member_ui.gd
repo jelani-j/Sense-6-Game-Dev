@@ -20,6 +20,11 @@ var flow = 30
 var base_position : Vector2
 var tween : Tween
 var is_selected:= false
+signal fight
+signal defend
+signal skill
+signal bag
+signal run
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -65,3 +70,21 @@ func _on_pressed() -> void:
 	extra_stats.visible = true
 	
 	
+func _on_fight_btn_pressed() -> void:
+	emit_signal("fight")
+
+
+func _on_def_btn_pressed() -> void:
+	emit_signal("defend")
+
+
+func _on_skill_btn_pressed() -> void:
+	emit_signal("skill")
+
+
+func _on_bag_btn_pressed() -> void:
+	emit_signal("bag")
+
+
+func _on_run_btn_pressed() -> void:
+	emit_signal("run")
