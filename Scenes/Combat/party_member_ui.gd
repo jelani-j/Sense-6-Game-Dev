@@ -20,11 +20,11 @@ var flow = 30
 var base_position : Vector2
 var tween : Tween
 var is_selected:= false
-signal fight
-signal defend
-signal skill
-signal bag
-signal run
+signal selected(member)
+signal action_selected(member, action)
+var player_data: PlayerData
+var member_name
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -64,27 +64,31 @@ func _on_mouse_exited() -> void:
 		animate_to(base_position.y)
 	#extra_stats.visible = false
 
+
+
+func setup(data: PlayerData):
+	player_data = data
+	member_name = data.name
+	# set portrait, hp bar, etc
+	
 func _on_pressed() -> void:
 	is_selected = true
+	emit_signal("selected", self)
 	animate_to(base_position.y - 20)
 	extra_stats.visible = true
 	
 	
 func _on_fight_btn_pressed() -> void:
-	emit_signal("fight")
-
+	emit_signal("action_selected", self, "fight")
 
 func _on_def_btn_pressed() -> void:
-	emit_signal("defend")
-
+	emit_signal("action_selected", self, "defend")
 
 func _on_skill_btn_pressed() -> void:
-	emit_signal("skill")
-
+	emit_signal("action_selected", self, "skill")
 
 func _on_bag_btn_pressed() -> void:
-	emit_signal("bag")
-
+	emit_signal("action_selected", self, "bag")
 
 func _on_run_btn_pressed() -> void:
-	emit_signal("run")
+	emit_signal("action_selected", self, "run")

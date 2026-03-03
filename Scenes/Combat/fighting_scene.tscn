@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://q6as3assiu7x"]
+[gd_scene load_steps=5 format=3 uid="uid://q6as3assiu7x"]
 
 [ext_resource type="Script" uid="uid://f3dcpo7ydln5" path="res://Scenes/Combat/Battle_Ui.gd" id="1_gfi2s"]
 [ext_resource type="Resource" uid="uid://bps46rla8fr2t" path="res://Scenes/Monsters/goblin.tres" id="2_8h7dl"]
 [ext_resource type="Resource" uid="uid://hapk1guai8mn" path="res://Scenes/Players/main_character.tres" id="3_vgq8a"]
-[ext_resource type="PackedScene" uid="uid://uouy4r2hdrph" path="res://Scenes/Combat/PartyMemberUI.tscn" id="4_vgq8a"]
 
 [sub_resource type="Theme" id="Theme_8h7dl"]
 
@@ -50,13 +49,10 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="MemberContainer" type="HBoxContainer" parent="MarginContainer"]
 clip_contents = true
 layout_mode = 2
 theme_override_constants/separation = 80
-
-[node name="PartyMemberUi" parent="MarginContainer/HBoxContainer" instance=ExtResource("4_vgq8a")]
-layout_mode = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -103,10 +99,3 @@ position = Vector2(141, 93)
 
 [node name="Marker2D4" type="Marker2D" parent="PlayerContainer"]
 position = Vector2(64, 41)
-
-[connection signal="bag" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_bag"]
-[connection signal="defend" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_defend"]
-[connection signal="fight" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_fight"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_pressed"]
-[connection signal="run" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_run"]
-[connection signal="skill" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_skill"]

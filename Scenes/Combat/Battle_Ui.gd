@@ -1,9 +1,13 @@
 extends Control
 @onready var member_button1 = $MarginContainer/HBoxContainer/PartyMemberUi
+#Variables to be passed from actual game scenes
 @export var monster_test: MonsterData
 @export var player_test: PlayerData
+# End of data needed
+
 @onready var enemy_slots = $EnemyContainer.get_children()
 @onready var player_slots = $PlayerContainer.get_children()
+@onready var party_container = $MarginContainer/MemberContainer
 
 enum BattleState {
 	IDLE,
@@ -25,6 +29,7 @@ var enemies = []
 func _ready() -> void:
 	spawn_monster([monster_test])
 	spawn_player([player_test])
+	spawn_party_member([player_test])
 	
 func spawn_monster(monster_data: Array[MonsterData]):
 	for i in monster_data.size():
@@ -41,35 +46,34 @@ func spawn_player(player_data: Array[PlayerData]):
 		unit.global_position = player_slots[i].global_position
 	
 # For First Button Press 
-func _process(delta: float) -> void:
-	pass
-
-#Spawn in enemies & players into scene 
-
-
-# Button logic for party member ui
-func _on_party_member_ui_pressed() -> void:
+func spawn_party_member(players: Array[PlayerData]):
+	for player in players:
+		var member_ui = preload("res://Scenes/Combat/PartyMemberUI.tscn").instantiate()
+		party_container.add_child(member_ui)
+		member_ui.setup(player)
+		member_ui.selected.connect(_on_member_selected)
+		member_ui.action_selected.connect(_on_action_selected)
+	
+func _on_member_selected(member):
 	if battle_state != BattleState.IDLE:
 		return
 	battle_state = BattleState.SELECTING_CHARACTER
-	print(battle_state)
-	
-func _on_party_member_ui_fight() -> void:
-	battle_state = BattleState.SELECTING_ACTION
-	print(battle_state,"Engaging Target!")
+	print("Selecting:", member.member_name)
 
-func _on_party_member_ui_defend() -> void:
-	battle_state = BattleState.BLOCKING
-	print(battle_state,"Defending vitals...")
-
-func _on_party_member_ui_bag() -> void:
-	battle_state = BattleState.UTILITY
-	print(battle_state, "Utility required...")
-
-func _on_party_member_ui_run() -> void:
-	battle_state = BattleState.RUNNING
-	print(battle_state,"Retreating!")
-
-func _on_party_member_ui_skill() -> void:
-	battle_state = BattleState.SPECIAL
-	print(battle_state,"Activating Special Ability!")
+func _on_action_selected(member, action):
+	match action:
+		"fight":
+			battle_state = BattleState.SELECTING_ACTION
+			print(member.member_name, "Engaging Target!")
+		"defend":
+			battle_state = BattleState.BLOCKING
+			print(member.member_name, "Defending vitals...")
+		"bag":
+			battle_state = BattleState.UTILITY
+			print(member.member_name, "Utility required...")
+		"run":
+			battle_state = BattleState.RUNNING
+			print(member.member_name, "Retreating!")
+		"skill":
+			battle_state = BattleState.SPECIAL
+			print(member.member_name, "Activating Special Ability!")
