@@ -1,13 +1,15 @@
 extends Control
-@onready var member_button1 = $MarginContainer/HBoxContainer/PartyMemberUi
 #Variables to be passed from actual game scenes
 @export var monster_test: MonsterData
 @export var player_test: PlayerData
+@export var Martial_art_attack: AttackData
+@export var Weapon_art_attack: AttackData
 # End of data needed
 
 @onready var enemy_slots = $EnemyContainer.get_children()
 @onready var player_slots = $PlayerContainer.get_children()
-@onready var party_container = $MarginContainer/MemberContainer
+@onready var party_container = $"ActionContainer/Party-Members"
+@onready var panel_container = $ActionContainer/ActionOptions
 
 enum BattleState {
 	IDLE,
@@ -60,11 +62,21 @@ func _on_member_selected(member):
 	battle_state = BattleState.SELECTING_CHARACTER
 	print("Selecting:", member.member_name)
 
+func fight_options(AttackData):
+	var btn = Button.new()
+	btn.text = AttackData.name
+	panel_container.add_child(btn)
+	print()
+
+
 func _on_action_selected(member, action):
 	match action:
 		"fight":
 			battle_state = BattleState.SELECTING_ACTION
+			fight_options(Martial_art_attack)
+			fight_options(Weapon_art_attack)
 			print(member.member_name, "Engaging Target!")
+			
 		"defend":
 			battle_state = BattleState.BLOCKING
 			print(member.member_name, "Defending vitals...")
