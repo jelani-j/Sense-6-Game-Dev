@@ -24,6 +24,7 @@ func setup(data):
 	attack = data.attack
 	defense = data.defense
 	sprite.texture = data.texture
+	sprite.scale = Vector2(2, 2)
 
 func _on_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed:

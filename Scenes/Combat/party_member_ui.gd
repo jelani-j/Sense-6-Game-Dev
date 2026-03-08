@@ -17,11 +17,12 @@ var flow = 30
 #@onready var flow_bar = $HBoxContainer/Status/FlowBar
 @onready var icon_symbol = $HBoxContainer/Icon
 @onready var extra_stats = $HBoxContainer/Status/Extra_Stats
+@onready var name_title = $HBoxContainer/Status/Name
 var base_position : Vector2
 var tween : Tween
 var is_selected:= false
 signal selected(member)
-signal action_selected(member, action)
+signal action_selected(player_data, action)
 var player_data: PlayerData
 var member_name
 
@@ -69,6 +70,8 @@ func _on_mouse_exited() -> void:
 func setup(data: PlayerData):
 	player_data = data
 	member_name = data.name
+	name_title.text = member_name
+	
 	# set portrait, hp bar, etc
 	
 func _on_pressed() -> void:
@@ -79,16 +82,16 @@ func _on_pressed() -> void:
 	
 	
 func _on_fight_btn_pressed() -> void:
-	emit_signal("action_selected", self, "fight")
+	action_selected.emit(player_data, "fight")
 
 func _on_def_btn_pressed() -> void:
-	emit_signal("action_selected", self, "defend")
+	action_selected.emit(player_data, "defend")
 
 func _on_skill_btn_pressed() -> void:
-	emit_signal("action_selected", self, "skill")
+	action_selected.emit(player_data, "skill")
 
 func _on_bag_btn_pressed() -> void:
-	emit_signal("action_selected", self, "bag")
+	action_selected.emit(player_data, "bag")
 
 func _on_run_btn_pressed() -> void:
-	emit_signal("action_selected", self, "run")
+	action_selected.emit(player_data, "run")

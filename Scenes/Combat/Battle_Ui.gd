@@ -39,6 +39,7 @@ func spawn_monster(monster_data: Array[MonsterData]):
 		$EnemyContainer.add_child(unit)
 		unit.setup(monster_data[i])
 		unit.global_position = enemy_slots[i].global_position
+		
 
 func spawn_player(player_data: Array[PlayerData]):
 	for i in player_data.size():
@@ -62,30 +63,40 @@ func _on_member_selected(member):
 	battle_state = BattleState.SELECTING_CHARACTER
 	print("Selecting:", member.member_name)
 
-func fight_options(AttackData):
-	var btn = Button.new()
-	btn.text = AttackData.name
-	panel_container.add_child(btn)
-	print()
+func clear_panel():
+	for child in panel_container.get_children():
+		child.queue_free()
 
+func create_attack_buttons(player: PlayerData):
+	clear_panel()
+	for attack in player.attacks:
+		var btn = Button.new()
+		btn.text = attack.name
+		#btn.pressed.connect(_on_attack_selected.bind(player, attack))
+		panel_container.add_child(btn)
 
-func _on_action_selected(member, action):
+func _on_attack_selected(player: PlayerData, attack: AttackData):
+	print(player.member_name, "used", attack.name)
+	battle_state = BattleState.TARGETING
+	clear_panel()
+	#spawn_enemy_targets()
+
+func _on_action_selected(player_data, action):
 	match action:
 		"fight":
 			battle_state = BattleState.SELECTING_ACTION
-			fight_options(Martial_art_attack)
-			fight_options(Weapon_art_attack)
-			print(member.member_name, "Engaging Target!")
+			create_attack_buttons(player_data)
+			print( "Engaging Target!")
 			
-		"defend":
-			battle_state = BattleState.BLOCKING
-			print(member.member_name, "Defending vitals...")
-		"bag":
-			battle_state = BattleState.UTILITY
-			print(member.member_name, "Utility required...")
-		"run":
-			battle_state = BattleState.RUNNING
-			print(member.member_name, "Retreating!")
-		"skill":
-			battle_state = BattleState.SPECIAL
-			print(member.member_name, "Activating Special Ability!")
+		#"defend":
+			#battle_state = BattleState.BLOCKING
+			#print(player.member_name, "Defending vitals...")
+		#"bag":
+			#battle_state = BattleState.UTILITY
+			#print(player.member_name, "Utility required...")
+		#"run":
+			#battle_state = BattleState.RUNNING
+			#print(player.member_name, "Retreating!")
+		#"skill":
+			#battle_state = BattleState.SPECIAL
+			#print(player.member_name, "Activating Special Ability!")

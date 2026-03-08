@@ -1,7 +1,10 @@
-[gd_resource type="Resource" script_class="PlayerData" load_steps=3 format=3 uid="uid://hapk1guai8mn"]
+[gd_resource type="Resource" script_class="PlayerData" load_steps=6 format=3 uid="uid://hapk1guai8mn"]
 
 [ext_resource type="Script" uid="uid://d7qhwar4tx1a" path="res://Scenes/Players/player_data.gd" id="1_k3ba2"]
+[ext_resource type="Script" uid="uid://bcco0wqu3xis1" path="res://Scenes/Combat/Attack Types/attack_data.gd" id="1_n6icq"]
 [ext_resource type="Texture2D" uid="uid://b05pgt2pw0tp1" path="res://Sprite_Textures/main_character_sprite/main_character_base.png" id="2_5mp8e"]
+[ext_resource type="Resource" uid="uid://bmjcqm6xlndg3" path="res://Scenes/Combat/Attack Types/Weapon-Art.tres" id="2_lkqlh"]
+[ext_resource type="Resource" uid="uid://cijv8n8v08mxb" path="res://Scenes/Combat/Attack Types/Martial-Art.tres" id="3_ag77y"]
 
 [resource]
 script = ExtResource("1_k3ba2")
@@ -10,4 +13,5 @@ max_hp = 10
 attack = 3
 defense = 2
 texture = ExtResource("2_5mp8e")
+attacks = Array[ExtResource("1_n6icq")]([ExtResource("2_lkqlh"), ExtResource("3_ag77y")])
 metadata/_custom_type_script = "uid://d7qhwar4tx1a"
