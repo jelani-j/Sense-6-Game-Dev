@@ -4,6 +4,7 @@ extends Control
 @export var player_test: PlayerData
 @export var Martial_art_attack: AttackData
 @export var Weapon_art_attack: AttackData
+
 # End of data needed
 
 @onready var enemy_slots = $EnemyContainer.get_children()
@@ -26,6 +27,7 @@ var battle_state := BattleState.IDLE
 var selected_member = null
 var players_array = []
 var enemies_array = []
+var targetable_enemies = []
 var active_player : PlayerData
 var selected_attack : AttackData
 
@@ -41,8 +43,8 @@ func spawn_monster(monster_data: Array[MonsterData]):
 		$EnemyContainer.add_child(unit)
 		unit.setup(monster_data[monster])
 		unit.global_position = enemy_slots[monster].global_position
-		enemies_array.append(monster_data[monster])
-		
+		#enemies_array.append(monster_data[monster])
+		enemies_array.append(unit)
 
 func spawn_player(player_data: Array[PlayerData]):
 	for i in player_data.size():
@@ -50,7 +52,8 @@ func spawn_player(player_data: Array[PlayerData]):
 		$PlayerContainer.add_child(unit)
 		unit.setup(player_data[i])
 		unit.global_position = player_slots[i].global_position
-		players_array.append(player_data[i])
+		#players_array.append(player_data[i])
+		players_array.append(unit)
 	
 # For First Button Press 
 func spawn_party_member(players: Array[PlayerData]):
@@ -92,9 +95,19 @@ func _on_attack_selected(player: PlayerData, attack: AttackData):
 func show_targets():
 	for enemy in enemies_array:
 		var monster_target = Button.new()
-		monster_target.text = enemy.name
+		monster_target.text = enemy.unit_name
 		panel_container.add_child(monster_target)
+		monster_target.pressed.connect(attack_target.bind(enemy, selected_attack))
 
+func attack_target(target: BattleUnit, attack: AttackData):
+	battle_state = BattleState.EXECUTING
+	clear_panel()
+	target.take_damage(attack.damage)
+	print(target.name, "has: ", target.current_hp, " HitPoints left" )
+	#if target.max_hp >=0:
+		#print (target.name, " has been slain!")
+		#despawn_monster(target)
+		
 func _on_action_selected(player_data, action):
 	match action:
 		"fight":

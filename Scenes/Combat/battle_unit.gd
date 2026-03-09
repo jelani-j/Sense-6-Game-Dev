@@ -1,3 +1,4 @@
+class_name BattleUnit
 extends Node2D
 
 signal unit_clicked(unit)
