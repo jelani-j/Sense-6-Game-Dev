@@ -24,8 +24,10 @@ enum BattleState {
 }
 var battle_state := BattleState.IDLE
 var selected_member = null
-var players = []
-var enemies = []
+var players_array = []
+var enemies_array = []
+var active_player : PlayerData
+var selected_attack : AttackData
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -34,11 +36,12 @@ func _ready() -> void:
 	spawn_party_member([player_test])
 	
 func spawn_monster(monster_data: Array[MonsterData]):
-	for i in monster_data.size():
+	for monster in monster_data.size():
 		var unit = preload("res://Scenes/Combat/Battle_Unit.tscn").instantiate()
 		$EnemyContainer.add_child(unit)
-		unit.setup(monster_data[i])
-		unit.global_position = enemy_slots[i].global_position
+		unit.setup(monster_data[monster])
+		unit.global_position = enemy_slots[monster].global_position
+		enemies_array.append(monster_data[monster])
 		
 
 func spawn_player(player_data: Array[PlayerData]):
@@ -47,6 +50,7 @@ func spawn_player(player_data: Array[PlayerData]):
 		$PlayerContainer.add_child(unit)
 		unit.setup(player_data[i])
 		unit.global_position = player_slots[i].global_position
+		players_array.append(player_data[i])
 	
 # For First Button Press 
 func spawn_party_member(players: Array[PlayerData]):
@@ -72,14 +76,24 @@ func create_attack_buttons(player: PlayerData):
 	for attack in player.attacks:
 		var btn = Button.new()
 		btn.text = attack.name
-		#btn.pressed.connect(_on_attack_selected.bind(player, attack))
+		btn.pressed.connect(_on_attack_selected.bind(player, attack))
 		panel_container.add_child(btn)
 
+
+	
 func _on_attack_selected(player: PlayerData, attack: AttackData):
-	print(player.member_name, "used", attack.name)
+	print(player.name, ": used -->", attack.name)
 	battle_state = BattleState.TARGETING
+	active_player = player
+	selected_attack = attack
 	clear_panel()
-	#spawn_enemy_targets()
+	show_targets()
+
+func show_targets():
+	for enemy in enemies_array:
+		var monster_target = Button.new()
+		monster_target.text = enemy.name
+		panel_container.add_child(monster_target)
 
 func _on_action_selected(player_data, action):
 	match action:
