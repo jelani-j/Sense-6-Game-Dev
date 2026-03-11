@@ -6,9 +6,7 @@
 [resource]
 script = ExtResource("1_hc7ia")
 name = "goblin_test"
-max_hp = 10
-current_hp = 10
-attack = 2
-defense = 2
+max_hp = 3
+attack = 1
 texture = ExtResource("2_hc7ia")
 metadata/_custom_type_script = "uid://bklrb16e7lbgp"

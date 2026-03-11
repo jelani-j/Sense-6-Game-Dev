@@ -22,8 +22,8 @@ var base_position : Vector2
 var tween : Tween
 var is_selected:= false
 signal selected(member)
-signal action_selected(player_data, action)
-var player_data: PlayerData
+signal action_selected(unit, action)
+var unit: BattleUnit
 var member_name
 
 
@@ -32,7 +32,7 @@ func _ready() -> void:
 	extra_stats.visible = false
 	base_position = position
 	name_label.text = 'Test-Character'
-	icon_symbol.texture = preload("res://icon.svg")
+	#icon_symbol.texture = preload("res://icon.svg")
 
 	hp_bar.max_value = max_hp
 	hp_bar.value = hp
@@ -67,9 +67,9 @@ func _on_mouse_exited() -> void:
 
 
 
-func setup(data: PlayerData):
-	player_data = data
-	member_name = data.name
+func setup(unit_data: BattleUnit):
+	self.unit = unit_data
+	member_name = unit.unit_data.name
 	name_title.text = member_name
 	
 	# set portrait, hp bar, etc
@@ -82,16 +82,16 @@ func _on_pressed() -> void:
 	
 	
 func _on_fight_btn_pressed() -> void:
-	action_selected.emit(player_data, "fight")
+	action_selected.emit(unit, "fight")
 
 func _on_def_btn_pressed() -> void:
-	action_selected.emit(player_data, "defend")
+	action_selected.emit(unit, "defend")
 
 func _on_skill_btn_pressed() -> void:
-	action_selected.emit(player_data, "skill")
+	action_selected.emit(unit, "skill")
 
 func _on_bag_btn_pressed() -> void:
-	action_selected.emit(player_data, "bag")
+	action_selected.emit(unit, "bag")
 
 func _on_run_btn_pressed() -> void:
-	action_selected.emit(player_data, "run")
+	action_selected.emit(unit, "run")
