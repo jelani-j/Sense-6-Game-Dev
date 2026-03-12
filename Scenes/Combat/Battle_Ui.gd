@@ -27,8 +27,14 @@ var battle_state := BattleState.IDLE
 var selected_member = null
 var players_array: Array[BattleUnit] = []
 var enemies_array: Array[BattleUnit] = []
-var active_player : PlayerData
+var active_player : BattleUnit
 var selected_attack : AttackData
+var action_queue = []
+var action_obejct: Dictionary = {
+		"type": "",
+		"actor": BattleUnit,
+		"target": BattleUnit,
+	}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -82,7 +88,7 @@ func create_attack_buttons(unit: BattleUnit):
 func _on_attack_selected(player: BattleUnit, attack: AttackData):
 	print(player.unit_data.name, ": used -->", attack.name)
 	battle_state = BattleState.TARGETING
-	active_player = player.unit_data
+	active_player = player
 	selected_attack = attack
 	clear_panel()
 	show_targets(enemies_array)
@@ -93,33 +99,65 @@ func show_targets(targets: Array[BattleUnit]):
 		monster_target.text = target.unit_data.name
 		panel_container.add_child(monster_target)
 		monster_target.pressed.connect(attack_target.bind(target, selected_attack))
-#
-#func execute_actions():
+
+#func monster_ai():
+
+func execute_actions(action_queue):
+	for action in action_queue:
+		if action.type == "attack":
+			print("Attacking!")
+			action.target.take_damage(selected_attack.damage)
+		if action.type == "defend":
+			print("Defending")
+		if action.type == "run":
+			print(" Running away!")
 	
 
 func attack_target(target: BattleUnit, attack: AttackData):
 	battle_state = BattleState.EXECUTING
 	clear_panel()
-	target.take_damage(attack.damage)
-	print(target.name, "has: ", target.current_hp, " HitPoints left" )
+	action_obejct = {
+		"type": "attack",
+		"actor": active_player,
+		"target": target
+		#"action": selected_attack.damage
+	}
+	action_queue.push_back(action_obejct)
+	execute_actions(action_queue)
+	#target.take_damage(attack.damage)
+	#print(action_queue)
 		
 func _on_action_selected(unit, action):
-	#player_data.temp_defense = 0
+	#unit.unit_data.temp_defense = 0
+	print("Current Defense: ", unit.unit_data.defense)
 	match action:
 		"fight":
 			battle_state = BattleState.SELECTING_ACTION
 			create_attack_buttons(unit)
-			print( "Engaging Target!")
-		#"defend":
-			#battle_state = BattleState.BLOCKING
-			#player_data.temp_defense = 3
-			#print( "Defending vitals...", player_data.defense)
+			#print( "Engaging Target!")
+		"defend":
+			battle_state = BattleState.BLOCKING
+			action_obejct = {
+				"type": "defend",
+				"actor": unit
+			}
+			action_queue.push_back(action_obejct)
+			execute_actions(action_queue)
+			#unit.unit_data.temp_defense = 2
+			#unit.unit_data.defense += unit.unit_data.temp_defense
+			#print(action_queue)
 		#"bag":
 			#battle_state = BattleState.UTILITY
 			#print(player.member_name, "Utility required...")
-		#"run":
-			#battle_state = BattleState.RUNNING
-			#print(player.member_name, "Retreating!")
+		"run":
+			battle_state = BattleState.RUNNING
+			action_obejct = {
+				"type": "run",
+				"actor": unit
+			}
+			action_queue.push_back(action_obejct)
+			execute_actions(action_queue)
+			#print(action_queue)
 		#"skill":
 			#battle_state = BattleState.SPECIAL
 			#print(player.member_name, "Activating Special Ability!")

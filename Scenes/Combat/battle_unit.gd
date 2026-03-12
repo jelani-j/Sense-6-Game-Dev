@@ -9,7 +9,7 @@ signal unit_clicked(unit)
 var unit_data: Resource
 var current_hp: int
 var is_enemy: bool 
-var temp_defense: int 
+@export var temp_defense: int 
 #temp stats
 
 func _ready():
