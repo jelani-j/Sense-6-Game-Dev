@@ -109,24 +109,23 @@ func monster_ai(enemies_array, players_array):
 			"target": players_array[0],
 			"attack": monster.unit_data.attacks[0]
 		}
-		action_queue.push_front(action_obejct)
+		action_queue.push_back(action_obejct)
 
 func execute_actions(action_queue):
 	for action in action_queue:
 		var user = action["actor"].unit_data.name
-		action["actor"].set_defending(false)
+
+		if action["type"] == "defend":
+			action["actor"].set_defending(true)
+			log_container.text += "\n" + user + " is Defending"
 		if action["type"] == "attack":
 			var target = action["target"].unit_data.name
 			var attack_name = action["attack"].name
-			log_container.text += "\n" + user + " Used: " + attack_name + " on " + target
 			action["target"].take_damage(action["attack"].damage)
-		#if action["type"] == "defend":
-			#action["actor"].set_defending(true)
-			#log_container.text += "\n" + user + " is Defending"
-		#if action["type"] == "run":
-			#log_container.text += "\n" + user + "is Running away!"
+			log_container.text += "\n" + user + " Used: " + attack_name + " on " + target
+		if action["type"] == "run":
+			log_container.text += "\n" + user + " is Running away!"
 	
-
 func attack_target(target: BattleUnit, attack: AttackData):
 	battle_state = BattleState.EXECUTING
 	clear_panel()
@@ -136,11 +135,10 @@ func attack_target(target: BattleUnit, attack: AttackData):
 		"target": target,
 		"attack": selected_attack
 	}
-	action_queue.push_front(action_obejct)
+	action_queue.push_back(action_obejct)
 	start_queue()
 		
 func _on_action_selected(unit, action):
-	print("Current Defense: ", unit.unit_data.defense)
 	match action:
 		"fight":
 			battle_state = BattleState.SELECTING_ACTION
@@ -151,11 +149,9 @@ func _on_action_selected(unit, action):
 				"type": "defend",
 				"actor": unit
 			}
-			action_queue.push_front(action_obejct)
-			unit.set_defending(true)
-			execute_actions(action_queue)
+			action_queue.push_back(action_obejct)
+			print(action_queue)
 			start_queue()
-			log_container.text += "\n" + unit.unit_data.name + " is Defending"
 		#"bag":
 			#battle_state = BattleState.UTILITY
 			#print(player.member_name, "Utility required...")
@@ -165,14 +161,14 @@ func _on_action_selected(unit, action):
 				"type": "run",
 				"actor": unit
 			}
-			action_queue.push_front(action_obejct)
-			execute_actions(action_queue)
+			action_queue.push_back(action_obejct)
 			start_queue()
-			#print(action_queue)
 		#"skill":
 			#battle_state = BattleState.SPECIAL
 			#print(player.member_name, "Activating Special Ability!")
 func start_queue():
 	monster_ai(enemies_array, players_array)
 	execute_actions(action_queue)
+	for unit in action_queue:
+		unit["actor"].set_defending(false)
 	action_queue.clear()
