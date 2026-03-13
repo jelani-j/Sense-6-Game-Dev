@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AttackData" load_steps=2 format=3 uid="uid://bf4dt4awvc51x"]
+
+[ext_resource type="Script" uid="uid://bcco0wqu3xis1" path="res://Scenes/Combat/Attack Types/attack_data.gd" id="1_4l4wx"]
+
+[resource]
+script = ExtResource("1_4l4wx")
+name = "Slash"
+damage = 1
+cost = 2
+metadata/_custom_type_script = "uid://bcco0wqu3xis1"

@@ -6,3 +6,4 @@ class_name MonsterData
 @export var attack: int
 @export var defense: int
 @export var texture: Texture2D
+@export var attacks: Array[AttackData]

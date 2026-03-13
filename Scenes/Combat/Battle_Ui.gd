@@ -11,6 +11,7 @@ extends Control
 @onready var player_slots = $PlayerContainer.get_children()
 @onready var party_container = $"ActionContainer/Party-Members"
 @onready var panel_container = $ActionContainer/ActionOptions
+@onready var log_container = $ActionContainer/BattleLog
 
 enum BattleState {
 	IDLE,
@@ -49,6 +50,7 @@ func spawn_monster(monster_data: Array[MonsterData]):
 		unit.setup(monster_data[monster], true)
 		unit.global_position = enemy_slots[monster].global_position
 		enemies_array.append(unit)
+		
 
 func spawn_player(player_data: Array[PlayerData]):
 	for i in player_data.size():
@@ -86,7 +88,6 @@ func create_attack_buttons(unit: BattleUnit):
 		panel_container.add_child(btn)
 #
 func _on_attack_selected(player: BattleUnit, attack: AttackData):
-	print(player.unit_data.name, ": used -->", attack.name)
 	battle_state = BattleState.TARGETING
 	active_player = player
 	selected_attack = attack
@@ -100,17 +101,29 @@ func show_targets(targets: Array[BattleUnit]):
 		panel_container.add_child(monster_target)
 		monster_target.pressed.connect(attack_target.bind(target, selected_attack))
 
-#func monster_ai():
+func monster_ai(enemies_array, players_array):
+	for monster in enemies_array:
+		action_obejct = {
+			"type": "attack",
+			"actor": monster,
+			"target": players_array[0],
+			"attack": monster.unit_data.attacks[0]
+		}
+		action_queue.push_back(action_obejct)
 
 func execute_actions(action_queue):
 	for action in action_queue:
-		if action.type == "attack":
-			print("Attacking!")
-			action.target.take_damage(selected_attack.damage)
-		if action.type == "defend":
-			print("Defending")
-		if action.type == "run":
-			print(" Running away!")
+		var user = action["actor"].unit_data.name
+		
+		if action["type"] == "attack":
+			var target = action["target"].unit_data.name
+			var attack_name = action["attack"].name
+			log_container.text += "\n" + user + " Used: " + attack_name + " on " + target
+			action.target.take_damage(action["attack"].damage)
+		if action["type"] == "defend":
+			print(user, " is Defending")
+		if action["type"] == "run":
+			log_container.text += "\n" + user + "is Running away!"
 	
 
 func attack_target(target: BattleUnit, attack: AttackData):
@@ -119,22 +132,18 @@ func attack_target(target: BattleUnit, attack: AttackData):
 	action_obejct = {
 		"type": "attack",
 		"actor": active_player,
-		"target": target
-		#"action": selected_attack.damage
+		"target": target,
+		"attack": selected_attack
 	}
 	action_queue.push_back(action_obejct)
-	execute_actions(action_queue)
-	#target.take_damage(attack.damage)
-	#print(action_queue)
+	start_queue()
 		
 func _on_action_selected(unit, action):
-	#unit.unit_data.temp_defense = 0
 	print("Current Defense: ", unit.unit_data.defense)
 	match action:
 		"fight":
 			battle_state = BattleState.SELECTING_ACTION
 			create_attack_buttons(unit)
-			#print( "Engaging Target!")
 		"defend":
 			battle_state = BattleState.BLOCKING
 			action_obejct = {
@@ -143,9 +152,7 @@ func _on_action_selected(unit, action):
 			}
 			action_queue.push_back(action_obejct)
 			execute_actions(action_queue)
-			#unit.unit_data.temp_defense = 2
-			#unit.unit_data.defense += unit.unit_data.temp_defense
-			#print(action_queue)
+			start_queue()
 		#"bag":
 			#battle_state = BattleState.UTILITY
 			#print(player.member_name, "Utility required...")
@@ -157,7 +164,12 @@ func _on_action_selected(unit, action):
 			}
 			action_queue.push_back(action_obejct)
 			execute_actions(action_queue)
+			start_queue()
 			#print(action_queue)
 		#"skill":
 			#battle_state = BattleState.SPECIAL
 			#print(player.member_name, "Activating Special Ability!")
+func start_queue():
+	monster_ai(enemies_array, players_array)
+	execute_actions(action_queue)
+	action_queue.clear()

@@ -106,3 +106,10 @@ custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 0
 size_flags_stretch_ratio = 12.7
+
+[node name="BattleLog" type="Label" parent="ActionContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 8
+autowrap_mode = 3
+clip_text = true
