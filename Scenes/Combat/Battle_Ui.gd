@@ -126,11 +126,11 @@ func handle_attack(text_display_actor, target_data, attack_data):
 		var target_name = target_data.unit_data.name
 		var attack_name = attack_data.name
 		target_data.take_damage(attack_data.damage)
+		log_container.text += "\n" + text_display_actor + " Used: " + attack_name + " on " + target_name
 		if target_data.current_hp <= 0:
 			log_container.text += "\n" + target_name + " was Slain"
 			return true
-		else:
-			log_container.text += "\n" + text_display_actor + " Used: " + attack_name + " on " + target_name
+		
 
 func handle_defense(text_display_actor, actor):
 	battle_state = BattleState.BLOCKING
@@ -202,6 +202,7 @@ func execute_actions(action_queue):
 			var text_display_actor = action["actor"].unit_data.name
 			match action["type"]:
 				"attack":
+					print(action)
 					handle_attack(text_display_actor, action["target"], action["attack"])
 					if check_battle_end() == true:
 						break
