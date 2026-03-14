@@ -116,7 +116,7 @@ func check_battle_end():
 		log_container.text += "\n" + "Victory!"
 		return true
 	if living_player == 0:
-		print("enemies all dead ")
+		print("Allies all dead ")
 		battle_state = BattleState.DEFEAT
 		log_container.text += "\n" + "All Allies Slain..."
 		return true
@@ -147,6 +147,7 @@ func _on_action_selected(unit, action):
 			"fight":
 				create_attack_buttons(unit)
 			"defend":
+				clear_panel()
 				action_obejct = {
 					"type": "defend",
 					"actor": unit
@@ -157,6 +158,7 @@ func _on_action_selected(unit, action):
 				#battle_state = BattleState.UTILITY
 				#print(player.member_name, "Utility required...")
 			"run":
+				clear_panel()
 				action_obejct = {
 					"type": "run",
 					"actor": unit
