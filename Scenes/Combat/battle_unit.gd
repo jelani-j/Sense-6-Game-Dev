@@ -35,7 +35,7 @@ func take_damage(amount: int):
 		current_hp -= amount
 	if current_hp <= 0:
 		die()
-
+		
 func set_defending(value: bool):
 	defending = value
 
