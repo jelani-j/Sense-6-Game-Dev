@@ -101,20 +101,33 @@ func attack_target(target: BattleUnit, attack: AttackData):
 	}
 	action_queue.push_back(action_obejct)
 	resolve_turns()
-#func check_battle_end():
-	#for player in players_array:
-		#if player.current_hp >= 0:
-			#party_container.remove_child(player)
+func check_battle_end():
+	var living_enemy = 0
+	var living_player = 0
+	for enemy in enemies_array:
+		if is_instance_valid(enemy) and enemy.current_hp > 0:
+			living_enemy += 1
+	for player in players_array:
+		if is_instance_valid(player) and player.current_hp > 0:
+			living_player += 1
+	if living_enemy == 0:
+		print("enemies all dead ")
+		battle_state = BattleState.VICTORY
+		log_container.text += "\n" + "Victory!"
+		return true
+	if living_player == 0:
+		print("enemies all dead ")
+		battle_state = BattleState.DEFEAT
+		log_container.text += "\n" + "All Allies Slain..."
+		return true
+			
 func handle_attack(text_display_actor, target_data, attack_data):
 	if is_instance_valid(target_data):
 		var target_name = target_data.unit_data.name
 		var attack_name = attack_data.name
 		target_data.take_damage(attack_data.damage)
 		if target_data.current_hp <= 0:
-			print("Victory!!")
-			battle_state = BattleState.VICTORY
-			log_container.text += "\n" + "Victory!"
-			#check_battle_end()
+			log_container.text += "\n" + target_name + " was Slain"
 			return true
 		else:
 			log_container.text += "\n" + text_display_actor + " Used: " + attack_name + " on " + target_name
@@ -189,7 +202,8 @@ func execute_actions(action_queue):
 			var text_display_actor = action["actor"].unit_data.name
 			match action["type"]:
 				"attack":
-					if handle_attack(text_display_actor, action["target"], action["attack"]) == true:
+					handle_attack(text_display_actor, action["target"], action["attack"])
+					if check_battle_end() == true:
 						break
 				"defend":
 					handle_defense(text_display_actor, action["actor"])
