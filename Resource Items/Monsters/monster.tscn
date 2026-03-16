@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://be8x45cgu6cxa"]
 
-[ext_resource type="Script" uid="uid://c66ts3pb3hwc5" path="res://Scenes/Monsters/monster.gd" id="1_pbch1"]
+[ext_resource type="Script" uid="uid://c66ts3pb3hwc5" path="res://Resource Items/Monsters/monster.gd" id="1_pbch1"]
 [ext_resource type="SpriteFrames" uid="uid://bng5eucaya736" path="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Characters/goblin.tres" id="2_pbch1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kov8c"]

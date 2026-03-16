@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ConsumableItem" load_steps=3 format=3 uid="uid://dctc47wocui0n"]
+
+[ext_resource type="Texture2D" uid="uid://c3ft2omxf77ug" path="res://icon.svg" id="1_hd3ke"]
+[ext_resource type="Script" uid="uid://bs2q0y1bos428" path="res://Resource Items/Inventory/consumable_item.gd" id="1_s44ly"]
+
+[resource]
+script = ExtResource("1_s44ly")
+health_restored = 3
+name = "Bepzi"
+description = "Drink ze bepzi! recover 3 hp"
+icon = ExtResource("1_hd3ke")
+metadata/_custom_type_script = "uid://bs2q0y1bos428"

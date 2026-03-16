@@ -2,6 +2,7 @@ extends Control
 #Variables to be passed from actual game scenes
 @export var monster_test: MonsterData
 @export var player_test: PlayerData
+@export var inventory: InventoryData
 #@export var Martial_art_attack: AttackData
 #@export var Weapon_art_attack: AttackData
 
@@ -154,9 +155,11 @@ func _on_action_selected(unit, action):
 				}
 				action_queue.push_back(action_obejct)
 				resolve_turns()
-			#"bag":
-				#battle_state = BattleState.UTILITY
-				#print(player.member_name, "Utility required...")
+			"bag":
+				clear_panel()
+				battle_state = BattleState.UTILITY
+				show_inventory(inventory)
+				print("opening bag!")
 			"run":
 				clear_panel()
 				action_obejct = {
@@ -186,6 +189,12 @@ func show_targets(targets: Array[BattleUnit]):
 			monster_target.pressed.connect(attack_target.bind(target, selected_attack))
 		else:
 			battle_state = BattleState.VICTORY
+func show_inventory(bag: InventoryData):
+	for slots in bag.slots:
+		var slot = Button.new()
+		slot.text = slots.item.name
+		panel_container.add_child(slot)
+		
 ## Monster AI Functionality ##
 func monster_ai(enemies_array, players_array):
 	for monster in enemies_array:
