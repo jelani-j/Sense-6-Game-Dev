@@ -158,7 +158,7 @@ func _on_action_selected(unit, action):
 			"bag":
 				clear_panel()
 				battle_state = BattleState.UTILITY
-				show_inventory(inventory)
+				show_inventory(inventory,unit)
 				print("opening bag!")
 			"run":
 				clear_panel()
@@ -189,12 +189,17 @@ func show_targets(targets: Array[BattleUnit]):
 			monster_target.pressed.connect(attack_target.bind(target, selected_attack))
 		else:
 			battle_state = BattleState.VICTORY
-func show_inventory(bag: InventoryData):
-	for slots in bag.slots:
-		var slot = Button.new()
-		slot.text = slots.item.name
-		panel_container.add_child(slot)
-		
+func show_inventory(bag: InventoryData, unit):
+	for slot in bag.slots:
+		var slot_button = Button.new()
+		slot_button.text = slot.item.name + " x" + str(slot.quantity)
+		panel_container.add_child(slot_button)
+		slot_button.pressed.connect(use_item.bind(bag, unit))
+
+func use_item(slot: InventoryData, unit):
+	var bepzi = preload("res://Resource Items/Inventory/bepzi.tres")
+	slot.use_item(bepzi, unit)
+	
 ## Monster AI Functionality ##
 func monster_ai(enemies_array, players_array):
 	for monster in enemies_array:

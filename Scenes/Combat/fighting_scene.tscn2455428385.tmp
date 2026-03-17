@@ -1,0 +1,122 @@
+[gd_scene load_steps=8 format=3 uid="uid://q6as3assiu7x"]
+
+[ext_resource type="Script" uid="uid://f3dcpo7ydln5" path="res://Scenes/Combat/Battle_Ui.gd" id="1_gfi2s"]
+[ext_resource type="Resource" uid="uid://bps46rla8fr2t" path="res://Resource Items/Monsters/goblin.tres" id="2_8h7dl"]
+[ext_resource type="Resource" uid="uid://hapk1guai8mn" path="res://Resource Items/Players/main_character.tres" id="3_vgq8a"]
+[ext_resource type="Script" uid="uid://djdj0cquc0nku" path="res://Resource Items/Inventory/inventory_data.gd" id="4_gfi2s"]
+[ext_resource type="Script" uid="uid://cwxpoaatf5lfh" path="res://Resource Items/Inventory/inventory_slot.gd" id="5_sp0je"]
+[ext_resource type="Resource" uid="uid://drujhq6d17abh" path="res://Resource Items/Inventory/slot_test1.tres" id="6_sp0je"]
+
+[sub_resource type="Resource" id="Resource_x4bal"]
+script = ExtResource("4_gfi2s")
+slots = Array[ExtResource("5_sp0je")]([ExtResource("6_sp0je")])
+metadata/_custom_type_script = "uid://djdj0cquc0nku"
+
+[node name="BattleUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -2.0
+offset_right = 4.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_gfi2s")
+monster_test = ExtResource("2_8h7dl")
+player_test = ExtResource("3_vgq8a")
+inventory = SubResource("Resource_x4bal")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.10011808, 0.073204525, 0.18715522, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_direction = 1
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="MemberContainer" type="HBoxContainer" parent="MarginContainer"]
+clip_contents = true
+layout_mode = 2
+theme_override_constants/separation = 80
+
+[node name="EnemyContainer" type="Node2D" parent="."]
+position = Vector2(1081, 160)
+
+[node name="Marker2D" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(-365, 65)
+
+[node name="Marker2D2" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(-246, -11)
+
+[node name="Marker2D3" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(-246, 144)
+
+[node name="Marker2D4" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(-154, 65)
+
+[node name="PlayerContainer" type="Node2D" parent="."]
+position = Vector2(258, 212)
+
+[node name="Marker2D" type="Marker2D" parent="PlayerContainer"]
+position = Vector2(189, 15)
+
+[node name="Marker2D2" type="Marker2D" parent="PlayerContainer"]
+position = Vector2(104, -56)
+
+[node name="Marker2D3" type="Marker2D" parent="PlayerContainer"]
+position = Vector2(141, 93)
+
+[node name="Marker2D4" type="Marker2D" parent="PlayerContainer"]
+position = Vector2(64, 41)
+
+[node name="ActionContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -267.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ActionOptions" type="HBoxContainer" parent="ActionContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Party-Members" type="MarginContainer" parent="ActionContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 0
+size_flags_stretch_ratio = 12.7
+
+[node name="BattleLog" type="RichTextLabel" parent="ActionContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 8

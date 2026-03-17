@@ -2,7 +2,7 @@ extends Button
 var character_name : String
 var icon_texture : Texture2D
 
-var max_hp = 100.0
+var max_hp: BattleUnit
 var hp  = 100
 
 var max_stam  = 50.0
@@ -31,12 +31,11 @@ var member_name
 func _ready() -> void:
 	extra_stats.visible = false
 	base_position = position
-	name_label.text = 'Test-Character'
 	#icon_symbol.texture = preload("res://icon.svg")
 
-	hp_bar.max_value = max_hp
-	hp_bar.value = hp
-#
+	#hp_bar.max_value = max_hp
+	#hp_bar.value = hp
+##
 	#stam_bar.max_value = max_stam
 	#stam_bar.value = stam
 #
@@ -70,6 +69,8 @@ func _on_mouse_exited() -> void:
 func setup(unit_data: BattleUnit):
 	self.unit = unit_data
 	member_name = unit.unit_data.name
+	hp_bar.max_value = unit.unit_data.max_hp
+	#hp_bar.value = unit.current_hp
 	name_title.text = member_name
 	
 	# set portrait, hp bar, etc
