@@ -34,6 +34,7 @@ text = "Main Character"
 [node name="HPBar" type="ProgressBar" parent="HBoxContainer/Status"]
 layout_mode = 2
 size_flags_vertical = 1
+step = 1.0
 
 [node name="Extra_Stats" type="HBoxContainer" parent="HBoxContainer/Status"]
 layout_mode = 2

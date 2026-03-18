@@ -13,7 +13,7 @@ extends Control
 @onready var party_container = $"ActionContainer/Party-Members"
 @onready var panel_container = $ActionContainer/ActionOptions
 @onready var log_container = $ActionContainer/BattleLog
-
+var member_uis = []
 enum BattleState {
 	IDLE,
 	SELECTING_CHARACTER,
@@ -69,6 +69,7 @@ func spawn_party_member_UI(players_array):
 		party_container.add_child(member_ui)
 		member_ui.setup(player)
 		member_ui.selected.connect(_on_member_selected)
+		member_uis.append(member_ui)
 		member_ui.action_selected.connect(_on_action_selected)
 ## UI Option Functionality ##
 func clear_panel():
@@ -127,6 +128,8 @@ func handle_attack(text_display_actor, target_data, attack_data):
 		var target_name = target_data.unit_data.name
 		var attack_name = attack_data.name
 		target_data.take_damage(attack_data.damage)
+		for party_member in member_uis:
+			party_member.set_hp_value()
 		log_container.text += "\n" + text_display_actor + " Used: " + attack_name + " on " + target_name
 		if target_data.current_hp <= 0:
 			log_container.text += "\n" + target_name + " was Slain"

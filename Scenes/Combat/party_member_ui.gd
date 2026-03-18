@@ -64,13 +64,14 @@ func _on_mouse_exited() -> void:
 		animate_to(base_position.y)
 	#extra_stats.visible = false
 
-
+func set_hp_value():
+	hp_bar.value = unit.current_hp
 
 func setup(unit_data: BattleUnit):
 	self.unit = unit_data
 	member_name = unit.unit_data.name
-	hp_bar.max_value = unit.unit_data.max_hp
-	#hp_bar.value = unit.current_hp
+	hp_bar.max_value = int(unit.unit_data.max_hp)
+	print(hp_bar.max_value)
 	name_title.text = member_name
 	
 	# set portrait, hp bar, etc
