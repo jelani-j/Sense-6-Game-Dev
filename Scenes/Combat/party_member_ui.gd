@@ -13,6 +13,7 @@ var flow = 30
 
 @onready var name_label = $HBoxContainer/Status/Name
 @onready var hp_bar = $HBoxContainer/Status/HPBar
+@onready var hp_text = $HBoxContainer/Status/HPBar/HpText
 #@onready var stam_bar = $HBoxContainer/Status/StamBar
 #@onready var flow_bar = $HBoxContainer/Status/FlowBar
 @onready var icon_symbol = $HBoxContainer/Icon
@@ -66,12 +67,15 @@ func _on_mouse_exited() -> void:
 
 func set_hp_value():
 	hp_bar.value = unit.current_hp
+	hp_text.text = str(unit.current_hp)
+	
 
 func setup(unit_data: BattleUnit):
 	self.unit = unit_data
 	member_name = unit.unit_data.name
+	hp_text.text = str(unit.unit_data.max_hp)
 	hp_bar.max_value = int(unit.unit_data.max_hp)
-	print(hp_bar.max_value)
+	hp_bar.value = unit.current_hp
 	name_title.text = member_name
 	
 	# set portrait, hp bar, etc

@@ -17,7 +17,7 @@ func use_item(object: ItemData, unit: BattleUnit):
 	for slot in slots:
 		if slot.item == object:
 			if slot.quantity == 0:
-				print("remove slot entirely ")
+				slots.erase(slot)
 			else:
 				slot.quantity -= 1
 				unit.current_hp += object.health_restored

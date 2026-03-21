@@ -160,9 +160,13 @@ func _on_action_selected(unit, action):
 				resolve_turns()
 			"bag":
 				clear_panel()
+				action_obejct = {
+					"type": "bag",
+					"actor": unit,
+					"target": inventory
+				}
+				show_inventory(inventory, unit)
 				battle_state = BattleState.UTILITY
-				show_inventory(inventory,unit)
-				print("opening bag!")
 			"run":
 				clear_panel()
 				action_obejct = {
@@ -221,12 +225,14 @@ func execute_actions(action_queue):
 			var text_display_actor = action["actor"].unit_data.name
 			match action["type"]:
 				"attack":
-					print(action)
 					handle_attack(text_display_actor, action["target"], action["attack"])
 					if check_battle_end() == true:
 						break
 				"defend":
 					handle_defense(text_display_actor, action["actor"])
+				"bag":
+					clear_panel()
+					use_item(action["target"], action["actor"])
 				"run":
 					handle_run(text_display_actor)
 
