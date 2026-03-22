@@ -71,6 +71,12 @@ func spawn_party_member_UI(players_array):
 		member_ui.selected.connect(_on_member_selected)
 		member_uis.append(member_ui)
 		member_ui.action_selected.connect(_on_action_selected)
+## Despawn Entities ##
+func despawn_member_ui(party_member: BattleUnit):
+	for member in member_uis:
+		if party_member.unit_data.name == member.member_name:
+			party_container.remove_child(member)
+	
 ## UI Option Functionality ##
 func clear_panel():
 	for child in panel_container.get_children():
@@ -103,7 +109,7 @@ func attack_target(target: BattleUnit, attack: AttackData):
 	}
 	action_queue.push_back(action_obejct)
 	resolve_turns()
-func check_battle_end():
+func check_battle_end(active_player: BattleUnit):
 	var living_enemy = 0
 	var living_player = 0
 	for enemy in enemies_array:
@@ -114,11 +120,12 @@ func check_battle_end():
 			living_player += 1
 	if living_enemy == 0:
 		print("enemies all dead ")
+		despawn_member_ui(active_player)
 		battle_state = BattleState.VICTORY
 		log_container.text += "\n" + "Victory!"
 		return true
 	if living_player == 0:
-		print("Allies all dead ")
+		despawn_member_ui(active_player)
 		battle_state = BattleState.DEFEAT
 		log_container.text += "\n" + "All Allies Slain..."
 		return true
@@ -226,7 +233,7 @@ func execute_actions(action_queue):
 			match action["type"]:
 				"attack":
 					handle_attack(text_display_actor, action["target"], action["attack"])
-					if check_battle_end() == true:
+					if check_battle_end(action["actor"]) == true:
 						break
 				"defend":
 					handle_defense(text_display_actor, action["actor"])
@@ -235,6 +242,8 @@ func execute_actions(action_queue):
 					use_item(action["target"], action["actor"])
 				"run":
 					handle_run(text_display_actor)
+					battle_state = BattleState.VICTORY
+					despawn_member_ui(action["actor"])
 
 func resolve_turns():
 	if battle_state != BattleState.VICTORY:
