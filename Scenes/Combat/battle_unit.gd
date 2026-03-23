@@ -16,12 +16,12 @@ var is_enemy: bool
 func _ready():
 	area.input_event.connect(_on_input_event)
 
-func setup(data, monster_flag: bool):
+func setup(data: Resource, monster_flag: bool):
 	is_enemy = monster_flag
 	unit_data = data
 	current_hp = unit_data.max_hp
 	temp_defense = 0
-	sprite.texture = data.texture
+	sprite.texture = unit_data.texture
 	sprite.scale = Vector2(2, 2)
 
 func _on_input_event(viewport, event, shape_idx):

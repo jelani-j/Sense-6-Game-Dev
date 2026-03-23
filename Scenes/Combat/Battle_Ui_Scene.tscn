@@ -1,16 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://q6as3assiu7x"]
+[gd_scene load_steps=2 format=3 uid="uid://q6as3assiu7x"]
 
-[ext_resource type="Script" uid="uid://f3dcpo7ydln5" path="res://Scenes/Combat/Battle_Ui.gd" id="1_gfi2s"]
-[ext_resource type="Resource" uid="uid://bps46rla8fr2t" path="res://Resource Items/Monsters/goblin.tres" id="2_8h7dl"]
-[ext_resource type="Resource" uid="uid://hapk1guai8mn" path="res://Resource Items/Players/main_character.tres" id="3_vgq8a"]
-[ext_resource type="Script" uid="uid://djdj0cquc0nku" path="res://Resource Items/Inventory/inventory_data.gd" id="4_gfi2s"]
-[ext_resource type="Script" uid="uid://cwxpoaatf5lfh" path="res://Resource Items/Inventory/inventory_slot.gd" id="5_sp0je"]
-[ext_resource type="Resource" uid="uid://drujhq6d17abh" path="res://Resource Items/Inventory/slot_test1.tres" id="6_sp0je"]
-
-[sub_resource type="Resource" id="Resource_x4bal"]
-script = ExtResource("4_gfi2s")
-slots = Array[ExtResource("5_sp0je")]([ExtResource("6_sp0je")])
-metadata/_custom_type_script = "uid://djdj0cquc0nku"
+[ext_resource type="Script" uid="uid://f3dcpo7ydln5" path="res://Scenes/Combat/Battle_Ui.gd" id="1_b6fm1"]
 
 [node name="BattleUI" type="Control"]
 layout_mode = 3
@@ -25,10 +15,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_gfi2s")
-monster_test = ExtResource("2_8h7dl")
-player_test = ExtResource("3_vgq8a")
-inventory = SubResource("Resource_x4bal")
+script = ExtResource("1_b6fm1")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1

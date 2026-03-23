@@ -1,18 +1,11 @@
 extends Control
-#Variables to be passed from actual game scenes
-@export var monster_test: MonsterData
-@export var player_test: PlayerData
-@export var inventory: InventoryData
-#@export var Martial_art_attack: AttackData
-#@export var Weapon_art_attack: AttackData
-
-# End of data needed
 
 @onready var enemy_slots = $EnemyContainer.get_children()
 @onready var player_slots = $PlayerContainer.get_children()
 @onready var party_container = $"ActionContainer/Party-Members"
 @onready var panel_container = $ActionContainer/ActionOptions
 @onready var log_container = $ActionContainer/BattleLog
+
 var member_uis = []
 enum BattleState {
 	IDLE,
@@ -40,25 +33,33 @@ var action_obejct: Dictionary = {
 		"target": BattleUnit,
 	}
 
+
+func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	spawn_monster([monster_test])
-	spawn_player([player_test])
+func start_battle(player_data: Array[PlayerData], monser_data: Array[MonsterData]):
+	spawn_monster(monser_data)
+	spawn_player(player_data)
 	spawn_party_member_UI(players_array)
 
 ## Spawning Entities ##
 func spawn_monster(monster_data: Array[MonsterData]):
-	for monster in monster_data.size():
-		var unit = preload("res://Scenes/Combat/Battle_Unit.tscn").instantiate()
+	for i in range(monster_data.size()):
+		var unit = load("res://Scenes/Combat/Battle_Unit.tscn").instantiate()
 		$EnemyContainer.add_child(unit)
-		unit.setup(monster_data[monster], true)
-		unit.global_position = enemy_slots[monster].global_position
+		await unit.ready
+		print("Monster SPawn")
+		print(monster_data[i].unit_data.name)
+		unit.setup(monster_data[i], true)
+		unit.global_position = enemy_slots[i].global_position
 		enemies_array.append(unit)
 
 func spawn_player(player_data: Array[PlayerData]):
 	for i in player_data.size():
 		var unit = preload("res://Scenes/Combat/Battle_Unit.tscn").instantiate()
 		$PlayerContainer.add_child(unit)
+		await unit.ready
 		unit.setup(player_data[i], false)
 		unit.global_position = player_slots[i].global_position
 		players_array.append(unit)
@@ -167,13 +168,13 @@ func _on_action_selected(unit, action):
 				resolve_turns()
 			"bag":
 				clear_panel()
-				action_obejct = {
-					"type": "bag",
-					"actor": unit,
-					"target": inventory
-				}
-				show_inventory(inventory, unit)
-				battle_state = BattleState.UTILITY
+				#action_obejct = {
+					#"type": "bag",
+					#"actor": unit,
+					#"target": inventory
+				#}
+				##show_inventory(inventory, unit)
+				#battle_state = BattleState.UTILITY
 			"run":
 				clear_panel()
 				action_obejct = {
@@ -203,16 +204,12 @@ func show_targets(targets: Array[BattleUnit]):
 			monster_target.pressed.connect(attack_target.bind(target, selected_attack))
 		else:
 			battle_state = BattleState.VICTORY
-func show_inventory(bag: InventoryData, unit):
-	for slot in bag.slots:
-		var slot_button = Button.new()
-		slot_button.text = slot.item.name + " x" + str(slot.quantity)
-		panel_container.add_child(slot_button)
-		slot_button.pressed.connect(use_item.bind(bag, unit))
-
-func use_item(slot: InventoryData, unit):
-	var bepzi = preload("res://Resource Items/Inventory/bepzi.tres")
-	slot.use_item(bepzi, unit)
+#func show_inventory(bag: InventoryData, unit):
+	#for slot in bag.slots:
+		#var slot_button = Button.new()
+		#slot_button.text = slot.item.name + " x" + str(slot.quantity)
+		#panel_container.add_child(slot_button)
+		#slot_button.pressed.connect(use_item.bind(bag, unit))
 	
 ## Monster AI Functionality ##
 func monster_ai(enemies_array, players_array):
@@ -239,7 +236,7 @@ func execute_actions(action_queue):
 					handle_defense(text_display_actor, action["actor"])
 				"bag":
 					clear_panel()
-					use_item(action["target"], action["actor"])
+					#use_item(action["target"], action["actor"])
 				"run":
 					handle_run(text_display_actor)
 					battle_state = BattleState.VICTORY
