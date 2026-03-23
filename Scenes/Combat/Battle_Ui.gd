@@ -46,11 +46,9 @@ func start_battle(player_data: Array[PlayerData], monser_data: Array[MonsterData
 ## Spawning Entities ##
 func spawn_monster(monster_data: Array[MonsterData]):
 	for i in range(monster_data.size()):
+		print("Can you See me?")
 		var unit = load("res://Scenes/Combat/Battle_Unit.tscn").instantiate()
 		$EnemyContainer.add_child(unit)
-		await unit.ready
-		print("Monster SPawn")
-		print(monster_data[i].unit_data.name)
 		unit.setup(monster_data[i], true)
 		unit.global_position = enemy_slots[i].global_position
 		enemies_array.append(unit)
@@ -59,7 +57,6 @@ func spawn_player(player_data: Array[PlayerData]):
 	for i in player_data.size():
 		var unit = preload("res://Scenes/Combat/Battle_Unit.tscn").instantiate()
 		$PlayerContainer.add_child(unit)
-		await unit.ready
 		unit.setup(player_data[i], false)
 		unit.global_position = player_slots[i].global_position
 		players_array.append(unit)

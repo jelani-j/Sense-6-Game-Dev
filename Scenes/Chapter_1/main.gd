@@ -30,7 +30,6 @@ func _start_battle():
 	battle_canvas.add_child(battle_instance)
 	var players: Array[PlayerData] = [player_data]
 	var enemies: Array[MonsterData] = [monster_data]
-	print(players, enemies)
 	battle_instance.start_battle(players, enemies)
 	await get_tree().process_frame
 	get_tree().paused = true
