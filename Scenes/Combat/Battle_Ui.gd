@@ -5,7 +5,7 @@ extends Control
 @onready var party_container = $"ActionContainer/Party-Members"
 @onready var panel_container = $ActionContainer/ActionOptions
 @onready var log_container = $ActionContainer/BattleLog
-
+var inventory = Global.Inventory
 var member_uis = []
 enum BattleState {
 	IDLE,
@@ -18,8 +18,10 @@ enum BattleState {
 	UTILITY,
 	SPECIAL,
 	VICTORY,
-	DEFEAT
+	DEFEAT,
+	ESCAPED
 }
+signal battle_end_condition(state)
 var battle_state := BattleState.IDLE
 var selected_member = null
 var players_array: Array[BattleUnit] = []
@@ -46,7 +48,6 @@ func start_battle(player_data: Array[PlayerData], monser_data: Array[MonsterData
 ## Spawning Entities ##
 func spawn_monster(monster_data: Array[MonsterData]):
 	for i in range(monster_data.size()):
-		print("Can you See me?")
 		var unit = load("res://Scenes/Combat/Battle_Unit.tscn").instantiate()
 		$EnemyContainer.add_child(unit)
 		unit.setup(monster_data[i], true)
@@ -165,13 +166,13 @@ func _on_action_selected(unit, action):
 				resolve_turns()
 			"bag":
 				clear_panel()
-				#action_obejct = {
-					#"type": "bag",
-					#"actor": unit,
-					#"target": inventory
-				#}
-				##show_inventory(inventory, unit)
-				#battle_state = BattleState.UTILITY
+				action_obejct = {
+					"type": "bag",
+					"actor": unit,
+					"target": inventory
+				}
+				show_inventory(inventory, unit)
+				battle_state = BattleState.UTILITY
 			"run":
 				clear_panel()
 				action_obejct = {
@@ -201,11 +202,11 @@ func show_targets(targets: Array[BattleUnit]):
 			monster_target.pressed.connect(attack_target.bind(target, selected_attack))
 		else:
 			battle_state = BattleState.VICTORY
-#func show_inventory(bag: InventoryData, unit):
-	#for slot in bag.slots:
-		#var slot_button = Button.new()
-		#slot_button.text = slot.item.name + " x" + str(slot.quantity)
-		#panel_container.add_child(slot_button)
+func show_inventory(bag: InventoryData, unit):
+	for slot in bag.slots:
+		var slot_button = Button.new()
+		slot_button.text = slot.item.name + " x" + str(slot.quantity)
+		panel_container.add_child(slot_button)
 		#slot_button.pressed.connect(use_item.bind(bag, unit))
 	
 ## Monster AI Functionality ##
@@ -228,6 +229,7 @@ func execute_actions(action_queue):
 				"attack":
 					handle_attack(text_display_actor, action["target"], action["attack"])
 					if check_battle_end(action["actor"]) == true:
+						battle_end_condition.emit(battle_state)
 						break
 				"defend":
 					handle_defense(text_display_actor, action["actor"])
@@ -236,15 +238,13 @@ func execute_actions(action_queue):
 					#use_item(action["target"], action["actor"])
 				"run":
 					handle_run(text_display_actor)
-					battle_state = BattleState.VICTORY
+					battle_state = BattleState.ESCAPED
+					battle_end_condition.emit(battle_state)
 					despawn_member_ui(action["actor"])
 
 func resolve_turns():
-	if battle_state != BattleState.VICTORY:
-		monster_ai(enemies_array, players_array)
-		execute_actions(action_queue)
-		for unit in action_queue:
-			unit["actor"].set_defending(false)
+	monster_ai(enemies_array, players_array)
+	execute_actions(action_queue)
+	for unit in action_queue:
+		unit["actor"].set_defending(false)
 		action_queue.clear()
-	else:
-		print("Victory Condition Met!")

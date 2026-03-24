@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Global="*res://Scenes/Quiz-Components/global.gd"
+Global="*res://Global.gd"
 
 [editor]
 

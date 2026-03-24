@@ -9,7 +9,7 @@ var battle_canvas
 var current_monster
 var monster_data: MonsterData = load("res://Resource Items/Monsters/goblin.tres")
 var player_data: PlayerData = load("res://Resource Items/Players/main_character.tres")
-#@onready var Inventory = preload("res://Resource Items/Inventory/bag.tscn")
+var battle_instance
 
 func _ready():
 	monster.setup(goblin_sprite, 25.0)
@@ -26,14 +26,30 @@ func _start_battle():
 	battle_canvas = CanvasLayer.new()
 	add_child(battle_canvas)
 	
-	var battle_instance = battle_scene.instantiate()
+	battle_instance = battle_scene.instantiate()
 	battle_canvas.add_child(battle_instance)
 	var players: Array[PlayerData] = [player_data]
 	var enemies: Array[MonsterData] = [monster_data]
 	battle_instance.start_battle(players, enemies)
+	battle_instance.battle_end_condition.connect(_battle_check)
 	await get_tree().process_frame
 	get_tree().paused = true
-	
+
+func _battle_check(battlestate):
+	match battlestate:
+		9:
+			print("You Won!")
+			despawn_battle_ui()
+		10:
+			print("Fainted")
+			despawn_battle_ui()
+		11:
+			print("you got away")
+			despawn_battle_ui()
+
+func despawn_battle_ui():
+	get_tree().paused = false
+	battle_canvas.queue_free()
 
 #func on_battle_end():
 	#battle_UI.clear_panel()
