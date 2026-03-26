@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://be8x45cgu6cxa"]
+[gd_scene load_steps=5 format=3 uid="uid://be8x45cgu6cxa"]
 
 [ext_resource type="Script" uid="uid://c66ts3pb3hwc5" path="res://Resource Items/Monsters/monster.gd" id="1_pbch1"]
-[ext_resource type="SpriteFrames" uid="uid://bng5eucaya736" path="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Characters/goblin.tres" id="2_pbch1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kov8c"]
 radius = 59.0
@@ -15,11 +14,9 @@ radius = 6.0827627
 [node name="Monster" type="CharacterBody2D"]
 script = ExtResource("1_pbch1")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="Sprite2D" parent="."]
 position = Vector2(-0.24999928, 0)
 scale = Vector2(0.98, 1)
-sprite_frames = ExtResource("2_pbch1")
-animation = &"idle"
 
 [node name="detection_zone" type="Area2D" parent="."]
 collision_layer = 2
