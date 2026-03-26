@@ -66,8 +66,3 @@ func _battle_check(battlestate):
 func despawn_battle_ui():
 	get_tree().paused = false
 	battle_canvas.queue_free()
-
-
-#func on_battle_end():
-	#battle_UI.clear_panel()
-	

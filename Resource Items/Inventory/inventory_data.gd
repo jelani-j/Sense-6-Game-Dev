@@ -3,14 +3,19 @@ class_name InventoryData
 
 
 @export var slots: Array[InventorySlot]
+var item_found = false
 
 func inventory_stack(object: ItemData):
 	for slot in slots:
 		if slot.item == object:
 			slot.quantity += 1
 			print("adding another item to current stack")
-		else:
-			print("add new slot here")
+			item_found = true
+	if item_found == false:
+		var new_slot = InventorySlot.new()
+		new_slot.quantity = 1
+		new_slot.item = object
+		Global.Inventory.append(new_slot)
 
 func use_item(object: ItemData, unit: BattleUnit):
 	for slot in slots:
