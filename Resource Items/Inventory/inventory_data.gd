@@ -15,7 +15,7 @@ func inventory_stack(object: ItemData):
 		var new_slot = InventorySlot.new()
 		new_slot.quantity = 1
 		new_slot.item = object
-		Global.Inventory.append(new_slot)
+		Global.Inventory.slots.append(new_slot)
 
 func use_item(object: ItemData, unit: BattleUnit):
 	for slot in slots:
