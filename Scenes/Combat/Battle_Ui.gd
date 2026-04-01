@@ -166,11 +166,6 @@ func _on_action_selected(unit, action):
 				resolve_turns()
 			"bag":
 				clear_panel()
-				action_obejct = {
-					"type": "bag",
-					"actor": unit,
-					"target": inventory
-				}
 				show_inventory(inventory, unit)
 				battle_state = BattleState.UTILITY
 			"run":
@@ -207,8 +202,19 @@ func show_inventory(bag: InventoryData, unit):
 		var slot_button = Button.new()
 		slot_button.text = slot.item.name + " x" + str(slot.quantity)
 		panel_container.add_child(slot_button)
-		#slot_button.pressed.connect(use_item.bind(bag, unit))
+		slot_button.pressed.connect(inventory_use.bind(slot.item, bag, unit))
+		
+func inventory_use(item: ItemData, bag: InventoryData, unit: BattleUnit):
+	action_obejct = {
+		"type": "bag",
+		"actor": unit,
+		"item": item,
+		"bag": bag
+	}
 	
+	action_queue.push_back(action_obejct)
+	clear_panel()
+	resolve_turns()
 ## Monster AI Functionality ##
 func monster_ai(enemies_array, players_array):
 	for monster in enemies_array:
@@ -234,8 +240,12 @@ func execute_actions(action_queue):
 				"defend":
 					handle_defense(text_display_actor, action["actor"])
 				"bag":
-					clear_panel()
-					#use_item(action["target"], action["actor"])
+					var item = action["item"]
+					var bag = action["bag"]
+					var actor = action["actor"]
+					log_container.text += "\n" + text_display_actor + " is Using: " + item.name
+					bag.use_item(item, actor)
+					
 				"run":
 					handle_run(text_display_actor)
 					battle_state = BattleState.ESCAPED
