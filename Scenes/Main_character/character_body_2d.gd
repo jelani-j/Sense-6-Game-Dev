@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 var data: PlayerData
-const SPEED = 300.0
+const SPEED = 200.0
 @onready var sprite: Sprite2D = $Sprite2D
 
 func setup(Player_Data: PlayerData):

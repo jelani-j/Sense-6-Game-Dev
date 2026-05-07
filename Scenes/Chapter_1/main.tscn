@@ -1,19 +1,19 @@
 [gd_scene load_steps=3 format=3 uid="uid://dxcbasala18g8"]
 
 [ext_resource type="Script" uid="uid://r3ehs57fg8tm" path="res://Scenes/Chapter_1/main.gd" id="1_1j4re"]
-[ext_resource type="PackedScene" uid="uid://dina6es4n3qe" path="res://Scenes/Backgrounds/Stony Peaks/stony_peaks_open_area.tscn" id="1_ex4qd"]
+[ext_resource type="PackedScene" uid="uid://1dud47chbhgm" path="res://Scenes/Backgrounds/ThunderStone Caves/Thunderstone Caves.tscn" id="3_71ae7"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_1j4re")
 
-[node name="StonyPeaksVillage" parent="." instance=ExtResource("1_ex4qd")]
-position = Vector2(549, 514)
-
 [node name="Monster_spawn_point1" type="Marker2D" parent="."]
-position = Vector2(1786, 1170)
+position = Vector2(337, -35)
 
 [node name="Character_Spawn_Point" type="Marker2D" parent="."]
-position = Vector2(1456, 1168)
+position = Vector2(260, 162)
 
 [node name="Item_Spawn_1" type="Marker2D" parent="."]
-position = Vector2(1468, 1352)
+position = Vector2(143, 16)
+
+[node name="ThunderstoneCaves" parent="." instance=ExtResource("3_71ae7")]
+position = Vector2(256, -65)
