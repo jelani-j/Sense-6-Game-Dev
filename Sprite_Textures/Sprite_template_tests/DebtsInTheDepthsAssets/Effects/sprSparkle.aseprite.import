@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://d2ojl4klltlvn"
+path="res://.godot/imported/sprSparkle.aseprite-aa53fb22e569e9ee4581b92d6137a9d2.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Effects/sprSparkle.aseprite"
+dest_files=["res://.godot/imported/sprSparkle.aseprite-aa53fb22e569e9ee4581b92d6137a9d2.res"]
+
+[params]
+

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bb55kfnq1tx27"
+path="res://.godot/imported/allCharacters.aseprite-d7c85096fb8dcd67b3646706e024c570.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/allCharacters.aseprite"
+dest_files=["res://.godot/imported/allCharacters.aseprite-d7c85096fb8dcd67b3646706e024c570.res"]
+
+[params]
+

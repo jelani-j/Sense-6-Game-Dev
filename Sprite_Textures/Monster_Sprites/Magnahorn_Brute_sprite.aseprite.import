@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://wue6yqs3n8kb"
+path="res://.godot/imported/Magnahorn_Brute_sprite.aseprite-44ef18e4f1f697a93a447867291fbc8a.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Monster_Sprites/Magnahorn_Brute_sprite.aseprite"
+dest_files=["res://.godot/imported/Magnahorn_Brute_sprite.aseprite-44ef18e4f1f697a93a447867291fbc8a.res"]
+
+[params]
+

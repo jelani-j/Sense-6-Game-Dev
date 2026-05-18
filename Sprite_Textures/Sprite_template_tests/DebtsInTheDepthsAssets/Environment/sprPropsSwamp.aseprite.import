@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dtl54l37w5m07"
+path="res://.godot/imported/sprPropsSwamp.aseprite-23d85acc8d9ba4fd0d560b436ba07230.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Environment/sprPropsSwamp.aseprite"
+dest_files=["res://.godot/imported/sprPropsSwamp.aseprite-23d85acc8d9ba4fd0d560b436ba07230.res"]
+
+[params]
+

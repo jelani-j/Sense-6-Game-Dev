@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cgu8uio5vloir"
+path="res://.godot/imported/sprMinotaur3.aseprite-d62b5be5f71d9cea11da41acac82f188.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Characters/sprMinotaur3.aseprite"
+dest_files=["res://.godot/imported/sprMinotaur3.aseprite-d62b5be5f71d9cea11da41acac82f188.res"]
+
+[params]
+

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://m68ujkurow44"
+path="res://.godot/imported/Skitterfang_base.aseprite-8ad215b1dab8dd0af6156e3e3e2003ec.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Monster_Sprites/Skitterfang_base.aseprite"
+dest_files=["res://.godot/imported/Skitterfang_base.aseprite-8ad215b1dab8dd0af6156e3e3e2003ec.res"]
+
+[params]
+

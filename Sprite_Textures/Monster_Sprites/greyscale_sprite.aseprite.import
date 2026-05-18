@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cab8hwrob7ahi"
+path="res://.godot/imported/greyscale_sprite.aseprite-9d9f3f0a3f0dbb5d90c1ba41324439d4.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Monster_Sprites/greyscale_sprite.aseprite"
+dest_files=["res://.godot/imported/greyscale_sprite.aseprite-9d9f3f0a3f0dbb5d90c1ba41324439d4.res"]
+
+[params]
+

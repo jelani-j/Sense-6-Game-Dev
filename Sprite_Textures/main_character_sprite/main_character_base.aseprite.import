@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cnalq7e4jypm2"
+path="res://.godot/imported/main_character_base.aseprite-bbf7f01ab9c4ba9b30d9418a8b568e22.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/main_character_sprite/main_character_base.aseprite"
+dest_files=["res://.godot/imported/main_character_base.aseprite-bbf7f01ab9c4ba9b30d9418a8b568e22.res"]
+
+[params]
+

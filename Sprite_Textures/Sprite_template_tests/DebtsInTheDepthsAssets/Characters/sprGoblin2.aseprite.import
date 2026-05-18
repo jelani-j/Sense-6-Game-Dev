@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dt5lf7m5v1p8g"
+path="res://.godot/imported/sprGoblin2.aseprite-bfd56c53d3dfe9bcc6150155f40bbf5c.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Characters/sprGoblin2.aseprite"
+dest_files=["res://.godot/imported/sprGoblin2.aseprite-bfd56c53d3dfe9bcc6150155f40bbf5c.res"]
+
+[params]
+

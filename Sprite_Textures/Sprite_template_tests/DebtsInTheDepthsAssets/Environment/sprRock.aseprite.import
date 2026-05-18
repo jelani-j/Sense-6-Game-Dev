@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cqq2ayu17yqia"
+path="res://.godot/imported/sprRock.aseprite-dd620dedacb6a5eb128f947d8d5a8f8b.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Environment/sprRock.aseprite"
+dest_files=["res://.godot/imported/sprRock.aseprite-dd620dedacb6a5eb128f947d8d5a8f8b.res"]
+
+[params]
+

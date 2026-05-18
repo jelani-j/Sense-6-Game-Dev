@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://wft53teiifdj"
+path="res://.godot/imported/16x32 Run.aseprite-cc0c3c5af6e93efd5aea431144491bd4.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/16x32/16x32 Run.aseprite"
+dest_files=["res://.godot/imported/16x32 Run.aseprite-cc0c3c5af6e93efd5aea431144491bd4.res"]
+
+[params]
+

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://t01lxgrtylwc"
+path="res://.godot/imported/sprOrcArcher1.aseprite-9c5e6e88bf62145a380dd8908ba11d80.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Characters/sprOrcArcher1.aseprite"
+dest_files=["res://.godot/imported/sprOrcArcher1.aseprite-9c5e6e88bf62145a380dd8908ba11d80.res"]
+
+[params]
+

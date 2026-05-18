@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dbn57alroaiqi"
+path="res://.godot/imported/Mosshare_sprite.aseprite-cc95516f3b2fafaa54db810d572b0c85.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Monster_Sprites/Mosshare_sprite.aseprite"
+dest_files=["res://.godot/imported/Mosshare_sprite.aseprite-cc95516f3b2fafaa54db810d572b0c85.res"]
+
+[params]
+

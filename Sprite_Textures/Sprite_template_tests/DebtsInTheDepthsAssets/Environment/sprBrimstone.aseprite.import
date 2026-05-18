@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b8iiaitjcsnjw"
+path="res://.godot/imported/sprBrimstone.aseprite-514c4f1dfe53a2ff02f7848adabf7b58.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Environment/sprBrimstone.aseprite"
+dest_files=["res://.godot/imported/sprBrimstone.aseprite-514c4f1dfe53a2ff02f7848adabf7b58.res"]
+
+[params]
+

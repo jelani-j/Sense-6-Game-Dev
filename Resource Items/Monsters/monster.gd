@@ -6,11 +6,12 @@ var player_chase = false
 var player = null
 var data: MonsterData
 signal battle_triggered
-@onready var animated_sprite: Sprite2D = $AnimatedSprite2D
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@export var texture: Texture2D
 
 func setup(Monster_Data: MonsterData, new_speed: float = 25.0):
 	data = Monster_Data
-	animated_sprite.texture = data.texture
+	animated_sprite.sprite_frames = data.sprite_frames
 	speed = new_speed
 	
 func despawn():
