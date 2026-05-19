@@ -288,3 +288,6 @@ position = Vector2(2047, 59)
 
 [node name="Player_Spawn" type="Marker2D" parent="."]
 position = Vector2(257, 200)
+
+[node name="Item_Spawn_1" type="Marker2D" parent="."]
+position = Vector2(262, 68)

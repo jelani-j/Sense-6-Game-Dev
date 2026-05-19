@@ -1,4 +1,5 @@
-#@onready var player_hitbox = $Main_Character/Area2D/CollisionShape2D
+extends Node2D
+# Loading all needed scenes & variables for map
 var battle_scene = preload("res://Scenes/Combat/Battle_Ui_Scene.tscn")
 var battle_initiated = false
 var battle_canvas
@@ -8,10 +9,11 @@ var monster_scene = preload("res://Resource Items/Monsters/monster.tscn")
 var player_scene = preload("res://Scenes/Main_character/player.tscn")
 var item_scene = preload("res://Resource Items/Inventory/item.tscn")
 var monsters_spawned = []
-@onready var monster_spawn_point = $Monster_spawn_point1
+#Spawner markers for all entities
 @onready var player_spawn_point = $Player_Spawn
 @onready var item_spawn_point = $Item_Spawn_1
-#resources to load everytime
+
+#resources to load everytime, monster, player, and item data
 var luminete_data: MonsterData = load("res://Resource Items/Monsters/Luminete.tres")
 var skitterfang_data: MonsterData = load("res://Resource Items/Monsters/SkitterFang.tres")
 var greyscale_data: MonsterData = load("res://Resource Items/Monsters/Greyscale.tres")
@@ -20,12 +22,19 @@ var player_data: PlayerData = load("res://Resource Items/Players/main_character.
 var bepzi: ItemData = load("res://Resource Items/Inventory/bepzi.tres")
 var battle_instance
 
+#spawn list for all the monsters and data associated with them
+@onready var spawn_list = {
+	"luminete": {"data": luminete_data, "position": $Luminete_Spawner},
+	"skitterfang": {"data": skitterfang_data, "position": $SkitterFang_Spawner},
+	"greyscale": {"data": greyscale_data, "position": $GreyScale_Spawner},
+	"stalagbat": {"data": stalagbat_data, "position": $Stalagbat_Spawner}
+}
+
 func _ready():
 	player_spawn(player_data)
 	item_spawn([bepzi])
-	monster_spawn([goblin_data])
-	mosnter_interactions(monsters_spawned)
-	#monster_scene.battle_triggered.connect(_on_battle_triggered)
+	monster_spawn(spawn_list)
+	monster_interactions(monsters_spawned)
 
 func player_spawn(player: PlayerData):
 	var player_instance = player_scene.instantiate()
@@ -41,15 +50,16 @@ func item_spawn(items: Array[ItemData]):
 		item_instance.global_position = item_spawn_point.global_position
 		print("item spawned!")
 
-func monster_spawn(monsters: Array[MonsterData]):
+func monster_spawn(monsters: Dictionary):
 	for monster in monsters:
+		var monster_entity = monsters[monster]
 		var monster_instance = monster_scene.instantiate()
 		add_child(monster_instance)
-		monster_instance.setup(monster, 25.0)
-		monster_instance.global_position = monster_spawn_point.global_position
+		monster_instance.setup(monster_entity["data"], 25.0)
+		monster_instance.global_position = monster_entity["position"].global_position
 		monsters_spawned.append(monster_instance)
 
-func mosnter_interactions(monsters_spawned):
+func monster_interactions(monsters_spawned):
 	for monster in monsters_spawned:
 		monster.battle_triggered.connect(_on_battle_triggered.bind(monster))
 	
