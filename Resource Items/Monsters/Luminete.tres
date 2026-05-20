@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource("2_hgi1b")
 name = "Luminete"
-max_hp = 5
+max_hp = 3
 attack = 1
 texture = ExtResource("4_1o8gj")
 attacks = Array[ExtResource("1_dj0e1")]([ExtResource("2_1o8gj")])

@@ -4,6 +4,10 @@ var data: PlayerData
 const SPEED = 200.0
 @onready var sprite: Sprite2D = $Sprite2D
 
+#trying to test tagging player for collision detections between other entities
+func _ready():
+	add_to_group("player")
+	
 func setup(Player_Data: PlayerData):
 	data = Player_Data
 	sprite.texture = data.texture

@@ -6,7 +6,7 @@ var battle_canvas
 var current_monster
 var current_player
 var monster_scene = preload("res://Resource Items/Monsters/monster.tscn")
-var player_scene = preload("res://Scenes/Main_character/player.tscn")
+var player_scene = preload("res://Resource Items/Players/player.tscn")
 var item_scene = preload("res://Resource Items/Inventory/item.tscn")
 var monsters_spawned = []
 #Spawner markers for all entities
@@ -24,10 +24,10 @@ var battle_instance
 
 #spawn list for all the monsters and data associated with them
 @onready var spawn_list = {
-	"luminete": {"data": luminete_data, "position": $Luminete_Spawner},
-	"skitterfang": {"data": skitterfang_data, "position": $SkitterFang_Spawner},
-	"greyscale": {"data": greyscale_data, "position": $GreyScale_Spawner},
-	"stalagbat": {"data": stalagbat_data, "position": $Stalagbat_Spawner}
+	"luminete": {"data": [luminete_data, luminete_data] as Array[MonsterData], "position": $Luminete_Spawner},
+	"skitterfang": {"data": [skitterfang_data] as Array[MonsterData], "position": $SkitterFang_Spawner},
+	"greyscale": {"data": [greyscale_data] as Array[MonsterData], "position": $GreyScale_Spawner},
+	"stalagbat": {"data": [stalagbat_data] as Array[MonsterData], "position": $Stalagbat_Spawner}
 }
 
 func _ready():
@@ -54,8 +54,9 @@ func monster_spawn(monsters: Dictionary):
 	for monster in monsters:
 		var monster_entity = monsters[monster]
 		var monster_instance = monster_scene.instantiate()
+		var encounter_data = monster_entity["data"]
 		add_child(monster_instance)
-		monster_instance.setup(monster_entity["data"], 25.0)
+		monster_instance.setup(encounter_data, 25.0)
 		monster_instance.global_position = monster_entity["position"].global_position
 		monsters_spawned.append(monster_instance)
 

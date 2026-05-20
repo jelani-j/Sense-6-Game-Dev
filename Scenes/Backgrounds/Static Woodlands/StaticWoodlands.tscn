@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=4 uid="uid://b2wfw6quogsen"]
 
 [ext_resource type="Texture2D" uid="uid://dt3boh7irkc4q" path="res://Sprite_Textures/Sprite_template_tests/Texture/Woods_Tileset.png" id="1_3odgv"]
-[ext_resource type="PackedScene" uid="uid://ektw0nue1o2j" path="res://Scenes/Main_character/player.tscn" id="2_8psqw"]
+[ext_resource type="PackedScene" uid="uid://ektw0nue1o2j" path="res://Resource Items/Players/player.tscn" id="2_8psqw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_trohg"]
 texture = ExtResource("1_3odgv")

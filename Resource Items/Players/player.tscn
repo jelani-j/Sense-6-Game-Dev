@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://ektw0nue1o2j"]
 
-[ext_resource type="Script" uid="uid://c4rmu6itodbcw" path="res://Scenes/Main_character/character_body_2d.gd" id="1_s83gs"]
-[ext_resource type="Texture2D" uid="uid://b05pgt2pw0tp1" path="res://Sprite_Textures/main_character_sprite/main_character_base.png" id="2_8fwuw"]
+[ext_resource type="Script" uid="uid://c4rmu6itodbcw" path="res://Resource Items/Players/character_body_2d.gd" id="1_n1o70"]
+[ext_resource type="Texture2D" uid="uid://b05pgt2pw0tp1" path="res://Sprite_Textures/main_character_sprite/main_character_base.png" id="2_ic1n5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_urja0"]
 radius = 5.0
@@ -11,7 +11,8 @@ height = 10.0
 radius = 5.0
 
 [node name="player" type="CharacterBody2D"]
-script = ExtResource("1_s83gs")
+collision_layer = 2
+script = ExtResource("1_n1o70")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
@@ -23,7 +24,7 @@ zoom = Vector2(3, 3)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -2)
-texture = ExtResource("2_8fwuw")
+texture = ExtResource("2_ic1n5")
 
 [node name="Area2D" type="Area2D" parent="."]
 

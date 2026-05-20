@@ -4,14 +4,15 @@ extends CharacterBody2D
 var speed = 25.0
 var player_chase = false
 var player = null
-var data: MonsterData
+var data: Array[MonsterData] = []
 signal battle_triggered
 @onready var animated_sprite: Sprite2D = $AnimatedSprite2D
 @export var texture: Texture2D
 
-func setup(Monster_Data: MonsterData, new_speed: float = 25.0):
+func setup(Monster_Data: Array, new_speed: float = 25.0):
 	data = Monster_Data
-	animated_sprite.texture = data.texture
+	if data.size() > 0:
+		animated_sprite.texture = data[0].texture
 	speed = new_speed
 	
 func despawn():
@@ -29,9 +30,11 @@ func _physics_process(delta):
 		#animated_sprite.play("idle")
 
 func get_encounter_data() -> Array[MonsterData]:
-	return [data]
+	return data
+	
 func _on_detection_zone_body_entered(body: Node2D):
 	player = body
+	print("you have entered my domain!")
 	player_chase = true 
 	
 func _on_detection_zone_body_exited(body: Node2D):
