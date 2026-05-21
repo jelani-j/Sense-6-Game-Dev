@@ -4,6 +4,12 @@
 
 [resource]
 script = ExtResource("1_vyqtq")
-attack_type = null
+name = "sound wave"
+damage = 2
+cost = 2
+attack_type = 4
 status = null
+attack_category = 1
+aoe = true
+speed = 4.0
 metadata/_custom_type_script = "uid://bcco0wqu3xis1"

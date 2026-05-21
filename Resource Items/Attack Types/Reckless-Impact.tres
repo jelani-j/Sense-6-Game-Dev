@@ -4,4 +4,11 @@
 
 [resource]
 script = ExtResource("1_esepb")
+name = "reckless impact"
+damage = 2
+cost = 2
+attack_type = 0
+status = null
+attack_category = 0
+speed = 2.0
 metadata/_custom_type_script = "uid://bcco0wqu3xis1"

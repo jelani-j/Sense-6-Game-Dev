@@ -4,11 +4,13 @@
 
 [resource]
 script = ExtResource("1_msugq")
-name = null
-damage = null
-cost = null
-status_chance = null
-aoe = null
-speed = null
-defense_penetration = null
+name = "Bite"
+damage = 2
+cost = 1
+attack_type = 1
+status = 4
+attack_category = null
+critical_chance = 0.05
+status_chance = 0.002
+speed = 1.0
 metadata/_custom_type_script = "uid://bcco0wqu3xis1"

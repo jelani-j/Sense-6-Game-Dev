@@ -4,4 +4,12 @@
 
 [resource]
 script = ExtResource("1_rjvy6")
+name = "spit fire"
+damage = 2
+cost = 3
+attack_type = 4
+status = 1
+attack_category = 1
+aoe = true
+speed = 1.0
 metadata/_custom_type_script = "uid://bcco0wqu3xis1"

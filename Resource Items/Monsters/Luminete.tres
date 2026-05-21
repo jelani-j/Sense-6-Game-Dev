@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="MonsterData" load_steps=5 format=3 uid="uid://bgoc0tab0ssnv"]
 
 [ext_resource type="Script" uid="uid://bcco0wqu3xis1" path="res://Resource Items/Attack Types/attack_data.gd" id="1_dj0e1"]
-[ext_resource type="Resource" uid="uid://bf4dt4awvc51x" path="res://Resource Items/Attack Types/Slash.tres" id="2_1o8gj"]
+[ext_resource type="Resource" uid="uid://ysyhu7v8ioga" path="res://Resource Items/Attack Types/Reckless-Impact.tres" id="2_1o8gj"]
 [ext_resource type="Script" uid="uid://bklrb16e7lbgp" path="res://Resource Items/Monsters/monster_data.gd" id="2_hgi1b"]
 [ext_resource type="Texture2D" uid="uid://bmrv3hkj83rul" path="res://Sprite_Textures/Monster_Sprites/luminite_sprite_base.png" id="4_1o8gj"]
 
@@ -10,6 +10,7 @@ script = ExtResource("2_hgi1b")
 name = "Luminete"
 max_hp = 3
 attack = 1
+speed = 2.0
 texture = ExtResource("4_1o8gj")
 attacks = Array[ExtResource("1_dj0e1")]([ExtResource("2_1o8gj")])
 metadata/_custom_type_script = "uid://bklrb16e7lbgp"

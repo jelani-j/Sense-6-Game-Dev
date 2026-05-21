@@ -5,6 +5,10 @@
 [resource]
 script = ExtResource("1_4l4wx")
 name = "Slash"
-damage = 1
+damage = 3
 cost = 2
+attack_type = 1
+status = 4
+attack_category = 1
+speed = 2.0
 metadata/_custom_type_script = "uid://bcco0wqu3xis1"

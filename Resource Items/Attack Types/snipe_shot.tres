@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AttackData" load_steps=2 format=3 uid="uid://d17ssq6a3xof3"]
+
+[ext_resource type="Script" uid="uid://bcco0wqu3xis1" path="res://Resource Items/Attack Types/attack_data.gd" id="1_suk7m"]
+
+[resource]
+script = ExtResource("1_suk7m")
+name = "snipe shot"
+damage = 3
+cost = 3
+attack_type = 3
+status = 3
+attack_category = 1
+speed = 1.0
+metadata/_custom_type_script = "uid://bcco0wqu3xis1"

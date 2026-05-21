@@ -6,6 +6,8 @@ class_name AttackData
 @export var cost: int
 @export_enum("Blunt", "Slicing", "Piercing", "Ballistic", "Emission", "Soul") var attack_type
 @export_enum("Poison", "Fire", "Stun", "Electrified", "Bleeding", "Soul Shatterd") var status
+@export_enum("Martial-Art","Weapon-art") var attack_category
+@export var critical_chance: float
 @export var status_chance: float
 @export var aoe: bool
 @export var speed: float 
