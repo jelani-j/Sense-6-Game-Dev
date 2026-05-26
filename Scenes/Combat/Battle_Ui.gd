@@ -84,11 +84,38 @@ func clear_panel():
 func create_attack_buttons(unit: BattleUnit):
 	clear_panel()
 	battle_state = BattleState.SELECTING_ACTION
+	var weapon_art_btn = Button.new()
+	var martial_art_btn = Button.new()
+	weapon_art_btn.text = "Weapon Arts"
+	martial_art_btn.text = "Martial Arts"
+	martial_art_btn.pressed.connect(create_martial_attack_buttons.bind(unit))
+	weapon_art_btn.pressed.connect(create_weapon_attack_buttons.bind(unit))
+	panel_container.add_child(weapon_art_btn)
+	panel_container.add_child(martial_art_btn)
+	#for attack in unit.unit_data.attacks:
+		#var btn = Button.new()
+		#btn.text = attack.name
+		#btn.pressed.connect(_on_attack_selected.bind(unit, attack))
+		#panel_container.add_child(btn)
+
+func create_weapon_attack_buttons(unit):
+	clear_panel()
 	for attack in unit.unit_data.attacks:
-		var btn = Button.new()
-		btn.text = attack.name
-		btn.pressed.connect(_on_attack_selected.bind(unit, attack))
-		panel_container.add_child(btn)
+		if attack.attack_category == "Weapon-art":
+			var wep_btn = Button.new()
+			wep_btn.text = attack.name
+			wep_btn.pressed.connect(_on_attack_selected.bind(unit, attack))
+			panel_container.add_child(wep_btn)
+			
+func create_martial_attack_buttons(unit):
+	clear_panel()
+	for attack in unit.unit_data.attacks:
+		if attack.attack_category == "Martial-Art":
+			var mart_btn = Button.new()
+			mart_btn.text = attack.name
+			mart_btn.pressed.connect(_on_attack_selected.bind(unit, attack))
+			panel_container.add_child(mart_btn)
+	
 #
 func _on_attack_selected(player: BattleUnit, attack: AttackData):
 	battle_state = BattleState.TARGETING
@@ -129,11 +156,12 @@ func check_battle_end(active_player: BattleUnit):
 		log_container.text += "\n" + "All Allies Slain..."
 		return true
 			
-func handle_attack(text_display_actor, target_data, attack_data):
+func handle_attack(text_display_actor, target_data, attack_data, actor_data):
 	if is_instance_valid(target_data):
 		var target_name = target_data.unit_data.name
 		var attack_name = attack_data.name
-		target_data.take_damage(attack_data.damage)
+		var power = actor_data.attack
+		target_data.take_damage(attack_data, target_data.unit_data.defense, power)
 		for party_member in member_uis:
 			party_member.set_hp_value()
 		log_container.text += "\n" + text_display_actor + " Used: " + attack_name + " on " + target_name
@@ -231,9 +259,10 @@ func execute_actions(action_queue):
 	for action in action_queue:
 		if is_instance_valid(action["actor"]):
 			var text_display_actor = action["actor"].unit_data.name
+			var actor_data = action["actor"].unit_data
 			match action["type"]:
 				"attack":
-					handle_attack(text_display_actor, action["target"], action["attack"])
+					handle_attack(text_display_actor, action["target"], action["attack"], actor_data)
 					if check_battle_end(action["actor"]) == true:
 						battle_end_condition.emit(battle_state)
 						break

@@ -24,7 +24,7 @@ var battle_instance
 
 #spawn list for all the monsters and data associated with them
 @onready var spawn_list = {
-	"luminete": {"data": [luminete_data, luminete_data] as Array[MonsterData], "position": $Luminete_Spawner},
+	"luminete": {"data": [luminete_data] as Array[MonsterData], "position": $Luminete_Spawner},
 	"skitterfang": {"data": [skitterfang_data] as Array[MonsterData], "position": $SkitterFang_Spawner},
 	"greyscale": {"data": [greyscale_data] as Array[MonsterData], "position": $GreyScale_Spawner},
 	"stalagbat": {"data": [stalagbat_data] as Array[MonsterData], "position": $Stalagbat_Spawner}

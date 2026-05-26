@@ -9,6 +9,6 @@ damage = 2
 cost = 1
 attack_type = 0
 status = 2
-attack_category = 0
+attack_category = "Martial-Art"
 speed = 2.0
 metadata/_custom_type_script = "uid://bcco0wqu3xis1"

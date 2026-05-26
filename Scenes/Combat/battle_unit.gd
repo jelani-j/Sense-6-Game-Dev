@@ -28,11 +28,14 @@ func _on_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed:
 		emit_signal("unit_clicked", self)
 
-func take_damage(amount: int):
+func take_damage(attack_data: AttackData, target_data, power):
+	var amount = attack_data.damage
+	var def = target_data
 	if defending == true:
 		current_hp -= (amount/2)
 	else:
-		current_hp -= amount
+		current_hp -= ((power + amount) - def )
+		print(((power + amount) - def ))
 	if current_hp <= 0:
 		die()
 		
