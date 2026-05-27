@@ -2,9 +2,10 @@ extends Control
 
 @onready var enemy_slots = $EnemyContainer.get_children()
 @onready var player_slots = $PlayerContainer.get_children()
-@onready var party_container = $"ActionContainer/Party-Members"
-@onready var panel_container = $ActionContainer/ActionOptions
-@onready var log_container = $ActionContainer/BattleLog
+@onready var party_container = $"UIContainer/ActionContainer/Party-Members"
+@onready var panel_container = $UIContainer/ActionContainer/ActionOptions
+@onready var log_container = $UIContainer/ActionContainer/BattleLog
+@onready var minigame_container = $"UIContainer/ActionContainer/Mini-Game"
 var inventory = Global.Inventory
 var member_uis = []
 enum BattleState {
@@ -155,13 +156,46 @@ func check_battle_end(active_player: BattleUnit):
 		battle_state = BattleState.DEFEAT
 		log_container.text += "\n" + "All Allies Slain..."
 		return true
-			
+
+func mini_game_func():
+	var minigame_bar = CenterContainer.new()
+	minigame_container.add_child(minigame_bar)
+	var timing_bar = ProgressBar.new()
+	timing_bar.custom_minimum_size = Vector2(300, 20)
+	minigame_bar.add_child(timing_bar)
+	
+	var target_spot = ColorRect.new()
+	target_spot.color = Color(0.075, 0.918, 0.475, 0.863)
+	target_spot.size = Vector2(10, 10)
+	target_spot.set_position(Vector2(100, 10))
+	target_spot.custom_minimum_size = Vector2(100, 10)
+	minigame_bar.add_child(target_spot)
+	
+	var result = await wait_for_input(timing_bar)
+	return result
+
+func wait_for_input(timing_bar):
+	var input_recieved = false 
+	var result = "missed"
+	var progress = 0
+	while input_recieved == false:
+		await get_tree().process_frame
+		progress += 1 * get_process_delta_time()
+		timing_bar.value = progress * 100
+		if Input.is_action_just_pressed("minigame_attack"):
+			result = "hit"
+			input_recieved = true
+	return result
+	
 func handle_attack(text_display_actor, target_data, attack_data, actor_data):
 	if is_instance_valid(target_data):
 		var target_name = target_data.unit_data.name
 		var attack_name = attack_data.name
 		var power = actor_data.attack
+		#begin mini-game
+		var mini_game_results = await mini_game_func()
 		target_data.take_damage(attack_data, target_data.unit_data.defense, power)
+		 
 		for party_member in member_uis:
 			party_member.set_hp_value()
 		log_container.text += "\n" + text_display_actor + " Used: " + attack_name + " on " + target_name
@@ -180,7 +214,7 @@ func handle_run(text_display_actor):
 	log_container.text += "\n" + text_display_actor + " is Running away!"
 
 func _on_action_selected(unit, action):
-	if battle_state != BattleState.VICTORY or BattleState.DEFEAT:
+	if battle_state != BattleState.VICTORY and battle_state != BattleState.DEFEAT:
 		match action:
 			"fight":
 				create_attack_buttons(unit)
