@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://chw5dakabpyo0" path="res://Scenes/Combat/party_member_ui.gd" id="1_cnown"]
 
 [node name="PartyMemberUi" type="Button"]
+custom_minimum_size = Vector2(0, 50)
+layout_direction = 1
 offset_right = 250.0
 offset_bottom = 128.0
 size_flags_horizontal = 3
@@ -14,6 +16,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -2.0
+offset_bottom = -28.0
 grow_horizontal = 2
 grow_vertical = 2
 

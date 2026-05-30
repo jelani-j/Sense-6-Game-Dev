@@ -42,5 +42,8 @@ func take_damage(attack_data: AttackData, target_data, power):
 func set_defending(value: bool):
 	defending = value
 
+func is_alive():
+	return current_hp > 0
+
 func die():
 	queue_free()

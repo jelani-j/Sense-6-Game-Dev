@@ -44,7 +44,7 @@ func _ready():
 func start_battle(player_data: Array[PlayerData], monser_data: Array[MonsterData]):
 	spawn_monster(monser_data)
 	spawn_player(player_data)
-	spawn_party_member_UI(players_array)
+	spawn_party_member_UI()
 
 ## Spawning Entities ##
 func spawn_monster(monster_data: Array[MonsterData]):
@@ -63,7 +63,7 @@ func spawn_player(player_data: Array[PlayerData]):
 		unit.global_position = player_slots[i].global_position
 		players_array.append(unit)
 
-func spawn_party_member_UI(players_array):
+func spawn_party_member_UI():
 	for player in players_array:
 		var member_ui = preload("res://Scenes/Combat/PartyMemberUI.tscn").instantiate()
 		party_container.add_child(member_ui)
@@ -76,7 +76,10 @@ func despawn_member_ui(party_member: BattleUnit):
 	for member in member_uis:
 		if party_member.unit_data.name == member.member_name:
 			party_container.remove_child(member)
-	
+func despawn_entity():
+	for enemy in enemies_array:
+		if enemy.current_hp <= 0:
+			enemy.die()
 ## UI Option Functionality ##
 func clear_panel():
 	for child in panel_container.get_children():
@@ -136,7 +139,8 @@ func attack_target(target: BattleUnit, attack: AttackData):
 	}
 	action_queue.push_back(action_obejct)
 	resolve_turns()
-func check_battle_end(active_player: BattleUnit):
+func check_battle_end():
+	print("checking battle state!")
 	var living_enemy = 0
 	var living_player = 0
 	for enemy in enemies_array:
@@ -145,45 +149,58 @@ func check_battle_end(active_player: BattleUnit):
 	for player in players_array:
 		if is_instance_valid(player) and player.current_hp > 0:
 			living_player += 1
+	print ("Living Enemies: ", + living_enemy, " Living Players: ", + living_player)
 	if living_enemy == 0:
-		print("enemies all dead ")
-		despawn_member_ui(active_player)
-		battle_state = BattleState.VICTORY
-		log_container.text += "\n" + "Victory!"
-		return true
+		return BattleState.VICTORY
 	if living_player == 0:
-		despawn_member_ui(active_player)
-		battle_state = BattleState.DEFEAT
-		log_container.text += "\n" + "All Allies Slain..."
-		return true
+		return BattleState.DEFEAT
+	return null
 
 func mini_game_func():
 	var minigame_bar = CenterContainer.new()
 	minigame_container.add_child(minigame_bar)
 	var timing_bar = ProgressBar.new()
 	timing_bar.custom_minimum_size = Vector2(300, 20)
+	timing_bar.clip_contents = false
+	timing_bar.max_value = 100
 	minigame_bar.add_child(timing_bar)
 	
 	var target_spot = ColorRect.new()
 	target_spot.color = Color(0.075, 0.918, 0.475, 0.863)
-	target_spot.size = Vector2(10, 10)
-	target_spot.set_position(Vector2(100, 10))
-	target_spot.custom_minimum_size = Vector2(100, 10)
-	minigame_bar.add_child(target_spot)
-	
-	var result = await wait_for_input(timing_bar)
+	var target_min = 0.45
+	var target_max = 0.55
+	setup_target_zone(timing_bar, target_spot, target_min, target_max)
+	timing_bar.add_child(target_spot)
+	var result = await wait_for_input(timing_bar, target_spot, target_min, target_max)
+	log_container.text += "Minigame_result: " +result
 	return result
-
-func wait_for_input(timing_bar):
+	
+func setup_target_zone(timing_bar, target_spot, target_min, target_max):
+	await get_tree().process_frame
+	var bar_width = timing_bar.size.x
+	var pixel_min = target_min * bar_width
+	var pixel_max = target_max * bar_width
+	target_spot.position = Vector2(pixel_min, 0)
+	target_spot.size = Vector2(pixel_max - pixel_min, timing_bar.size.y)
+	
+func wait_for_input(timing_bar, target_spot, target_min, target_max):
 	var input_recieved = false 
 	var result = "missed"
-	var progress = 0
+	var progress = 0.0
 	while input_recieved == false:
 		await get_tree().process_frame
 		progress += 1 * get_process_delta_time()
 		timing_bar.value = progress * 100
+		var time_bar_rect = timing_bar.get_global_rect()
+		var target_spot_rect = target_spot.get_global_rect()
 		if Input.is_action_just_pressed("minigame_attack"):
-			result = "hit"
+			if progress >= target_min and progress <= target_max:
+				result = "perfect"
+			elif progress >= target_min - 0.1 and progress <= target_max + 0.1:
+				result = "good"
+			else:
+				result = "miss"
+			print(result)
 			input_recieved = true
 	return result
 	
@@ -193,16 +210,27 @@ func handle_attack(text_display_actor, target_data, attack_data, actor_data):
 		var attack_name = attack_data.name
 		var power = actor_data.attack
 		#begin mini-game
-		var mini_game_results = await mini_game_func()
+		if actor_data is PlayerData:
+			var mini_game_results = await mini_game_func()
 		target_data.take_damage(attack_data, target_data.unit_data.defense, power)
-		 
+		 #calculate damage + despawn entities and check for battle end conditions
 		for party_member in member_uis:
 			party_member.set_hp_value()
 		log_container.text += "\n" + text_display_actor + " Used: " + attack_name + " on " + target_name
 		if target_data.current_hp <= 0:
 			log_container.text += "\n" + target_name + " was Slain"
-			return true
-		
+			despawn_member_ui(target_data)
+			despawn_entity()
+			var result = check_battle_end()
+			if result != null:
+				battle_state = result
+				if result == BattleState.VICTORY:
+					log_container.text += "\nVictory!"
+					print(" won the battle")
+				elif result == BattleState.DEFEAT:
+					log_container.text += "\nAll Allies Slain..."
+				battle_end_condition.emit(battle_state)
+				return
 
 func handle_defense(text_display_actor, actor):
 	battle_state = BattleState.BLOCKING
@@ -278,28 +306,32 @@ func inventory_use(item: ItemData, bag: InventoryData, unit: BattleUnit):
 	clear_panel()
 	resolve_turns()
 ## Monster AI Functionality ##
-func monster_ai(enemies_array, players_array):
+func monster_ai(enemies_array, players_array, queue):
 	for monster in enemies_array:
-		if is_instance_valid(monster):
-			action_obejct = {
+		if is_instance_valid(monster) and monster.is_alive():
+			queue.push_back({
 				"type": "attack",
 				"actor": monster,
 				"target": players_array[0],
 				"attack": monster.unit_data.attacks[0]
-			}
-			action_queue.push_back(action_obejct)
+			})
 ## Turn Processing ##
 func execute_actions(action_queue):
 	for action in action_queue:
+		#if not is_instance_valid(action["actor"]):
+			#continue
+		#if not action["actor"].is_alive():
+			#print(action["actor"] + "is no longer alive!")
+			#continue	
 		if is_instance_valid(action["actor"]):
 			var text_display_actor = action["actor"].unit_data.name
 			var actor_data = action["actor"].unit_data
+			print(action["type"])
 			match action["type"]:
 				"attack":
-					handle_attack(text_display_actor, action["target"], action["attack"], actor_data)
-					if check_battle_end(action["actor"]) == true:
-						battle_end_condition.emit(battle_state)
-						break
+					if not is_instance_valid(action["actor"]) or not action["actor"].is_alive():
+						continue
+					await handle_attack(text_display_actor, action["target"], action["attack"], actor_data)
 				"defend":
 					handle_defense(text_display_actor, action["actor"])
 				"bag":
@@ -308,16 +340,24 @@ func execute_actions(action_queue):
 					var actor = action["actor"]
 					log_container.text += "\n" + text_display_actor + " is Using: " + item.name
 					bag.use_item(item, actor)
-					
 				"run":
 					handle_run(text_display_actor)
 					battle_state = BattleState.ESCAPED
 					battle_end_condition.emit(battle_state)
 					despawn_member_ui(action["actor"])
 
+func execute_player_phase():
+	await execute_actions(action_queue)
+
+func execute_enemy_phase():
+	var enemey_queue = []
+	monster_ai(enemies_array, players_array, enemey_queue)
+	await execute_actions(enemey_queue)
+
 func resolve_turns():
-	monster_ai(enemies_array, players_array)
-	execute_actions(action_queue)
+	await execute_player_phase()
+	await execute_enemy_phase()
 	for unit in action_queue:
 		unit["actor"].set_defending(false)
-		action_queue.clear()
+	action_queue.clear()
+	
