@@ -368,16 +368,65 @@ func handle_death():
 					log_container.text += "\nAll Allies Slain..."
 				battle_end_condition.emit(battle_state)
 				return
-	
+
+func apply_status_effect():
+	for action in action_queue:
+		if action["type"] != "attack":
+			continue
+		var attack_data = action["attack"]
+		if attack_data["status"] == null:
+			print(attack_data["status"])
+			continue
+		print("reaching status effect apply")
+		var status_effect = attack_data["status"]
+		var target = action["target"]
+		#if randf() <= attack_data.status_chance:
+		if attack_data.status_chance != null:
+			target.add_status({"status": attack_data.status, "duration": 1})
+
+func status_effect_phase():
+	var all_units = enemies_array + players_array
+	for unit in all_units:
+		if unit.get_status() == null:
+			continue
+		var status_effects = unit.get_status()
+		print(status_effects)
+		for statuses in status_effects:
+			var status = statuses["status"]
+			var duration = statuses["duration"]
+			match status:
+				"Stun":
+					print("you are stunned!")
+				"Bleeding":
+					print("you are Bleeding!")
+				"Poison":
+					print("you are Poisioned!")
+				"Fire":
+					print("you are on Fire!")
+				"Electrified":
+					print("you are Electrified!")
+				"Soul Shatterd":
+					print("you're very soul begins to shatter!")
+			
+		
+	#for action in action_queue:
+		#if action["type"] != "attack":
+			#continue
+		#var attack_data = action["attack"]
+		#if attack_data["status"] == null:
+			#continue
+		#var target = action["target"]
+		#print(target.unit_data["type"])
+		
 func resolve_turns():
 	monster_ai(enemies_array, players_array)
 	action_interpreter(action_queue)
 	await minigame_phase(action_queue)
 	damage_phase(action_queue)
 	handle_death()
-	#status phase here
-	#check defeat status here
+	apply_status_effect()
+	status_effect_phase()
+	handle_death()
 	for unit in action_queue:
 		unit["actor"].set_defending(false)
 	action_queue.clear()
-	

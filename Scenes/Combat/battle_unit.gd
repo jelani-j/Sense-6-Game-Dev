@@ -9,6 +9,7 @@ signal unit_clicked(unit)
 var unit_data: Resource
 var current_hp: int
 var is_enemy: bool 
+var status_effects: Array = []
 @export var defending = false
 @export var temp_defense: int 
 #temp stats
@@ -39,6 +40,11 @@ func take_damage(attack_data: AttackData, target_data, power):
 	if current_hp <= 0:
 		die()
 		
+func add_status(stauts_details: Dictionary):
+	status_effects.append(stauts_details)
+
+func get_status():
+	return status_effects
 func set_defending(value: bool):
 	defending = value
 
