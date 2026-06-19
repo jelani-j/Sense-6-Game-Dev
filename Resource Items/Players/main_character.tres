@@ -11,7 +11,7 @@
 [resource]
 script = ExtResource("1_k3ba2")
 name = "Sonnet"
-max_hp = 5
+max_hp = 10
 attack = 1
 texture = ExtResource("5_l4yw6")
 attacks = Array[ExtResource("1_n6icq")]([ExtResource("2_p6l8i"), ExtResource("3_v0kh2"), ExtResource("4_w8hsg"), ExtResource("5_u0kar")])

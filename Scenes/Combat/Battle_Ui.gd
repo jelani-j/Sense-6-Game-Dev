@@ -203,7 +203,7 @@ func wait_for_input(timing_bar, target_spot, target_min, target_max):
 			elif progress >= target_min - 0.1 and progress <= target_max + 0.1:
 				result = "good"
 			else:
-				result = "miss"
+				result = "bad"
 			print(result)
 			input_recieved = true
 	return result
@@ -326,7 +326,7 @@ func action_interpreter(action_queue):
 					despawn_member_ui(action["actor"])
 
 	
-func minigame_phase(action_queue):
+func minigame_sequence(action_queue):
 	for action in action_queue:
 		if not is_instance_valid(action["actor"]) or not action["actor"].is_alive():
 			continue
@@ -335,9 +335,10 @@ func minigame_phase(action_queue):
 		if not (action["actor"].unit_data is PlayerData):
 			continue
 		var results = await mini_game_func()
-		action["mini_game_results"] = results
-		
-func damage_phase(action_queue):
+		return results
+
+#need to add handle death here or have another area to implement minigame await as if its here it will cause a delay in death
+func damage_phase(action_queue, mini_game_results):
 	for action in action_queue:
 		if not is_instance_valid(action["actor"]) or not action["actor"].is_alive():
 			continue
@@ -347,7 +348,7 @@ func damage_phase(action_queue):
 		var target_data = action["target"]
 		var actor_data = action["actor"].unit_data
 		var power = actor_data.attack
-		target_data.take_damage(attack_data, target_data.unit_data.defense, power)
+		target_data.process_attack(attack_data, target_data.unit_data.defense, power, mini_game_results)
 
 func handle_death():
 	var all_units = players_array + enemies_array
@@ -399,6 +400,7 @@ func status_effect_phase():
 					print("you are stunned!")
 				"Bleeding":
 					print("you are Bleeding!")
+					#unit.take_damage()
 				"Poison":
 					print("you are Poisioned!")
 				"Fire":
@@ -421,8 +423,8 @@ func status_effect_phase():
 func resolve_turns():
 	monster_ai(enemies_array, players_array)
 	action_interpreter(action_queue)
-	await minigame_phase(action_queue)
-	damage_phase(action_queue)
+	var minigame_phase = await minigame_sequence(action_queue)
+	damage_phase(action_queue, minigame_phase)
 	handle_death()
 	apply_status_effect()
 	status_effect_phase()

@@ -28,7 +28,7 @@ func setup(data: Resource, monster_flag: bool):
 func _on_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed:
 		emit_signal("unit_clicked", self)
-
+#change this to recieve damage (process amount)
 func take_damage(attack_data: AttackData, target_data, power):
 	var amount = attack_data.damage
 	var def = target_data
@@ -39,7 +39,38 @@ func take_damage(attack_data: AttackData, target_data, power):
 		print(((power + amount) - def ))
 	if current_hp <= 0:
 		die()
-		
+
+#make this a damage calc function that accepts inputs and does a formula to return amount 
+#pass characters data + attack info into a function and process the calc [ power? attack dmage? minigame res>]
+#handle critical hits + calc speed into hit chance 
+#determine all stat attributes before scaling 
+func process_attack(attack_data: AttackData, power, defense, minigame_result):
+	var amount = attack_data.damage
+	var def = defense
+	var accuracy: int
+	if minigame_result == "perfect":
+		accuracy = 2
+	elif minigame_result == "good":
+		accuracy = 1
+	else:
+		minigame_result = ""
+		accuracy = 0
+	var player_damage_calc = accuracy + ((amount + power) - def)
+	current_hp -= player_damage_calc
+	if current_hp <= 0:
+		die()
+	
+#func process_enemy_damage(attack_data: AttackData, power, defense)
+
+#func process_enemy_attack(attack_data: AttackData, power: Resource, defense: Resource):
+	#var amount = attack_data.damage
+	#var def = defense
+	#var enemy_damage_calc = ((amount + power) - defense)
+	
+#make this a function that handles all status damage 
+func status_damage(status):
+	print("text")
+	
 func add_status(stauts_details: Dictionary):
 	status_effects.append(stauts_details)
 
