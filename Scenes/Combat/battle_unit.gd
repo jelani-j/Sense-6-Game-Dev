@@ -60,22 +60,41 @@ func process_attack(attack_data: AttackData, power, defense, minigame_result):
 	if current_hp <= 0:
 		die()
 	
-#func process_enemy_damage(attack_data: AttackData, power, defense)
-
-#func process_enemy_attack(attack_data: AttackData, power: Resource, defense: Resource):
-	#var amount = attack_data.damage
-	#var def = defense
-	#var enemy_damage_calc = ((amount + power) - defense)
-	
 #make this a function that handles all status damage 
 func status_damage(status):
-	print("text")
+	match status:
+		"Poison":
+			# tick damage
+			current_hp -= 1
+		"Fire":
+			# refuces power for attacks + tick damage 
+			current_hp -= 1
+		"Stun":
+			# cant act 
+			print("User is dazed and cannot attack")
+		"Electrified":
+			# cant use skills 
+			print("use of skills have been disabled temporairly")
+		"Bleeding":
+			# tick damage + reduces defense
+			current_hp -= 1
+		"Soul Shatterd":
+			# if hit too many times with this sets hp to 1 
+			print("the very soul begins to cry out in pain")
 	
 func add_status(stauts_details: Dictionary):
+	for existing_status in status_effects:
+		if existing_status["status"] == stauts_details["status"]:
+			existing_status["duration"] += stauts_details["duration"]
+			return
 	status_effects.append(stauts_details)
 
 func get_status():
 	return status_effects
+
+func clear_status():
+	status_effects.clear()
+	
 func set_defending(value: bool):
 	defending = value
 

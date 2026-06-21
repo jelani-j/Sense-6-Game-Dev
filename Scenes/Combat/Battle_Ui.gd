@@ -286,10 +286,10 @@ func inventory_use(item: ItemData, bag: InventoryData, unit: BattleUnit):
 		"item": item,
 		"bag": bag
 	}
-	
 	action_queue.push_back(action_obejct)
 	clear_panel()
 	resolve_turns()
+	
 ## Monster AI Functionality ##
 func monster_ai(enemies_array, players_array):
 	for monster in enemies_array:
@@ -325,7 +325,6 @@ func action_interpreter(action_queue):
 					battle_end_condition.emit(battle_state)
 					despawn_member_ui(action["actor"])
 
-	
 func minigame_sequence(action_queue):
 	for action in action_queue:
 		if not is_instance_valid(action["actor"]) or not action["actor"].is_alive():
@@ -388,38 +387,34 @@ func apply_status_effect():
 func status_effect_phase():
 	var all_units = enemies_array + players_array
 	for unit in all_units:
-		if unit.get_status() == null:
-			continue
 		var status_effects = unit.get_status()
-		print(status_effects)
-		for statuses in status_effects:
-			var status = statuses["status"]
-			var duration = statuses["duration"]
+		if status_effects.is_empty():
+			continue
+		for i in range(status_effects.size() - 1, -1, -1):
+			var effect = status_effects[i]
+			var status = effect["status"]
 			match status:
 				"Stun":
-					print("you are stunned!")
+					unit.status_damage("Stun")
 				"Bleeding":
 					print("you are Bleeding!")
-					#unit.take_damage()
+					unit.status_damage("Bleeding")
 				"Poison":
 					print("you are Poisioned!")
+					unit.status_damage("Poison")
 				"Fire":
-					print("you are on Fire!")
+					unit.status_damage("Fire")
 				"Electrified":
-					print("you are Electrified!")
+					unit.status_damage("Electrified")
 				"Soul Shatterd":
-					print("you're very soul begins to shatter!")
-			
-		
-	#for action in action_queue:
-		#if action["type"] != "attack":
-			#continue
-		#var attack_data = action["attack"]
-		#if attack_data["status"] == null:
-			#continue
-		#var target = action["target"]
-		#print(target.unit_data["type"])
-		
+					unit.status_damage("Soul Shattered")
+					
+			effect["duration"] -= 1
+			if effect["duration"] <= 0:
+				unit.clear_status()
+		print(status_effects)
+
+
 func resolve_turns():
 	monster_ai(enemies_array, players_array)
 	action_interpreter(action_queue)
@@ -432,3 +427,4 @@ func resolve_turns():
 	for unit in action_queue:
 		unit["actor"].set_defending(false)
 	action_queue.clear()
+	
