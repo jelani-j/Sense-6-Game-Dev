@@ -56,7 +56,14 @@ func process_attack(attack_data: AttackData, power, defense, minigame_result):
 		minigame_result = ""
 		accuracy = 0
 	var player_damage_calc = accuracy + ((amount + power) - def)
+	print("power for both are: ", power, " Defense for both are: ", def )
+	#if statemnet here is causing some form of timing issue
+	if defending:
+		print("Defending")
+		current_hp -= round((player_damage_calc * 0.70))
+		print(round(player_damage_calc * 0.70))
 	current_hp -= player_damage_calc
+	print(player_damage_calc)
 	if current_hp <= 0:
 		die()
 	

@@ -11,6 +11,7 @@ name = "Luminete"
 max_hp = 3
 attack = 1
 speed = 2.0
+defense = 1
 texture = ExtResource("4_1o8gj")
 attacks = Array[ExtResource("1_dj0e1")]([ExtResource("2_1o8gj")])
 metadata/_custom_type_script = "uid://bklrb16e7lbgp"
