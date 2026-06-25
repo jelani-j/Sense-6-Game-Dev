@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dhnc1hf7trsd7"
+path="res://.godot/imported/sprBrick.aseprite-f251bb68df667dc3dba9b19c0b4acd25.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Environment/sprBrick.aseprite"
+dest_files=["res://.godot/imported/sprBrick.aseprite-f251bb68df667dc3dba9b19c0b4acd25.res"]
+
+[params]
+

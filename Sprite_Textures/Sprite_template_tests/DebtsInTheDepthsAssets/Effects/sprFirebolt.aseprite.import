@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cuyfmj41wqomr"
+path="res://.godot/imported/sprFirebolt.aseprite-acd83f1223d9c0287321999882946382.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Effects/sprFirebolt.aseprite"
+dest_files=["res://.godot/imported/sprFirebolt.aseprite-acd83f1223d9c0287321999882946382.res"]
+
+[params]
+

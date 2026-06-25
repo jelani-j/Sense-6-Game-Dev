@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://phh6fumyyi0r"]
+
+[ext_resource type="Script" uid="uid://stl68a4s160u" path="res://Resource Items/Inventory/item_overworld.gd" id="1_n1c0u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n1c0u"]
+
+[node name="item" type="Node2D"]
+script = ExtResource("1_n1c0u")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="Sprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
+shape = SubResource("CircleShape2D_n1c0u")
+
+[connection signal="area_shape_entered" from="Sprite2D/Area2D" to="." method="_on_area_2d_area_shape_entered"]

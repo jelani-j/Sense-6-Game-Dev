@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c37k17xatcy37"
+path="res://.godot/imported/sprCursor.aseprite-d8f37e5ea37911aaac28117415cd9dd9.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/UI/sprCursor.aseprite"
+dest_files=["res://.godot/imported/sprCursor.aseprite-d8f37e5ea37911aaac28117415cd9dd9.res"]
+
+[params]
+

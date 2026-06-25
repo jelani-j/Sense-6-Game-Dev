@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://vgll2uh2whm6"
+path="res://.godot/imported/Sonnet_walk_forward.aseprite-b09860dc9d5555f315ea67e4dd0be044.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Sonnet_Sprite/Sonnet_walk_forward.aseprite"
+dest_files=["res://.godot/imported/Sonnet_walk_forward.aseprite-b09860dc9d5555f315ea67e4dd0be044.res"]
+
+[params]
+

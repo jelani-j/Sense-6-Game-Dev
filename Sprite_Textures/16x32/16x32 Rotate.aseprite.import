@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c1n6yjf5kkpoc"
+path="res://.godot/imported/16x32 Rotate.aseprite-ddc5af6040a9bb4e5de53580c3ef5824.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/16x32/16x32 Rotate.aseprite"
+dest_files=["res://.godot/imported/16x32 Rotate.aseprite-ddc5af6040a9bb4e5de53580c3ef5824.res"]
+
+[params]
+

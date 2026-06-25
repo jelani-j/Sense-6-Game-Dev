@@ -1,0 +1,117 @@
+[gd_scene load_steps=2 format=3 uid="uid://q6as3assiu7x"]
+
+[ext_resource type="Script" uid="uid://f3dcpo7ydln5" path="res://Scenes/Combat/Battle_Ui.gd" id="1_b6fm1"]
+
+[node name="BattleUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -2.0
+offset_right = 4.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_b6fm1")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.10011808, 0.073204525, 0.18715522, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_direction = 1
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="MemberContainer" type="HBoxContainer" parent="MarginContainer"]
+clip_contents = true
+layout_mode = 2
+theme_override_constants/separation = 80
+
+[node name="EnemyContainer" type="Node2D" parent="."]
+position = Vector2(1081, 160)
+
+[node name="Marker2D" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(-365, 65)
+
+[node name="Marker2D2" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(-246, -11)
+
+[node name="Marker2D3" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(-246, 144)
+
+[node name="Marker2D4" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(-154, 65)
+
+[node name="PlayerContainer" type="Node2D" parent="."]
+position = Vector2(258, 212)
+
+[node name="Marker2D" type="Marker2D" parent="PlayerContainer"]
+position = Vector2(189, 15)
+
+[node name="Marker2D2" type="Marker2D" parent="PlayerContainer"]
+position = Vector2(104, -56)
+
+[node name="Marker2D3" type="Marker2D" parent="PlayerContainer"]
+position = Vector2(141, 93)
+
+[node name="Marker2D4" type="Marker2D" parent="PlayerContainer"]
+position = Vector2(64, 41)
+
+[node name="UIContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -252.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ActionContainer" type="VBoxContainer" parent="UIContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Party-Members" type="MarginContainer" parent="UIContainer/ActionContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_stretch_ratio = 12.7
+
+[node name="Mini-Game" type="CenterContainer" parent="UIContainer/ActionContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+
+[node name="ActionOptions" type="HBoxContainer" parent="UIContainer/ActionContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="BattleLog" type="RichTextLabel" parent="UIContainer/ActionContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 8

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cb7gm7keba5qv"
+path="res://.godot/imported/sprGoldIcon.aseprite-08f9446b12cf2de3e8fa2898b89fd209.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/UI/sprGoldIcon.aseprite"
+dest_files=["res://.godot/imported/sprGoldIcon.aseprite-08f9446b12cf2de3e8fa2898b89fd209.res"]
+
+[params]
+

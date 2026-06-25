@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://tgmch06ge5mf"
+path="res://.godot/imported/Basil_walk_forward.aseprite-8f26aa0d36bbdb1df327fdab0c4a43c6.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Basil_Sprite/Basil_walk_forward.aseprite"
+dest_files=["res://.godot/imported/Basil_walk_forward.aseprite-8f26aa0d36bbdb1df327fdab0c4a43c6.res"]
+
+[params]
+

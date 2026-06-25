@@ -1,0 +1,110 @@
+[gd_scene load_steps=5 format=3 uid="uid://q6as3assiu7x"]
+
+[ext_resource type="Script" uid="uid://f3dcpo7ydln5" path="res://Scenes/Combat/Battle_Ui.gd" id="1_gfi2s"]
+[ext_resource type="Resource" uid="uid://bps46rla8fr2t" path="res://Scenes/Monsters/goblin.tres" id="2_8h7dl"]
+[ext_resource type="PackedScene" uid="uid://uouy4r2hdrph" path="res://Scenes/Combat/PartyMemberUI.tscn" id="4_vgq8a"]
+
+[sub_resource type="Theme" id="Theme_8h7dl"]
+
+[node name="BattleUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -2.0
+offset_right = 4.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_gfi2s")
+monster_test = ExtResource("2_8h7dl")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.10011808, 0.073204525, 0.18715522, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.595
+anchor_right = 0.826
+anchor_bottom = 0.768
+offset_right = 192.0
+offset_bottom = 16.0
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+clip_contents = true
+layout_mode = 2
+theme_override_constants/separation = 80
+
+[node name="PartyMemberUi" parent="MarginContainer/HBoxContainer" instance=ExtResource("4_vgq8a")]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -132.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_8h7dl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+top_level = true
+layout_mode = 2
+
+[node name="EnemyContainer" type="Node2D" parent="."]
+position = Vector2(1006, 153)
+
+[node name="Marker2D" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(-266, -43)
+
+[node name="Marker2D2" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(-123, 62)
+
+[node name="Marker2D3" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(-268, 164)
+
+[node name="Marker2D4" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(-398, 63)
+
+[node name="PlayerContainer" type="Node2D" parent="."]
+position = Vector2(269, 216)
+
+[node name="Marker2D" type="Marker2D" parent="PlayerContainer"]
+position = Vector2(-187, -1)
+
+[node name="Marker2D2" type="Marker2D" parent="PlayerContainer"]
+position = Vector2(74, 6)
+
+[node name="Marker2D3" type="Marker2D" parent="PlayerContainer"]
+position = Vector2(-81, 87)
+
+[node name="Marker2D4" type="Marker2D" parent="PlayerContainer"]
+position = Vector2(-81, -101)
+
+[connection signal="bag" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_bag"]
+[connection signal="defend" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_defend"]
+[connection signal="fight" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_fight"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_pressed"]
+[connection signal="run" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_run"]
+[connection signal="skill" from="MarginContainer/HBoxContainer/PartyMemberUi" to="." method="_on_party_member_ui_skill"]

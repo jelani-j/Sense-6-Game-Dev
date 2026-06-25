@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AttackData" load_steps=2 format=3 uid="uid://brqf38frkhim"]
+
+[ext_resource type="Script" uid="uid://bcco0wqu3xis1" path="res://Resource Items/Attack Types/attack_data.gd" id="1_msugq"]
+
+[resource]
+script = ExtResource("1_msugq")
+name = "Bite"
+damage = 2
+cost = 1
+attack_type = 1
+attack_category = "Martial-Art"
+critical_chance = 0.05
+status_chance = 0.002
+speed = 1.0
+metadata/_custom_type_script = "uid://bcco0wqu3xis1"

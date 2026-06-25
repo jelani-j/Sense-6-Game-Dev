@@ -1,0 +1,430 @@
+extends Control
+
+@onready var enemy_slots = $EnemyContainer.get_children()
+@onready var player_slots = $PlayerContainer.get_children()
+@onready var party_container = $"UIContainer/ActionContainer/Party-Members"
+@onready var panel_container = $UIContainer/ActionContainer/ActionOptions
+@onready var log_container = $UIContainer/ActionContainer/BattleLog
+@onready var minigame_container = $"UIContainer/ActionContainer/Mini-Game"
+var inventory = Global.Inventory
+var member_uis = []
+enum BattleState {
+	IDLE,
+	SELECTING_CHARACTER,
+	SELECTING_ACTION,
+	TARGETING,
+	EXECUTING,
+	BLOCKING,
+	RUNNING,
+	UTILITY,
+	SPECIAL,
+	VICTORY,
+	DEFEAT,
+	ESCAPED
+}
+signal battle_end_condition(state)
+var battle_state := BattleState.IDLE
+var selected_member = null
+var players_array: Array[BattleUnit] = []
+var enemies_array: Array[BattleUnit] = []
+var active_player : BattleUnit
+var selected_attack : AttackData
+var action_queue = []
+var action_obejct: Dictionary = {
+		"type": "",
+		"actor": BattleUnit,
+		"target": BattleUnit,
+	}
+
+
+func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	
+# Called when the node enters the scene tree for the first time.
+func start_battle(player_data: Array[PlayerData], monser_data: Array[MonsterData]):
+	spawn_monster(monser_data)
+	spawn_player(player_data)
+	spawn_party_member_UI()
+
+## Spawning Entities ##
+func spawn_monster(monster_data: Array[MonsterData]):
+	for i in range(monster_data.size()):
+		var unit = load("res://Scenes/Combat/Battle_Unit.tscn").instantiate()
+		$EnemyContainer.add_child(unit)
+		unit.setup(monster_data[i], true)
+		unit.global_position = enemy_slots[i].global_position
+		enemies_array.append(unit)
+
+func spawn_player(player_data: Array[PlayerData]):
+	for i in player_data.size():
+		var unit = preload("res://Scenes/Combat/Battle_Unit.tscn").instantiate()
+		$PlayerContainer.add_child(unit)
+		unit.setup(player_data[i], false)
+		unit.global_position = player_slots[i].global_position
+		players_array.append(unit)
+
+func spawn_party_member_UI():
+	for player in players_array:
+		var member_ui = preload("res://Scenes/Combat/PartyMemberUI.tscn").instantiate()
+		party_container.add_child(member_ui)
+		member_ui.setup(player)
+		member_ui.selected.connect(_on_member_selected)
+		member_uis.append(member_ui)
+		member_ui.action_selected.connect(_on_action_selected)
+## Despawn Entities ##
+func despawn_member_ui(party_member: BattleUnit):
+	for member in member_uis:
+		if party_member.unit_data.name == member.member_name:
+			party_container.remove_child(member)
+func despawn_entity():
+	for enemy in enemies_array:
+		if enemy.current_hp <= 0:
+			enemy.die()
+## UI Option Functionality ##
+func clear_panel():
+	for child in panel_container.get_children():
+		child.queue_free()
+func clear_minigame_panel():
+	for child in minigame_container.get_children():
+		child.queue_free()
+		
+func create_attack_buttons(unit: BattleUnit):
+	clear_panel()
+	battle_state = BattleState.SELECTING_ACTION
+	var weapon_art_btn = Button.new()
+	var martial_art_btn = Button.new()
+	weapon_art_btn.text = "Weapon Arts"
+	martial_art_btn.text = "Martial Arts"
+	martial_art_btn.pressed.connect(create_martial_attack_buttons.bind(unit))
+	weapon_art_btn.pressed.connect(create_weapon_attack_buttons.bind(unit))
+	panel_container.add_child(weapon_art_btn)
+	panel_container.add_child(martial_art_btn)
+	#for attack in unit.unit_data.attacks:
+		#var btn = Button.new()
+		#btn.text = attack.name
+		#btn.pressed.connect(_on_attack_selected.bind(unit, attack))
+		#panel_container.add_child(btn)
+
+func create_weapon_attack_buttons(unit):
+	clear_panel()
+	for attack in unit.unit_data.attacks:
+		if attack.attack_category == "Weapon-art":
+			var wep_btn = Button.new()
+			wep_btn.text = attack.name
+			wep_btn.pressed.connect(_on_attack_selected.bind(unit, attack))
+			panel_container.add_child(wep_btn)
+			
+func create_martial_attack_buttons(unit):
+	clear_panel()
+	for attack in unit.unit_data.attacks:
+		if attack.attack_category == "Martial-Art":
+			var mart_btn = Button.new()
+			mart_btn.text = attack.name
+			mart_btn.pressed.connect(_on_attack_selected.bind(unit, attack))
+			panel_container.add_child(mart_btn)
+	
+#
+func _on_attack_selected(player: BattleUnit, attack: AttackData):
+	battle_state = BattleState.TARGETING
+	active_player = player
+	selected_attack = attack
+	clear_panel()
+	show_targets(enemies_array)
+## Attack Ui Option Functionality ##
+func attack_target(target: BattleUnit, attack: AttackData):
+	battle_state = BattleState.EXECUTING
+	clear_panel()
+	action_obejct = {
+		"type": "attack",
+		"actor": active_player,
+		"target": target,
+		"attack": selected_attack
+	}
+	action_queue.push_back(action_obejct)
+	resolve_turns()
+func check_battle_end():
+	print("checking battle state!")
+	var living_enemy = 0
+	var living_player = 0
+	for enemy in enemies_array:
+		if is_instance_valid(enemy) and enemy.current_hp > 0:
+			living_enemy += 1
+	for player in players_array:
+		if is_instance_valid(player) and player.current_hp > 0:
+			living_player += 1
+	print ("Living Enemies: ", + living_enemy, " Living Players: ", + living_player)
+	if living_enemy == 0:
+		return BattleState.VICTORY
+	if living_player == 0:
+		return BattleState.DEFEAT
+	return null
+
+func mini_game_func():
+	var minigame_bar = CenterContainer.new()
+	minigame_container.add_child(minigame_bar)
+	var timing_bar = ProgressBar.new()
+	timing_bar.custom_minimum_size = Vector2(300, 20)
+	timing_bar.clip_contents = false
+	timing_bar.max_value = 100
+	minigame_bar.add_child(timing_bar)
+	
+	var target_spot = ColorRect.new()
+	target_spot.color = Color(0.075, 0.918, 0.475, 0.863)
+	var target_min = 0.45
+	var target_max = 0.55
+	setup_target_zone(timing_bar, target_spot, target_min, target_max)
+	timing_bar.add_child(target_spot)
+	var result = await wait_for_input(timing_bar, target_spot, target_min, target_max)
+	log_container.text += "Minigame_result: " +result
+	clear_minigame_panel()
+	return result
+	
+func setup_target_zone(timing_bar, target_spot, target_min, target_max):
+	await get_tree().process_frame
+	var bar_width = timing_bar.size.x
+	var pixel_min = target_min * bar_width
+	var pixel_max = target_max * bar_width
+	target_spot.position = Vector2(pixel_min, 0)
+	target_spot.size = Vector2(pixel_max - pixel_min, timing_bar.size.y)
+	
+func wait_for_input(timing_bar, target_spot, target_min, target_max):
+	var input_recieved = false 
+	var result = "missed"
+	var progress = 0.0
+	while input_recieved == false:
+		await get_tree().process_frame
+		progress += 1 * get_process_delta_time()
+		timing_bar.value = progress * 100
+		var time_bar_rect = timing_bar.get_global_rect()
+		var target_spot_rect = target_spot.get_global_rect()
+		if Input.is_action_just_pressed("minigame_attack"):
+			if progress >= target_min and progress <= target_max:
+				result = "perfect"
+			elif progress >= target_min - 0.1 and progress <= target_max + 0.1:
+				result = "good"
+			else:
+				result = "bad"
+			print(result)
+			input_recieved = true
+	return result
+	
+func handle_attack(text_display_actor, target_data, attack_data, actor_data):
+	if is_instance_valid(target_data):
+		var target_name = target_data.unit_data.name
+		var attack_name = attack_data.name
+
+		for party_member in member_uis:
+			party_member.set_hp_value()
+		log_container.text += "\n" + text_display_actor + " Used: " + attack_name + " on " + target_name
+
+func handle_defense(text_display_actor, actor):
+	battle_state = BattleState.BLOCKING
+	actor.set_defending(true)
+	log_container.text += "\n" + text_display_actor + " is Defending"
+
+func handle_run(text_display_actor):
+	battle_state = BattleState.RUNNING
+	log_container.text += "\n" + text_display_actor + " is Running away!"
+
+func _on_action_selected(unit, action):
+	if battle_state != BattleState.VICTORY and battle_state != BattleState.DEFEAT:
+		match action:
+			"fight":
+				create_attack_buttons(unit)
+			"defend":
+				clear_panel()
+				action_obejct = {
+					"type": "defend",
+					"actor": unit
+				}
+				action_queue.push_back(action_obejct)
+				resolve_turns()
+			"bag":
+				clear_panel()
+				show_inventory(inventory, unit)
+				battle_state = BattleState.UTILITY
+			"run":
+				clear_panel()
+				action_obejct = {
+					"type": "run",
+					"actor": unit
+				}
+				action_queue.push_back(action_obejct)
+				resolve_turns()
+			#"skill":
+				#battle_state = BattleState.SPECIAL
+				#print(player.member_name, "Activating Special Ability!")
+	else:
+		resolve_turns()
+## Displaying UI Options ##
+func _on_member_selected(member):
+	if battle_state != BattleState.IDLE:
+		return
+	battle_state = BattleState.SELECTING_CHARACTER
+	print("Selecting:", member.member_name)
+	
+func show_targets(targets: Array[BattleUnit]):
+	for target in targets:
+		if is_instance_valid(target):
+			var monster_target = Button.new()
+			monster_target.text = target.unit_data.name
+			panel_container.add_child(monster_target)
+			monster_target.pressed.connect(attack_target.bind(target, selected_attack))
+		else:
+			battle_state = BattleState.VICTORY
+func show_inventory(bag: InventoryData, unit):
+	for slot in bag.slots:
+		var slot_button = Button.new()
+		slot_button.text = slot.item.name + " x" + str(slot.quantity)
+		panel_container.add_child(slot_button)
+		slot_button.pressed.connect(inventory_use.bind(slot.item, bag, unit))
+		
+func inventory_use(item: ItemData, bag: InventoryData, unit: BattleUnit):
+	action_obejct = {
+		"type": "bag",
+		"actor": unit,
+		"item": item,
+		"bag": bag
+	}
+	action_queue.push_back(action_obejct)
+	clear_panel()
+	resolve_turns()
+	
+## Monster AI Functionality ##
+func monster_ai(enemies_array, players_array):
+	for monster in enemies_array:
+		if is_instance_valid(monster) and monster.is_alive():
+			action_queue.push_back({
+				"type": "attack",
+				"actor": monster,
+				"target": players_array[0],
+				"attack": monster.unit_data.attacks[0]
+			})
+## Turn Processing ##
+func action_interpreter(action_queue):
+	for action in action_queue:
+		if is_instance_valid(action["actor"]):
+			var text_display_actor = action["actor"].unit_data.name
+			var actor_data = action["actor"].unit_data
+			match action["type"]:
+				"attack":
+					if not is_instance_valid(action["actor"]) or not action["actor"].is_alive():
+						continue
+					handle_attack(text_display_actor, action["target"], action["attack"], actor_data)
+				"defend":
+					handle_defense(text_display_actor, action["actor"])
+				"bag":
+					var item = action["item"]
+					var bag = action["bag"]
+					var actor = action["actor"]
+					log_container.text += "\n" + text_display_actor + " is Using: " + item.name
+					bag.use_item(item, actor)
+				"run":
+					handle_run(text_display_actor)
+					battle_state = BattleState.ESCAPED
+					battle_end_condition.emit(battle_state)
+					despawn_member_ui(action["actor"])
+
+func minigame_sequence(action_queue):
+	for action in action_queue:
+		if not is_instance_valid(action["actor"]) or not action["actor"].is_alive():
+			continue
+		if action["type"] != "attack":
+			continue
+		if not (action["actor"].unit_data is PlayerData):
+			continue
+		var results = await mini_game_func()
+		return results
+
+#need to add handle death here or have another area to implement minigame await as if its here it will cause a delay in death
+func damage_phase(action_queue, mini_game_results):
+	for action in action_queue:
+		if not is_instance_valid(action["actor"]) or not action["actor"].is_alive():
+			continue
+		if action["type"] != "attack":
+			continue
+		var attack_data = action["attack"]
+		var target_data = action["target"]
+		var actor_data = action["actor"].unit_data
+		var power = actor_data.attack
+		target_data.process_attack(attack_data, target_data.unit_data.defense, power, mini_game_results)
+
+func handle_death():
+	var all_units = players_array + enemies_array
+	for unit in all_units:
+		if unit.current_hp <= 0:
+			log_container.text += "\n" + unit.name + " was Slain"
+			if unit is PlayerData:
+				despawn_member_ui(unit)
+				
+			despawn_entity()
+			var result = check_battle_end()
+			if result != null:
+				battle_state = result
+				if result == BattleState.VICTORY:
+					log_container.text += "\nVictory!"
+					print(" won the battle")
+				elif result == BattleState.DEFEAT:
+					log_container.text += "\nAll Allies Slain..."
+				battle_end_condition.emit(battle_state)
+				return
+
+func apply_status_effect():
+	for action in action_queue:
+		if action["type"] != "attack":
+			continue
+		var attack_data = action["attack"]
+		if attack_data["status"] == null:
+			print(attack_data["status"])
+			continue
+		print("reaching status effect apply")
+		var status_effect = attack_data["status"]
+		var target = action["target"]
+		#if randf() <= attack_data.status_chance:
+		if attack_data.status_chance != null:
+			target.add_status({"status": attack_data.status, "duration": 1})
+
+func status_effect_phase():
+	var all_units = enemies_array + players_array
+	for unit in all_units:
+		var status_effects = unit.get_status()
+		if status_effects.is_empty():
+			continue
+		for i in range(status_effects.size() - 1, -1, -1):
+			var effect = status_effects[i]
+			var status = effect["status"]
+			match status:
+				"Stun":
+					unit.status_damage("Stun")
+				"Bleeding":
+					print("you are Bleeding!")
+					unit.status_damage("Bleeding")
+				"Poison":
+					print("you are Poisioned!")
+					unit.status_damage("Poison")
+				"Fire":
+					unit.status_damage("Fire")
+				"Electrified":
+					unit.status_damage("Electrified")
+				"Soul Shatterd":
+					unit.status_damage("Soul Shattered")
+					
+			effect["duration"] -= 1
+			if effect["duration"] <= 0:
+				unit.clear_status()
+		print(status_effects)
+
+
+func resolve_turns():
+	monster_ai(enemies_array, players_array)
+	action_interpreter(action_queue)
+	var minigame_phase = await minigame_sequence(action_queue)
+	damage_phase(action_queue, minigame_phase)
+	handle_death()
+	apply_status_effect()
+	status_effect_phase()
+	handle_death()
+	for unit in action_queue:
+		unit["actor"].set_defending(false)
+	action_queue.clear()
+	

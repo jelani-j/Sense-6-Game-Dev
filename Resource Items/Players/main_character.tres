@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="PlayerData" load_steps=8 format=3 uid="uid://hapk1guai8mn"]
+
+[ext_resource type="Script" uid="uid://d7qhwar4tx1a" path="res://Resource Items/Players/player_data.gd" id="1_k3ba2"]
+[ext_resource type="Script" uid="uid://bcco0wqu3xis1" path="res://Resource Items/Attack Types/attack_data.gd" id="1_n6icq"]
+[ext_resource type="Resource" uid="uid://dcenda46m4oin" path="res://Resource Items/Attack Types/bolt-shot.tres" id="2_p6l8i"]
+[ext_resource type="Resource" uid="uid://d17ssq6a3xof3" path="res://Resource Items/Attack Types/snipe_shot.tres" id="3_v0kh2"]
+[ext_resource type="Resource" uid="uid://dp3st06vndmlm" path="res://Resource Items/Attack Types/punch.tres" id="4_w8hsg"]
+[ext_resource type="Texture2D" uid="uid://nn851pkyirt1" path="res://Sprite_Textures/Sonnet_Sprite/Sonnet_Sprite.png" id="5_l4yw6"]
+[ext_resource type="Resource" uid="uid://cojsttb528aad" path="res://Resource Items/Attack Types/kick.tres" id="5_u0kar"]
+
+[resource]
+script = ExtResource("1_k3ba2")
+name = "Sonnet"
+max_hp = 10
+attack = 1
+texture = ExtResource("5_l4yw6")
+attacks = Array[ExtResource("1_n6icq")]([ExtResource("2_p6l8i"), ExtResource("3_v0kh2"), ExtResource("4_w8hsg"), ExtResource("5_u0kar")])
+personality_trait = null
+metadata/_custom_type_script = "uid://d7qhwar4tx1a"

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AttackData" load_steps=2 format=3 uid="uid://dp3st06vndmlm"]
+
+[ext_resource type="Script" uid="uid://bcco0wqu3xis1" path="res://Resource Items/Attack Types/attack_data.gd" id="1_1j28v"]
+
+[resource]
+script = ExtResource("1_1j28v")
+name = "punch"
+damage = 2
+cost = 1
+attack_type = 0
+status = 2
+attack_category = "Martial-Art"
+speed = 3.0
+metadata/_custom_type_script = "uid://bcco0wqu3xis1"

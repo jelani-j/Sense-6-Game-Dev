@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c28rarraor4co"
+path="res://.godot/imported/sprMagicBolt.aseprite-b360317bd54c4bed867e1283eea30724.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Effects/sprMagicBolt.aseprite"
+dest_files=["res://.godot/imported/sprMagicBolt.aseprite-b360317bd54c4bed867e1283eea30724.res"]
+
+[params]
+

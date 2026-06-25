@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cpjf8rlxhy5ee"
+path="res://.godot/imported/stalagbite_base.aseprite-be4e75278794bd17441f928cb26948f3.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Monster_Sprites/stalagbite_base.aseprite"
+dest_files=["res://.godot/imported/stalagbite_base.aseprite-be4e75278794bd17441f928cb26948f3.res"]
+
+[params]
+

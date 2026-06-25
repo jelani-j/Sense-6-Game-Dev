@@ -1,0 +1,84 @@
+[gd_scene load_steps=4 format=3 uid="uid://s1f7m0ywxt8v"]
+
+[ext_resource type="Script" uid="uid://dny4i0q3hdsck" path="res://Scenes/Main_Menu/main_menu.gd" id="1_6fw5m"]
+
+[sub_resource type="Theme" id="Theme_c4tk2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_hckgo"]
+outline_size = 2
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6fw5m")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+offset_left = 1.0
+offset_top = 8.0
+offset_right = 225.0
+offset_bottom = 364.0
+size_flags_vertical = 2
+
+[node name="Options_Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = SubResource("Theme_c4tk2")
+theme_override_colors/font_color = Color(0.48959064, 0.81614774, 0.81697136, 1)
+text = "Options"
+
+[node name="New_Game_Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = SubResource("Theme_c4tk2")
+theme_override_colors/font_color = Color(0.49019608, 0.8156863, 0.8156863, 1)
+text = "New Game"
+
+[node name="Other_Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.49019608, 0.8156863, 0.8156863, 1)
+text = "Other"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+modulate = Color(0.64375705, 0.7513189, 0.99410194, 1)
+self_modulate = Color(0, 0.3255379, 0.32647133, 1)
+visibility_layer = 2
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 248.0
+offset_bottom = 319.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+label_settings = SubResource("LabelSettings_hckgo")
+
+[connection signal="mouse_entered" from="VBoxContainer/Options_Button" to="." method="_on_options_button_mouse_entered"]
+[connection signal="pressed" from="VBoxContainer/Options_Button" to="." method="_on_options_button_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/New_Game_Button" to="." method="_on_new_game_button_mouse_entered"]
+[connection signal="pressed" from="VBoxContainer/New_Game_Button" to="." method="_on_new_game_button_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/Other_Button" to="." method="_on_other_button_mouse_entered"]
+[connection signal="pressed" from="VBoxContainer/Other_Button" to="." method="_on_other_button_pressed"]

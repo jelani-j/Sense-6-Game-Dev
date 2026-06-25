@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://cvwwtwxc3ylda"]
+
+[ext_resource type="Texture2D" uid="uid://cci10m3ssi3op" path="res://Sprite_Textures/16x32/16x32 Idle-Sheet.png" id="1_sm5or"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oa5y3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2dfd"]
+atlas = ExtResource("1_sm5or")
+region = Rect2(0, 0, 16, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0pk3"]
+atlas = ExtResource("1_sm5or")
+region = Rect2(16, 0, 16, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kgpbn"]
+atlas = ExtResource("1_sm5or")
+region = Rect2(32, 0, 16, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vk30l"]
+atlas = ExtResource("1_sm5or")
+region = Rect2(48, 0, 16, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xg4ks"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2dfd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w0pk3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kgpbn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vk30l")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[node name="Sense-6-Test" type="Node2D"]
+
+[node name="Sonnet" type="CharacterBody2D" parent="."]
+
+[node name="Sonnet-Hitbox" type="CollisionShape2D" parent="Sonnet"]
+shape = SubResource("CircleShape2D_oa5y3")
+
+[node name="Sonnet-Animations" type="AnimatedSprite2D" parent="Sonnet/Sonnet-Hitbox"]
+sprite_frames = SubResource("SpriteFrames_xg4ks")
+animation = &"Idle"

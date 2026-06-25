@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bcq45x8g662q4"
+path="res://.godot/imported/sprStairs.aseprite-b68881684a7b3a95e9a5562994ef03b4.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Environment/sprStairs.aseprite"
+dest_files=["res://.godot/imported/sprStairs.aseprite-b68881684a7b3a95e9a5562994ef03b4.res"]
+
+[params]
+

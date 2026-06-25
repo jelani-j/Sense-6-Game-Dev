@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://buu6f37nyvwqd"
+path="res://.godot/imported/sprShockwave.aseprite-e28ea276ba8ea37b946a1d09717845ab.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Effects/sprShockwave.aseprite"
+dest_files=["res://.godot/imported/sprShockwave.aseprite-e28ea276ba8ea37b946a1d09717845ab.res"]
+
+[params]
+

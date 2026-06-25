@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ur0l4g55jjnm"
+path="res://.godot/imported/sprHeart.aseprite-72d6d218a3a0ccca5a7ed2d34dbc035a.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/UI/sprHeart.aseprite"
+dest_files=["res://.godot/imported/sprHeart.aseprite-72d6d218a3a0ccca5a7ed2d34dbc035a.res"]
+
+[params]
+

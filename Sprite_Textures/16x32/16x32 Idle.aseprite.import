@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://0qsvuf2hx4b8"
+path="res://.godot/imported/16x32 Idle.aseprite-e8ddbdea74ce6b5c0b049582242dd399.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/16x32/16x32 Idle.aseprite"
+dest_files=["res://.godot/imported/16x32 Idle.aseprite-e8ddbdea74ce6b5c0b049582242dd399.res"]
+
+[params]
+

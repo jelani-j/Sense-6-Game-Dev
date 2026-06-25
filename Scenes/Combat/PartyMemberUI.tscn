@@ -1,0 +1,85 @@
+[gd_scene load_steps=2 format=3 uid="uid://uouy4r2hdrph"]
+
+[ext_resource type="Script" uid="uid://chw5dakabpyo0" path="res://Scenes/Combat/party_member_ui.gd" id="1_cnown"]
+
+[node name="PartyMemberUi" type="Button"]
+custom_minimum_size = Vector2(0, 50)
+layout_direction = 1
+offset_right = 250.0
+offset_bottom = 128.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_cnown")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Icon" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Status" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Name" type="Label" parent="HBoxContainer/Status"]
+layout_mode = 2
+text = "Main Character"
+
+[node name="HPBar" type="ProgressBar" parent="HBoxContainer/Status"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+step = 1.0
+show_percentage = false
+
+[node name="HpText" type="Label" parent="HBoxContainer/Status/HPBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Extra_Stats" type="HBoxContainer" parent="HBoxContainer/Status"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+
+[node name="Fight_btn" type="Button" parent="HBoxContainer/Status/Extra_Stats"]
+layout_mode = 2
+text = "Atk"
+
+[node name="Def_btn" type="Button" parent="HBoxContainer/Status/Extra_Stats"]
+layout_mode = 2
+text = "Def"
+
+[node name="Skill_btn" type="Button" parent="HBoxContainer/Status/Extra_Stats"]
+layout_mode = 2
+text = "Abl"
+
+[node name="Bag_btn" type="Button" parent="HBoxContainer/Status/Extra_Stats"]
+layout_mode = 2
+text = "Bag"
+
+[node name="Run_btn" type="Button" parent="HBoxContainer/Status/Extra_Stats"]
+layout_mode = 2
+text = "Run"
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]
+[connection signal="pressed" from="HBoxContainer/Status/Extra_Stats/Fight_btn" to="." method="_on_fight_btn_pressed"]
+[connection signal="pressed" from="HBoxContainer/Status/Extra_Stats/Def_btn" to="." method="_on_def_btn_pressed"]
+[connection signal="pressed" from="HBoxContainer/Status/Extra_Stats/Skill_btn" to="." method="_on_skill_btn_pressed"]
+[connection signal="pressed" from="HBoxContainer/Status/Extra_Stats/Bag_btn" to="." method="_on_bag_btn_pressed"]
+[connection signal="pressed" from="HBoxContainer/Status/Extra_Stats/Run_btn" to="." method="_on_run_btn_pressed"]

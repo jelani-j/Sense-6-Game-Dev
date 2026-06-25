@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dqwu38jxvk0y7"
+path="res://.godot/imported/sprFireExplosion.aseprite-342b1e731d32ac44849df5b13125071b.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Sprite_template_tests/DebtsInTheDepthsAssets/Effects/sprFireExplosion.aseprite"
+dest_files=["res://.godot/imported/sprFireExplosion.aseprite-342b1e731d32ac44849df5b13125071b.res"]
+
+[params]
+

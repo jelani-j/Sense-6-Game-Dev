@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c7hacs30dj1qd"
+path="res://.godot/imported/direfang_wolf_sprite.aseprite-94fdd8d9d73f52b0e8bddecc25f73552.res"
+
+[deps]
+
+source_file="res://Sprite_Textures/Monster_Sprites/direfang_wolf_sprite.aseprite"
+dest_files=["res://.godot/imported/direfang_wolf_sprite.aseprite-94fdd8d9d73f52b0e8bddecc25f73552.res"]
+
+[params]
+

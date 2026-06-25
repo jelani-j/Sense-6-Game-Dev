@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=3 uid="uid://cesjnxsq3efhe"]
+
+[ext_resource type="Script" uid="uid://37wr1ggidvcl" path="res://Scenes/Quiz-Components/test_intro.gd" id="1_ml0tp"]
+
+[node name="FrontScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Test_Intro_Container" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Test_Intro_Container"]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0, 0, 0, 1)
+
+[node name="Test_Intro" type="VBoxContainer" parent="Test_Intro_Container/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ml0tp")
+
+[node name="Intro_Prompt" type="VBoxContainer" parent="Test_Intro_Container/ColorRect/Test_Intro"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Intro_Prompt" type="Label" parent="Test_Intro_Container/ColorRect/Test_Intro/Intro_Prompt"]
+custom_minimum_size = Vector2(4, 4)
+layout_mode = 2
+size_flags_vertical = 6
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Next_Button" type="VBoxContainer" parent="Test_Intro_Container/ColorRect/Test_Intro"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Continue" type="Button" parent="Test_Intro_Container/ColorRect/Test_Intro/Next_Button"]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 2
+
+[connection signal="pressed" from="Test_Intro_Container/ColorRect/Test_Intro/Next_Button/Continue" to="Test_Intro_Container/ColorRect/Test_Intro" method="_on_continue_pressed"]

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="MonsterData" load_steps=6 format=3 uid="uid://cjr2plnrohubb"]
+
+[ext_resource type="Script" uid="uid://bcco0wqu3xis1" path="res://Resource Items/Attack Types/attack_data.gd" id="1_nsseg"]
+[ext_resource type="Script" uid="uid://bklrb16e7lbgp" path="res://Resource Items/Monsters/monster_data.gd" id="2_0jyig"]
+[ext_resource type="Resource" uid="uid://cgfgly6yx8kpe" path="res://Resource Items/Attack Types/Sound_Wave.tres" id="2_u2cpj"]
+[ext_resource type="Texture2D" uid="uid://xp5ls6spygee" path="res://Sprite_Textures/Monster_Sprites/stalagbite_base.png" id="3_0jyig"]
+[ext_resource type="Resource" uid="uid://brqf38frkhim" path="res://Resource Items/Attack Types/Bite.tres" id="3_v6fw5"]
+
+[resource]
+script = ExtResource("2_0jyig")
+name = "Stalagbat"
+max_hp = 10
+attack = 3
+speed = 4.0
+texture = ExtResource("3_0jyig")
+attacks = Array[ExtResource("1_nsseg")]([ExtResource("2_u2cpj"), ExtResource("3_v6fw5")])
+metadata/_custom_type_script = "uid://bklrb16e7lbgp"
