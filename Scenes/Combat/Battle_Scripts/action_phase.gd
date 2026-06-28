@@ -1,4 +1,4 @@
-extends Node
+extends RefCounted
 
 #need to add handle death here or have another area to implement minigame await as if its here it will cause a delay in death
 func damage_phase(action_queue, mini_game_results):
@@ -11,6 +11,5 @@ func damage_phase(action_queue, mini_game_results):
 		var target_data = action["target"]
 		var actor_data = action["actor"].unit_data
 		var power = actor_data.attack
-		target_data.process_attack(attack_data, power, target_data.unit_data.defense, mini_game_results)
-		await get_tree().create_timer(0.2).timeout  
+		target_data.process_attack(attack_data, power, target_data.unit_data.defense, mini_game_results) 
 		

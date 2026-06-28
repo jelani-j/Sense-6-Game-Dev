@@ -1,4 +1,4 @@
-extends Node
+extends RefCounted
 
 func apply_status_effect():
 	for action in action_queue:

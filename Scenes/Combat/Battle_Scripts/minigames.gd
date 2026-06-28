@@ -1,4 +1,7 @@
-extends Node
+extends RefCounted
+class_name AttackMinigame
+
+var minigame_container
 
 func clear_minigame_panel():
 	for child in minigame_container.get_children():
@@ -20,12 +23,12 @@ func mini_game_func():
 	setup_target_zone(timing_bar, target_spot, target_min, target_max)
 	timing_bar.add_child(target_spot)
 	var result = await wait_for_input(timing_bar, target_spot, target_min, target_max)
-	log_container.text += "Minigame_result: " +result
+	#log_container.text += "Minigame_result: " +result
 	clear_minigame_panel()
 	return result
 	
 func setup_target_zone(timing_bar, target_spot, target_min, target_max):
-	await get_tree().process_frame
+	#await get_tree().process_frame
 	var bar_width = timing_bar.size.x
 	var pixel_min = target_min * bar_width
 	var pixel_max = target_max * bar_width
@@ -37,8 +40,8 @@ func wait_for_input(timing_bar, target_spot, target_min, target_max):
 	var result = "missed"
 	var progress = 0.0
 	while input_recieved == false:
-		await get_tree().process_frame
-		progress += 1 * get_process_delta_time()
+		#await get_tree().process_frame
+		#progress += 1 * get_process_delta_time()
 		timing_bar.value = progress * 100
 		var time_bar_rect = timing_bar.get_global_rect()
 		var target_spot_rect = target_spot.get_global_rect()

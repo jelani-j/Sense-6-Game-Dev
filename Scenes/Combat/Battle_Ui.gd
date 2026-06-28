@@ -17,11 +17,10 @@ var action_queue = []
 var action_object: Dictionary = {}
 signal battle_end_condition(state)
 signal current_action(action_object)
-var battle_controller: BattleController
+var battle_controller = BattleController.new()
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	battle_controller = BattleController.new()
 	battle_controller._current_action_listener(self)
 
 # Called when the node enters the scene tree for the first time.
@@ -147,7 +146,7 @@ func trigger_attack(target, selected_attack):
 			party_member.set_hp_value()
 		log_container.text += "\n" + active_player.unit_data.name  + " Used: " + attack_name + " on " + target_name
 		action_object = {
-			"type": "fight",
+			"type": "attack",
 			"actor": active_player,
 			"target": target
 		}

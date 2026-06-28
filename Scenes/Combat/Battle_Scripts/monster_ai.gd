@@ -1,4 +1,4 @@
-extends Node
+extends RefCounted
 
 ## Monster AI Functionality ##
 func monster_ai(enemies_array, players_array):
