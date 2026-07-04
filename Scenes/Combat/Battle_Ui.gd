@@ -119,6 +119,9 @@ func show_targets(targets: Array[BattleUnit]):
 			panel_container.add_child(monster_target)
 			monster_target.pressed.connect(trigger_attack.bind(target, selected_attack))
 
+func spawn_minigame():
+	print("make logic for modular minigame spawning here similar to signal listener enum val")
+
 ## Handling Button Inputs & sending them to propper next function
 func _on_action_selected(unit, action):
 	match action:
@@ -148,6 +151,7 @@ func trigger_attack(target, selected_attack):
 		action_object = {
 			"type": "attack",
 			"actor": active_player,
+			"move": selected_attack,
 			"target": target
 		}
 		current_action.emit(action_object)

@@ -9,13 +9,6 @@ var player_array
 var enemy_array
 var minigame_container
 
-enum BATTLESTATE{
-	Player_Phase,
-	Enemy_Phase,
-	Damage_Phase,
-	End_Phase
-	
-}
 
 func _current_action_listener(battle_signal: Node) -> void:
 	battle_signal.current_action.connect(_action_reciever)
@@ -29,7 +22,6 @@ func _action_reciever(action: Dictionary):
 
 func process_action():
 	interpreter.action_interpreter(action_queue,enemy_array,player_array,minigame_container)
-	
 	action_queue.clear()
 
 

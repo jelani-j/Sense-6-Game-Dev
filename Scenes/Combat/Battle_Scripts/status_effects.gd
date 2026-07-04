@@ -1,46 +1,56 @@
 extends RefCounted
+class_name StatusProcessing
 
-func apply_status_effect():
-	for action in action_queue:
-		if action["type"] != "attack":
-			continue
-		var attack_data = action["attack"]
-		if attack_data["status"] == null:
-			print(attack_data["status"])
-			continue
-		print("reaching status effect apply")
-		var status_effect = attack_data["status"]
-		var target = action["target"]
-		#if randf() <= attack_data.status_chance:
-		if attack_data.status_chance != null:
-			target.add_status({"status": attack_data.status, "duration": 1})
+var current_status
+var status_object: Dictionary
+var status_damage
 
-func status_effect_phase():
-	var all_units = enemies_array + players_array
-	for unit in all_units:
-		var status_effects = unit.get_status()
-		if status_effects.is_empty():
-			continue
-		for i in range(status_effects.size() - 1, -1, -1):
-			var effect = status_effects[i]
-			var status = effect["status"]
-			match status:
-				"Stun":
-					unit.status_damage("Stun")
-				"Bleeding":
-					print("you are Bleeding!")
-					unit.status_damage("Bleeding")
-				"Poison":
-					print("you are Poisioned!")
-					unit.status_damage("Poison")
-				"Fire":
-					unit.status_damage("Fire")
-				"Electrified":
-					unit.status_damage("Electrified")
-				"Soul Shatterd":
-					unit.status_damage("Soul Shattered")
-					
-			effect["duration"] -= 1
-			if effect["duration"] <= 0:
-				unit.clear_status()
-		print(status_effects)
+func trigger_status(target,attack: AttackData):
+	var status = attack.status
+	var status_chance = attack.status_chance
+	print(status, " from attack has a ", status_chance * 100, " % of being triggered")
+	if randf() < status_chance:
+		print("Status Triggered!")
+		apply_status(target,status, 1)
+	else:
+		return
+
+func apply_status(target,status, duration):
+	match status:
+		StatusTypes.STATUS.Defend:
+			return finalize_status(target,status, duration)
+		StatusTypes.STATUS.Poison:
+			tick_damage(target,status, duration)
+		StatusTypes.STATUS.Stun:
+			stun()
+		StatusTypes.STATUS.SoulShattered:
+			print("this will be added later")
+			# implement this one later 4 stacks = great chunck of damage 
+		StatusTypes.STATUS.Bleeding:
+			tick_damage(target,status, duration)
+		StatusTypes.STATUS.Fire:
+			tick_damage(target,status, duration)
+		StatusTypes.STATUS.Electrified:
+			print("this will be added later")
+			# add later disable defending 
+	
+func stun():
+	#skip turn or phase here for duration 
+	print("skipping turn")
+	
+func tick_damage(target,status,duration):
+	# later split this to burn poision and bleed to do different things for now just reduce hp by 1
+	print("applying tick damage")
+	status_damage = 1
+	return finalize_status(target,status, duration)
+	
+
+func finalize_status(target,status, duration) -> Dictionary:
+	#return dictonary with status, effect(damage/edits), and duration
+	status_object = {
+		"target": target,
+		"status": status,
+		"duration": duration,
+		"damage": status_damage
+	}
+	return status_object
