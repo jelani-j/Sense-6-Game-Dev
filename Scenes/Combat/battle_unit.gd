@@ -29,10 +29,14 @@ func _on_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed:
 		emit_signal("unit_clicked", self)
 
-func take_damage(amount):
-	current_hp -= amount
-	if current_hp <= 0:
-		die()	
+func take_damage(phase_data):
+	var target = phase_data["target"]
+	var damage = phase_data["damage"]
+	if target.status_effects.has("status"):
+		print(target.status_effects)
+	target.current_hp -= damage
+	if target.current_hp <= 0:
+		die()
 	
 #make this a function that handles all status damage 
 #func set_status(status):
@@ -55,13 +59,17 @@ func take_damage(amount):
 		#"Soul Shatterd":
 			## if hit too many times with this sets hp to 1 
 			#print("the very soul begins to cry out in pain")
-	
-func add_status(stauts_details: Dictionary):
-	for existing_status in status_effects:
-		if existing_status["status"] == stauts_details["status"]:
-			existing_status["duration"] += stauts_details["duration"]
-			return
-	status_effects.append(stauts_details)
+
+# fix this so only the target is affected rather than all units 
+func add_status(status_details: Dictionary):
+	var target = status_details["target"]
+	var status = status_details["status"]
+	var duration = status_details["duration"]
+	if status_effects == []:
+		status_effects.append(status_details)
+	for effect in status_effects:
+		if effect.has("status") and effect["status"] == status:
+			effect.duration += 1
 
 func status_tick_down():
 	for existing_status in status_effects:

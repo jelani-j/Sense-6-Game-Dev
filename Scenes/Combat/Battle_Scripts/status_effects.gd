@@ -48,6 +48,7 @@ func tick_damage(target,status,duration):
 func finalize_status(target,status, duration) -> Dictionary:
 	#return dictonary with status, effect(damage/edits), and duration
 	status_object = {
+		"type": "status",
 		"target": target,
 		"status": status,
 		"duration": duration,

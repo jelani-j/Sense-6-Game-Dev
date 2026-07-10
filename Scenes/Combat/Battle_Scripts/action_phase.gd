@@ -24,3 +24,6 @@ func calculate_damage(attack_data: AttackData, actor, target):
 		#print(round(player_damage_calc * 0.70))
 	#current_hp -= player_damage_calc
 	return damage_calc
+
+func inventory_use(item: ItemData, bag: InventoryData, target: BattleUnit):
+	return 

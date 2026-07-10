@@ -9,6 +9,7 @@ extends Control
 var inventory = Global.Inventory
 var member_uis = []
 var selected_member = null
+var unit = BattleUnit.new()
 var players_array: Array[BattleUnit] = []
 var enemies_array: Array[BattleUnit] = []
 var active_player : BattleUnit
@@ -22,6 +23,7 @@ var battle_controller = BattleController.new()
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	battle_controller._current_action_listener(self)
+	battle_controller.battle_queue_ready.connect(execute_phases)
 
 # Called when the node enters the scene tree for the first time.
 func start_battle(player_data: Array[PlayerData], monser_data: Array[MonsterData]):
@@ -110,6 +112,7 @@ func _on_attack_selected(player: BattleUnit, attack: AttackData):
 	selected_attack = attack
 	clear_panel()
 	show_targets(enemies_array)
+	
 
 func show_targets(targets: Array[BattleUnit]):
 	for target in targets:
@@ -179,8 +182,19 @@ func show_inventory(bag: InventoryData, unit):
 		panel_container.add_child(slot_button)
 		action_object = {
 			"type": "bag",
+			"Inventory": bag,
 			"actor": unit,
 			"item": slot.item
 		}
 	current_action.emit(action_object)
-	
+
+func execute_phases(queue):
+	for phases in queue:
+		match phases["type"]:
+			"status":
+				unit.add_status(phases)
+			"attack":
+				unit.take_damage(phases)
+			# fix so bag shows data AFTER actual item has been selected
+			"bag":
+				print("bag reached!", phases)

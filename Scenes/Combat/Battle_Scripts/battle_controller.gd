@@ -8,8 +8,8 @@ var interpreter = ActionInterpreter.new()
 var player_array
 var enemy_array
 var minigame_container
-
-
+signal battle_queue_ready(queue)
+	
 func _current_action_listener(battle_signal: Node) -> void:
 	battle_signal.current_action.connect(_action_reciever)
 	player_array = battle_signal.enemies_array
@@ -21,9 +21,10 @@ func _action_reciever(action: Dictionary):
 	process_action()
 
 func process_action():
-	interpreter.action_interpreter(action_queue,enemy_array,player_array,minigame_container)
+	var battle_queue = interpreter.action_interpreter(action_queue,enemy_array,player_array,minigame_container)
 	action_queue.clear()
-
+	battle_queue_ready.emit(battle_queue)
+	
 
 # after recieving action determine how action should be processed
 # after sending it to be procssed the interpreter should handle the actual actions of the queue happening
