@@ -180,11 +180,14 @@ func show_inventory(bag: InventoryData, unit):
 		var slot_button = Button.new()
 		slot_button.text = slot.item.name + " x" + str(slot.quantity)
 		panel_container.add_child(slot_button)
-		action_object = {
+		slot_button.pressed.connect(send_inventory_data.bind(slot.item, bag, unit))
+		
+func send_inventory_data(item, bag, unit):
+	action_object = {
 			"type": "bag",
 			"Inventory": bag,
 			"actor": unit,
-			"item": slot.item
+			"item": item
 		}
 	current_action.emit(action_object)
 
@@ -195,6 +198,5 @@ func execute_phases(queue):
 				unit.add_status(phases)
 			"attack":
 				unit.take_damage(phases)
-			# fix so bag shows data AFTER actual item has been selected
 			"bag":
-				print("bag reached!", phases)
+				unit.inventory_use(phases)

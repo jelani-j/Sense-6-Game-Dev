@@ -32,11 +32,21 @@ func _on_input_event(viewport, event, shape_idx):
 func take_damage(phase_data):
 	var target = phase_data["target"]
 	var damage = phase_data["damage"]
-	if target.status_effects.has("status"):
-		print(target.status_effects)
-	target.current_hp -= damage
 	if target.current_hp <= 0:
 		die()
+	if target.status_effects.has("status"):
+		for effect in target.status_effects:
+			if effect["status"] == 1:
+				target.current_hp -= roundi(damage * 0.3)
+	else:
+		target.current_hp -= damage
+
+func inventory_use(phase_data):
+	var target = phase_data["actor"]
+	var item = phase_data["item"]
+	var bag = phase_data["Inventory"]
+	print(item.name)
+	bag.use_item(item, target)
 	
 #make this a function that handles all status damage 
 #func set_status(status):
