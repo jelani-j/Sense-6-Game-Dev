@@ -4,7 +4,9 @@ extends RefCounted
 class_name BattleController
 
 var action_queue = []
+var battle_queue = []
 var interpreter = ActionInterpreter.new()
+var monsters = MonsterAi.new()
 var player_array
 var enemy_array
 var minigame_container
@@ -21,7 +23,9 @@ func _action_reciever(action: Dictionary):
 	process_action()
 
 func process_action():
-	var battle_queue = interpreter.action_interpreter(action_queue,enemy_array,player_array,minigame_container)
+	var monster_action = monsters.monster_ai(enemy_array,player_array, minigame_container)
+	battle_queue += interpreter.action_interpreter(action_queue,enemy_array,player_array,minigame_container)
+	battle_queue += interpreter.action_interpreter(monster_action,enemy_array,player_array,minigame_container)
 	action_queue.clear()
 	battle_queue_ready.emit(battle_queue)
 	

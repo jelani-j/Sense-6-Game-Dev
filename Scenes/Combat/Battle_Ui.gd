@@ -196,6 +196,7 @@ func execute_phases(queue):
 		match phases["type"]:
 			"status":
 				unit.add_status(phases)
+			# next work on minigame for attack data [ only for skills, attk will be normal but build mtr]
 			"attack":
 				unit.take_damage(phases)
 			"bag":
