@@ -17,8 +17,13 @@ func item_select_phase(actor, item, bag ):
 		"Inventory": bag
 	}
 		
-func status_phase(phase):
-	return phase
+func status_phase(status_data):
+	return {
+		"type": "status",
+		"target": status_data["target"],
+		"status": status_data["status"],
+		"duration": status_data["duration"]
+	}
 	
 #func damage_phase(phase):
 	#status phase (statuses take effect before any turns are taken + applies damage if status is painful)

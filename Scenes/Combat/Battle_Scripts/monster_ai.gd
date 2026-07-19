@@ -7,7 +7,6 @@ class_name MonsterAi
 func monster_ai(enemies_array, players_array, minigame_container):
 	for monster in enemies_array:
 		if is_instance_valid(monster) and monster.is_alive():
-			print("monster Ai being hit and trying to return attck data!")
 			return [{
 				"type": "attack",
 				"actor": monster,

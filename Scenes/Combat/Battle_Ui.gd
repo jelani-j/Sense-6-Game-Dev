@@ -191,13 +191,27 @@ func send_inventory_data(item, bag, unit):
 		}
 	current_action.emit(action_object)
 
+func death_check():
+	for unit in players_array:
+		if unit.is_alive() == false:
+			unit.die()
+			party_container.remove_child(unit)
+	for unit in enemies_array:
+		if unit.is_alive() == false:
+			unit.die()
+	
 func execute_phases(queue):
 	for phases in queue:
 		match phases["type"]:
 			"status":
-				unit.add_status(phases)
+				var target = phases["target"]
+				target.add_status(phases)
+				#death_check()
 			# next work on minigame for attack data [ only for skills, attk will be normal but build mtr]
 			"attack":
-				unit.take_damage(phases)
+				var target = phases["target"]
+				target.take_damage(phases)
+				#death_check()
 			"bag":
-				unit.inventory_use(phases)
+				var actor = phases["actor"]
+				actor.inventory_use(phases)

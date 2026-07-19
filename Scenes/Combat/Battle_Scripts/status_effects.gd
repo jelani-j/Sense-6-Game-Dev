@@ -8,7 +8,7 @@ var status_damage
 func trigger_status(target,attack: AttackData):
 	var status = attack.status
 	var status_chance = attack.status_chance
-	print(status, " from attack has a ", status_chance * 100, " % of being triggered")
+	print(target, " has a ", status_chance * 100, " % of being triggered", "of recieving", status)
 	if randf() < status_chance:
 		print("Status Triggered!")
 		apply_status(target,status, 1)
