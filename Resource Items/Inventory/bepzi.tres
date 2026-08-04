@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_s44ly")
-health_restored = 3
+health_restored = 5
 name = "Bepzi"
 description = "Drink ze bepzi! recover 3 hp"
 icon = ExtResource("1_hd3ke")

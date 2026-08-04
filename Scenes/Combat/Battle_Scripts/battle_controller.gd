@@ -25,7 +25,7 @@ func _action_reciever(action: Dictionary):
 func process_action():
 	battle_queue.clear()
 	var monster_action = monsters.monster_ai(enemy_array,player_array, minigame_container)
-	#battle_queue += interpreter.action_interpreter(action_queue,enemy_array,player_array,minigame_container)
+	battle_queue += interpreter.action_interpreter(action_queue,enemy_array,player_array,minigame_container)
 	battle_queue += interpreter.action_interpreter(monster_action,enemy_array,player_array,minigame_container)
 	action_queue.clear()
 	battle_queue_ready.emit(battle_queue)

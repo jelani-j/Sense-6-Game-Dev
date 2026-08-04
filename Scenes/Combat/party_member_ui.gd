@@ -48,21 +48,21 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func animate_to(target_y: float):
-	if tween:
-		tween.kill()
-	tween = create_tween()
-	tween.tween_property(self, "position:y", target_y, 0.3)\
-		.set_trans(Tween.TRANS_BACK)\
-		.set_ease(Tween.EASE_OUT)
+#func animate_to(target_y: float):
+	#if tween:
+		#tween.kill()
+	#tween = create_tween()
+	#tween.tween_property(self, "position:y", target_y, 0.3)\
+		#.set_trans(Tween.TRANS_BACK)\
+		#.set_ease(Tween.EASE_OUT)
 
-func _on_mouse_entered() -> void:
-	if not is_selected:
-		animate_to(base_position.y - 20)
-
-func _on_mouse_exited() -> void:
-	if not is_selected:
-		animate_to(base_position.y)
+#func _on_mouse_entered() -> void:
+	#if not is_selected:
+		#animate_to(base_position.y - 20)
+#
+#func _on_mouse_exited() -> void:
+	#if not is_selected:
+		#animate_to(base_position.y)
 	#extra_stats.visible = false
 
 func set_hp_value():
@@ -83,21 +83,21 @@ func setup(unit_data: BattleUnit):
 func _on_pressed() -> void:
 	is_selected = true
 	emit_signal("selected", self)
-	animate_to(base_position.y - 20)
-	extra_stats.visible = true
+	#animate_to(base_position.y - 20)
+	#extra_stats.visible = true
 	
 	
-func _on_fight_btn_pressed() -> void:
-	action_selected.emit(unit, "fight")
-
-func _on_def_btn_pressed() -> void:
-	action_selected.emit(unit, "defend")
-
-func _on_skill_btn_pressed() -> void:
-	action_selected.emit(unit, "skill")
-
-func _on_bag_btn_pressed() -> void:
-	action_selected.emit(unit, "bag")
-
-func _on_run_btn_pressed() -> void:
-	action_selected.emit(unit, "run")
+#func _on_fight_btn_pressed() -> void:
+	#action_selected.emit(unit, "fight")
+#
+#func _on_def_btn_pressed() -> void:
+	#action_selected.emit(unit, "defend")
+#
+#func _on_skill_btn_pressed() -> void:
+	#action_selected.emit(unit, "skill")
+#
+#func _on_bag_btn_pressed() -> void:
+	#action_selected.emit(unit, "bag")
+#
+#func _on_run_btn_pressed() -> void:
+	#action_selected.emit(unit, "run")

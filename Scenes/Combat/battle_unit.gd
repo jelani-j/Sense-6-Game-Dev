@@ -34,6 +34,7 @@ func take_damage(phase_data):
 	var damage = phase_data["damage"]
 	if target.current_hp <= 0:
 		die()
+		print("death has been reached")
 	if target.status_effects.has("status"):
 		for effect in target.status_effects:
 			if effect["status"] == 1:
@@ -45,7 +46,6 @@ func inventory_use(phase_data):
 	var target = phase_data["actor"]
 	var item = phase_data["item"]
 	var bag = phase_data["Inventory"]
-	print(item.name)
 	bag.use_item(item, target)
 	
 #make this a function that handles all status damage 
