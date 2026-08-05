@@ -8,6 +8,7 @@ extends Control
 @onready var log_container = $"UIContainer/ActionContainer/BattleLog"
 @onready var minigame_container = $"UIContainer/ActionContainer/Mini-Game"
 @onready var containers = party_container.get_children()
+@onready var party_selection = $"UIContainer/ActionContainer/Party-Members"
 @onready var action_options = $"UIContainer/ActionContainer/ActionOptions"
 @onready var menu_options = $"UIContainer/ActionContainer/ActionOptions/Menu"
 @onready var move_selection = $"UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection"
@@ -112,12 +113,14 @@ func create_attack_buttons(unit: BattleUnit):
 	var martial_art_btn = Button.new()
 	weapon_art_btn.text = "Weapon Arts"
 	martial_art_btn.text = "Martial Arts"
-	martial_art_btn.pressed.connect(create_martial_attack_buttons.bind(unit))
-	weapon_art_btn.pressed.connect(create_weapon_attack_buttons.bind(unit))
+	martial_art_btn.pressed.connect(create_martial_attack_buttons.bind(unit, martial_art_btn, weapon_art_btn))
+	weapon_art_btn.pressed.connect(create_weapon_attack_buttons.bind(unit, weapon_art_btn, martial_art_btn))
 	attack_selection.add_child(weapon_art_btn)
 	attack_selection.add_child(martial_art_btn)
 
-func create_weapon_attack_buttons(unit):
+func create_weapon_attack_buttons(unit, weapon_art_btn,martial_art_btn):
+	attack_selection.remove_child(martial_art_btn)
+	attack_selection.remove_child(weapon_art_btn)
 	for attack in unit.unit_data.attacks:
 		if attack.attack_category == "Weapon-art":
 			var wep_btn = Button.new()
@@ -125,8 +128,9 @@ func create_weapon_attack_buttons(unit):
 			wep_btn.pressed.connect(_on_attack_selected.bind(unit, attack))
 			attack_selection.add_child(wep_btn)
 			
-func create_martial_attack_buttons(unit):
-	clear_panel()
+func create_martial_attack_buttons(unit, martial_art_btn,weapon_art_btn):
+	attack_selection.remove_child(martial_art_btn)
+	attack_selection.remove_child(weapon_art_btn)
 	for attack in unit.unit_data.attacks:
 		if attack.attack_category == "Martial-Art":
 			var mart_btn = Button.new()
@@ -137,7 +141,11 @@ func create_martial_attack_buttons(unit):
 func _on_attack_selected(player: BattleUnit, attack: AttackData):
 	active_player = player
 	selected_attack = attack
-	clear_panel()
+	var attack_buttons = attack_selection.get_children()
+	for button in attack_buttons:
+		attack_selection.remove_child(button)
+	attack_selection.hide()
+	target_selection.show()
 	show_targets(enemies_array)
 	
 
@@ -147,7 +155,7 @@ func show_targets(targets: Array[BattleUnit]):
 			var monster_target = Button.new()
 			monster_target.text = target.unit_data.name
 			target_selection.add_child(monster_target)
-			monster_target.pressed.connect(trigger_attack.bind(target, selected_attack))
+			monster_target.pressed.connect(trigger_attack.bind(target, selected_attack, monster_target))
 
 #minigame visuals
 func spawn_minigame():
@@ -155,7 +163,7 @@ func spawn_minigame():
 
 
 ## Processing actions & Sending out action object for Processing
-func trigger_attack(target, selected_attack):
+func trigger_attack(target, selected_attack,monster_target):
 	if is_instance_valid(target):
 		var target_name = target.unit_data.name
 		var attack_name = selected_attack.name
@@ -166,6 +174,13 @@ func trigger_attack(target, selected_attack):
 			"move": selected_attack,
 			"target": target
 		}
+		action_options.hide()
+		menu_options.hide()
+		active_player_border.hide()
+		move_selection.hide()
+		target_selection.remove_child(monster_target)
+		target_selection.hide()
+		party_selection.show()
 		current_action.emit(action_object)
 
 func trigger_defense(actor):
