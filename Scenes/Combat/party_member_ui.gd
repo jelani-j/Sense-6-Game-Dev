@@ -70,10 +70,10 @@ func set_hp_value():
 	hp_text.text = str(unit.current_hp)
 	
 
-func setup(unit_data: BattleUnit):
-	self.unit = unit_data
+func setup(player_data: BattleUnit):
+	self.unit = player_data
 	member_name = unit.unit_data.name
-	hp_text.text = str(unit.unit_data.max_hp)
+	hp_text.text = str(unit.current_hp)
 	hp_bar.max_value = int(unit.unit_data.max_hp)
 	hp_bar.value = unit.current_hp
 	name_title.text = member_name

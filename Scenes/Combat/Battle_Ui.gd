@@ -73,6 +73,20 @@ func spawn_party_member_UI():
 		member_uis.append(member_ui)
 		#member_ui.action_selected.connect(_on_action_selected)
 
+## Helper Functions ##
+func child_clear(node: Node):
+	for child in node.get_children():
+		child.queue_free()
+
+func screen_panel_transition():
+	child_clear(active_player_slot)
+	action_options.hide()
+	menu_options.hide()
+	active_player_border.hide()
+	move_selection.hide()
+	target_selection.hide()
+	party_selection.show()
+	
 ## Despawn Entities ##
 func despawn_member_ui(party_member: BattleUnit):
 	for member in member_uis:
@@ -92,19 +106,22 @@ func clear_panel():
 func _on_member_selected(member):
 	print("Selecting:", member.member_name)
 	party_container.hide()
-	var active_member_ui = member.duplicate()
-	active_player_slot.add_child(active_member_ui)
-	#hide these after end of player phase
-	action_options.show()
-	menu_options.show()
-	active_player_border.show()
-	move_selection.show()
 	for player in players_array:
 		if player.unit_data.name == member.member_name:
 			active_player = player
 		else:
 			print("error occured and counlt match the player data")
 			continue
+	var active_member_ui = preload("res://Scenes/Combat/PartyMemberUI.tscn").instantiate()
+	#print(active_player.unit_data.max_hp)
+	active_player_slot.add_child(active_member_ui)
+	active_member_ui.setup(active_player)
+	#hide these after end of player phase
+	action_options.show()
+	menu_options.show()
+	active_player_border.show()
+	move_selection.show()
+	
 
 
 ## Creation + Handling Attack Buttons
@@ -113,14 +130,13 @@ func create_attack_buttons(unit: BattleUnit):
 	var martial_art_btn = Button.new()
 	weapon_art_btn.text = "Weapon Arts"
 	martial_art_btn.text = "Martial Arts"
-	martial_art_btn.pressed.connect(create_martial_attack_buttons.bind(unit, martial_art_btn, weapon_art_btn))
-	weapon_art_btn.pressed.connect(create_weapon_attack_buttons.bind(unit, weapon_art_btn, martial_art_btn))
+	martial_art_btn.pressed.connect(create_martial_attack_buttons.bind(unit))
+	weapon_art_btn.pressed.connect(create_weapon_attack_buttons.bind(unit))
 	attack_selection.add_child(weapon_art_btn)
 	attack_selection.add_child(martial_art_btn)
 
-func create_weapon_attack_buttons(unit, weapon_art_btn,martial_art_btn):
-	attack_selection.remove_child(martial_art_btn)
-	attack_selection.remove_child(weapon_art_btn)
+func create_weapon_attack_buttons(unit):
+	child_clear(attack_selection)
 	for attack in unit.unit_data.attacks:
 		if attack.attack_category == "Weapon-art":
 			var wep_btn = Button.new()
@@ -128,9 +144,8 @@ func create_weapon_attack_buttons(unit, weapon_art_btn,martial_art_btn):
 			wep_btn.pressed.connect(_on_attack_selected.bind(unit, attack))
 			attack_selection.add_child(wep_btn)
 			
-func create_martial_attack_buttons(unit, martial_art_btn,weapon_art_btn):
-	attack_selection.remove_child(martial_art_btn)
-	attack_selection.remove_child(weapon_art_btn)
+func create_martial_attack_buttons(unit):
+	child_clear(attack_selection)
 	for attack in unit.unit_data.attacks:
 		if attack.attack_category == "Martial-Art":
 			var mart_btn = Button.new()
@@ -155,7 +170,7 @@ func show_targets(targets: Array[BattleUnit]):
 			var monster_target = Button.new()
 			monster_target.text = target.unit_data.name
 			target_selection.add_child(monster_target)
-			monster_target.pressed.connect(trigger_attack.bind(target, selected_attack, monster_target))
+			monster_target.pressed.connect(trigger_attack.bind(target, selected_attack))
 
 #minigame visuals
 func spawn_minigame():
@@ -163,7 +178,7 @@ func spawn_minigame():
 
 
 ## Processing actions & Sending out action object for Processing
-func trigger_attack(target, selected_attack,monster_target):
+func trigger_attack(target, selected_attack):
 	if is_instance_valid(target):
 		var target_name = target.unit_data.name
 		var attack_name = selected_attack.name
@@ -174,13 +189,8 @@ func trigger_attack(target, selected_attack,monster_target):
 			"move": selected_attack,
 			"target": target
 		}
-		action_options.hide()
-		menu_options.hide()
-		active_player_border.hide()
-		move_selection.hide()
-		target_selection.remove_child(monster_target)
-		target_selection.hide()
-		party_selection.show()
+		child_clear(target_selection)
+		screen_panel_transition()
 		current_action.emit(action_object)
 
 func trigger_defense(actor):
@@ -189,6 +199,7 @@ func trigger_defense(actor):
 		"type": "defend",
 		"actor": actor
 	}
+	screen_panel_transition()
 	current_action.emit(action_object)
 
 func trigger_run(actor):
@@ -197,13 +208,17 @@ func trigger_run(actor):
 		"type": "run",
 		"actor": actor
 	}
+	screen_panel_transition()
 	current_action.emit(action_object)
 
 func show_inventory(bag: InventoryData, unit):
+	action_options.show()
+	menu_options.show()
+	active_player_border.show()
 	for slot in bag.slots:
 		var slot_button = Button.new()
 		slot_button.text = slot.item.name + " x" + str(slot.quantity)
-		panel_container.add_child(slot_button)
+		inventory_selection.add_child(slot_button)
 		slot_button.pressed.connect(send_inventory_data.bind(slot.item, bag, unit))
 		
 func send_inventory_data(item, bag, unit):
@@ -213,6 +228,11 @@ func send_inventory_data(item, bag, unit):
 			"actor": unit,
 			"item": item
 		}
+	action_options.hide()
+	menu_options.hide()
+	active_player_border.hide()
+	#inventory_selection hide?
+	party_selection.show()
 	current_action.emit(action_object)
 
 func death_check():
