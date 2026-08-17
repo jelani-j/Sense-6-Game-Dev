@@ -19,6 +19,8 @@ var flow = 30
 @onready var icon_symbol = $HBoxContainer/Icon
 @onready var extra_stats = $HBoxContainer/Status/Extra_Stats
 @onready var name_title = $HBoxContainer/Status/Name
+@onready var meter_bar = $"HBoxContainer/Status/MeterBar"
+@onready var meter_text = $"HBoxContainer/Status/MeterBar/Meter Text"
 var base_position : Vector2
 var tween : Tween
 var is_selected:= false
@@ -65,9 +67,12 @@ func _process(delta: float) -> void:
 		#animate_to(base_position.y)
 	#extra_stats.visible = false
 
-func set_hp_value():
+func set_member_values():
 	hp_bar.value = unit.current_hp
 	hp_text.text = str(unit.current_hp)
+	meter_bar.value = unit.current_meter
+	meter_text = str(unit.current_meter)
+
 	
 
 func setup(player_data: BattleUnit):
@@ -76,6 +81,8 @@ func setup(player_data: BattleUnit):
 	hp_text.text = str(unit.current_hp)
 	hp_bar.max_value = int(unit.unit_data.max_hp)
 	hp_bar.value = unit.current_hp
+	meter_bar.value = unit.current_meter
+	meter_text.text = str(unit.current_meter)
 	name_title.text = member_name
 	
 	# set portrait, hp bar, etc

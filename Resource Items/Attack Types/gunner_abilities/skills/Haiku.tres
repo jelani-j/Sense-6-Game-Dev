@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillData" load_steps=2 format=3 uid="uid://di5l843tjv4p4"]
+
+[ext_resource type="Script" uid="uid://ttsp3gl0ig7m" path="res://Resource Items/Attack Types/skill_data.gd" id="1_7rrv1"]
+
+[resource]
+script = ExtResource("1_7rrv1")
+skill_type = true
+name = "Haiku"
+damage = 4
+cost = 2
+attack_type = 3
+status = 2
+attack_category = "Weapon-art"
+status_chance = 0.2
+defense_penetration = 1
+metadata/_custom_type_script = "uid://ttsp3gl0ig7m"

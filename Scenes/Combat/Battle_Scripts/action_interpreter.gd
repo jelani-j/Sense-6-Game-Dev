@@ -25,11 +25,20 @@ func action_interpreter(action_queue, enemies, players,minigame_container):
 					if status_data:
 						battle_queue.append(battle_phases.status_phase(status_data))
 					battle_queue.append(battle_phases.selection_phase(actor_data,target_data,damage_data))
-					#minigame will be reinstated later after it has been re-established
-					#minigame_result = await minigame.mini_game_func(minigame_container)
-					
 					#if not is_instance_valid(action["actor"]) or not action["actor"].is_alive():
 						#continue
+				"skill":
+					var attack_data = action["move"]
+					var target_data = action["target"]
+					
+					status_data = status_effects.trigger_status(target_data,attack_data)
+					if status_data:
+						battle_queue.append(battle_phases.status_phase(status_data))
+					var result = await minigame.mini_game_func(minigame_container)
+					damage_calc.skill_results_capture(result)
+					var damage_data = damage_calc.calculate_damage(attack_data,actor_data,target_data)
+					battle_queue.append(battle_phases.selection_phase(actor_data,target_data,damage_data))
+					
 				"defend":
 					print("Defend interpreted")
 					status_data = status_effects.apply_status(actor_data,StatusTypes.STATUS.Defend, 1)

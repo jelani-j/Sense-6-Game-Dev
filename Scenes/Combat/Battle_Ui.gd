@@ -6,7 +6,7 @@ extends Control
 @onready var party_container = $"UIContainer/ActionContainer/Party-Members"
 @onready var panel_container = $"UIContainer/ActionContainer/ActionOptions"
 @onready var log_container = $"UIContainer/ActionContainer/BattleLog"
-@onready var minigame_container = $"UIContainer/ActionContainer/Mini-Game"
+@onready var minigame_container = $"UIContainer/ActionContainer/ActionOptions/Menu/Minigame"
 @onready var containers = party_container.get_children()
 @onready var party_selection = $"UIContainer/ActionContainer/Party-Members"
 @onready var action_options = $"UIContainer/ActionContainer/ActionOptions"
@@ -17,6 +17,7 @@ extends Control
 @onready var target_selection = $"UIContainer/ActionContainer/ActionOptions/Menu/TargetSelection"
 @onready var active_player_border = $"UIContainer/ActionContainer/ActionOptions/Active_Player_Border"
 @onready var active_player_slot = $"UIContainer/ActionContainer/ActionOptions/Active_Player_Border/selected_player"
+@onready var active_player_back_button = $"UIContainer/ActionContainer/ActionOptions/Active_Player_Border/back_button"
 var inventory = Global.Inventory
 var member_uis = []
 
@@ -86,6 +87,8 @@ func screen_panel_transition():
 	move_selection.hide()
 	target_selection.hide()
 	party_selection.show()
+	inventory_selection.hide()
+	minigame_container.hide()
 	
 ## Despawn Entities ##
 func despawn_member_ui(party_member: BattleUnit):
@@ -98,11 +101,6 @@ func despawn_entity():
 		if enemy.current_hp <= 0:
 			enemy.die()
 
-## UI Option Functionality ##
-func clear_panel():
-	for child in panel_container.get_children():
-		child.queue_free()
-
 func _on_member_selected(member):
 	print("Selecting:", member.member_name)
 	party_container.hide()
@@ -113,7 +111,6 @@ func _on_member_selected(member):
 			print("error occured and counlt match the player data")
 			continue
 	var active_member_ui = preload("res://Scenes/Combat/PartyMemberUI.tscn").instantiate()
-	#print(active_player.unit_data.max_hp)
 	active_player_slot.add_child(active_member_ui)
 	active_member_ui.setup(active_player)
 	#hide these after end of player phase
@@ -122,7 +119,6 @@ func _on_member_selected(member):
 	active_player_border.show()
 	move_selection.show()
 	
-
 
 ## Creation + Handling Attack Buttons
 func create_attack_buttons(unit: BattleUnit):
@@ -135,6 +131,7 @@ func create_attack_buttons(unit: BattleUnit):
 	attack_selection.add_child(weapon_art_btn)
 	attack_selection.add_child(martial_art_btn)
 
+# mess with martial and weapon and simplify to just an attack 
 func create_weapon_attack_buttons(unit):
 	child_clear(attack_selection)
 	for attack in unit.unit_data.attacks:
@@ -152,6 +149,17 @@ func create_martial_attack_buttons(unit):
 			mart_btn.text = attack.name
 			mart_btn.pressed.connect(_on_attack_selected.bind(unit, attack))
 			attack_selection.add_child(mart_btn)
+
+func create_skill_attack_buttons(unit):
+	child_clear(attack_selection)
+	for skill in unit.unit_data.skills:
+		var skill_btn = Button.new()
+		skill_btn.text = skill.name
+		attack_selection.add_child(skill_btn)
+		if unit.current_meter < skill.cost:
+			print("Build more Meter before use!")
+		else:
+			skill_btn.pressed.connect(_on_skill_selected.bind(unit, skill))
 	
 func _on_attack_selected(player: BattleUnit, attack: AttackData):
 	active_player = player
@@ -162,7 +170,14 @@ func _on_attack_selected(player: BattleUnit, attack: AttackData):
 	attack_selection.hide()
 	target_selection.show()
 	show_targets(enemies_array)
-	
+
+func _on_skill_selected(player: BattleUnit, attack: SkillData):
+	active_player = player
+	selected_attack = attack
+	child_clear(attack_selection)
+	attack_selection.hide()
+	target_selection.show()
+	show_targets(enemies_array)
 
 func show_targets(targets: Array[BattleUnit]):
 	for target in targets:
@@ -170,12 +185,28 @@ func show_targets(targets: Array[BattleUnit]):
 			var monster_target = Button.new()
 			monster_target.text = target.unit_data.name
 			target_selection.add_child(monster_target)
-			monster_target.pressed.connect(trigger_attack.bind(target, selected_attack))
+			if selected_attack is AttackData:
+				monster_target.pressed.connect(trigger_attack.bind(target, selected_attack))
+			if selected_attack is SkillData:
+				monster_target.pressed.connect(trigger_skill.bind(target, selected_attack))
 
-#minigame visuals
-func spawn_minigame():
-	print("make logic for modular minigame spawning here similar to signal listener enum val")
 
+func trigger_skill(target, selected_attack):
+	if is_instance_valid(target):
+		var target_name = target.unit_data.name
+		var skill_name = selected_attack.name
+		log_container.text += "\n" + active_player.unit_data.name  + " Used: " + skill_name + " on " + target_name
+		action_object = {
+			"type": "skill",
+			"actor": active_player,
+			"move": selected_attack,
+			"target": target
+		}
+		child_clear(target_selection)
+		target_selection.hide()
+		#show minigame and await action before sending out data 
+		minigame_container.show()
+		current_action.emit(action_object)
 
 ## Processing actions & Sending out action object for Processing
 func trigger_attack(target, selected_attack):
@@ -228,11 +259,8 @@ func send_inventory_data(item, bag, unit):
 			"actor": unit,
 			"item": item
 		}
-	action_options.hide()
-	menu_options.hide()
-	active_player_border.hide()
-	#inventory_selection hide?
-	party_selection.show()
+	screen_panel_transition()
+	child_clear(inventory_selection)
 	current_action.emit(action_object)
 
 func death_check():
@@ -259,22 +287,37 @@ func execute_phases(queue):
 				if target.is_alive():
 					target.take_damage(phases)
 					for party_member in member_uis:
-						party_member.set_hp_value()
+						party_member.set_member_values()
 				death_check()
+			"skill":
+				print("skill being processed!")
+				var target = phases["target"]
+				if target.is_alive():
+					target.take_damage(phases)
+					for party_member in member_uis:
+						party_member.set_member_values()
+					#screen_panel_transition()
 			# for bag add if clause for if no items in inventory bag should not count as action
 			"bag":
 				var actor = phases["actor"]
 				if actor.is_alive():
 					actor.inventory_use(phases)
 					for party_member in member_uis:
-						party_member.set_hp_value()
-				clear_panel()
-
+						party_member.set_member_values()
+				
 #Button press triggers 
 func _on_fight_pressed() -> void:
 	move_selection.hide()
 	attack_selection.show()
+	child_clear(attack_selection)
 	create_attack_buttons(active_player)
+
+func _on_skill_pressed() -> void:
+	move_selection.hide()
+	attack_selection.show()
+	#minigame_container.show()
+	#child_clear(minigame_container)
+	create_skill_attack_buttons(active_player)
 
 func _on_def_pressed() -> void:
 	move_selection.hide()
@@ -289,8 +332,14 @@ func _on_bag_pressed() -> void:
 	inventory_selection.show()
 	show_inventory(inventory, active_player)
 
-func _on_skill_pressed() -> void:
-	pass # Replace with function body.[ implement meter and bar here with minigames ]
 
+	
 func _on_flow_pressed() -> void:
 	pass # Replace with function body. [ implement flow state after multiple good scored skills]
+
+
+func _on_back_button_pressed() -> void:
+	child_clear(attack_selection)
+	child_clear(inventory_selection)
+	child_clear(target_selection)
+	screen_panel_transition()

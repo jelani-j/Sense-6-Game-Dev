@@ -8,6 +8,7 @@ signal unit_clicked(unit)
 
 var unit_data: Resource
 var current_hp: int
+var current_meter: int
 var is_enemy: bool 
 var status_effects: Array = []
 @export var defending = false
@@ -21,6 +22,8 @@ func setup(data: Resource, monster_flag: bool):
 	is_enemy = monster_flag
 	unit_data = data
 	current_hp = unit_data.max_hp
+	if monster_flag != true:
+		current_meter = unit_data.meter
 	temp_defense = 0
 	sprite.texture = unit_data.texture
 	sprite.scale = Vector2(2, 2)
@@ -30,6 +33,7 @@ func _on_input_event(viewport, event, shape_idx):
 		emit_signal("unit_clicked", self)
 
 func take_damage(phase_data):
+	var actor = phase_data["actor"]
 	var target = phase_data["target"]
 	var damage = phase_data["damage"]
 	if target.current_hp <= 0:
@@ -41,7 +45,13 @@ func take_damage(phase_data):
 				target.current_hp -= roundi(damage * 0.3)
 	else:
 		target.current_hp -= damage
+		if actor.current_meter >= 10:
+			print("Flow bar has now been unlocked!")
+		else:
+			actor.current_meter += damage
+			target.current_meter += damage
 
+	
 func inventory_use(phase_data):
 	var target = phase_data["actor"]
 	var item = phase_data["item"]

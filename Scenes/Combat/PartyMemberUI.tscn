@@ -72,10 +72,12 @@ offset_bottom = 11.5
 grow_vertical = 2
 text = "HP:"
 
-[node name="MeterBar" type="TextureProgressBar" parent="HBoxContainer/Status"]
+[node name="MeterBar" type="ProgressBar" parent="HBoxContainer/Status"]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.73
+show_percentage = false
 
 [node name="Meter Label" type="Label" parent="HBoxContainer/Status/MeterBar"]
 layout_mode = 0

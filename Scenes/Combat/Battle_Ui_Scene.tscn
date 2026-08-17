@@ -148,7 +148,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Active_Player_Border" type="PanelContainer" parent="UIContainer/ActionContainer/ActionOptions"]
-visible = false
 custom_minimum_size = Vector2(0, 90)
 layout_mode = 2
 
@@ -157,6 +156,12 @@ custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+
+[node name="back_button" type="Button" parent="UIContainer/ActionContainer/ActionOptions/Active_Player_Border"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Return to Selection"
 
 [node name="Menu" type="VBoxContainer" parent="UIContainer/ActionContainer/ActionOptions"]
 visible = false
@@ -259,12 +264,18 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="Minigame" type="Control" parent="UIContainer/ActionContainer/ActionOptions/Menu"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="BattleLog" type="RichTextLabel" parent="UIContainer/ActionContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_vertical = 8
 size_flags_stretch_ratio = 0.0
 
+[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Active_Player_Border/back_button" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Fight" to="." method="_on_fight_pressed"]
 [connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Def" to="." method="_on_def_pressed"]
 [connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Run" to="." method="_on_run_pressed"]
