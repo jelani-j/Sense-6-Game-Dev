@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://uouy4r2hdrph"]
 
-[ext_resource type="Script" uid="uid://chw5dakabpyo0" path="res://Scenes/Combat/party_member_ui.gd" id="1_cnown"]
-[ext_resource type="Texture2D" uid="uid://c3ft2omxf77ug" path="res://icon.svg" id="2_cnown"]
+[ext_resource type="Script" uid="uid://chw5dakabpyo0" path="res://Scenes/Combat/Player_Battle_GUI/party_member_ui.gd" id="1_xocdg"]
+[ext_resource type="Texture2D" uid="uid://c3ft2omxf77ug" path="res://icon.svg" id="2_py41a"]
 
 [node name="PartyMemberUi" type="Button"]
 custom_minimum_size = Vector2(0, 50)
@@ -11,7 +11,7 @@ offset_right = 344.0
 offset_bottom = 120.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_cnown")
+script = ExtResource("1_xocdg")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -30,7 +30,7 @@ layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 0
 size_flags_stretch_ratio = 0.0
-texture = ExtResource("2_cnown")
+texture = ExtResource("2_py41a")
 
 [node name="Status" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2

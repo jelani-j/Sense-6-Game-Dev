@@ -1,6 +1,6 @@
 extends Node2D
 # Loading all needed scenes & variables for map
-var battle_scene = preload("res://Scenes/Combat/Battle_Ui_Scene.tscn")
+var battle_scene = preload("res://Scenes/Combat/Battle_UI_Visuals/Battle_Ui_Scene.tscn")
 var battle_initiated = false
 var battle_canvas
 var current_monster

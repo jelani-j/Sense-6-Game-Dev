@@ -1,0 +1,286 @@
+[gd_scene load_steps=3 format=3 uid="uid://q6as3assiu7x"]
+
+[ext_resource type="Script" uid="uid://f3dcpo7ydln5" path="res://Scenes/Combat/Battle_UI_Visuals/Battle_Ui.gd" id="1_wxodm"]
+[ext_resource type="Script" uid="uid://cbqktkthsdokj" path="res://Scenes/Combat/Battle_UI_Visuals/action_handling.gd" id="3_48504"]
+
+[node name="BattleUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -2.0
+offset_right = 4.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_wxodm")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -9.0
+offset_top = -22.0
+offset_right = -9.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.19772696, 0.15408674, 0.33567795, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="MemberContainer" type="HBoxContainer" parent="MarginContainer"]
+clip_contents = true
+layout_mode = 2
+theme_override_constants/separation = 80
+
+[node name="EnemyContainer" type="Node2D" parent="."]
+position = Vector2(1081, 160)
+
+[node name="Marker2D" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(-455, 53)
+
+[node name="Marker2D2" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(-375, -45)
+
+[node name="Marker2D3" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(-335, 96)
+
+[node name="Marker2D4" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(-269, -25)
+
+[node name="PlayerContainer" type="Node2D" parent="."]
+position = Vector2(258, 212)
+
+[node name="Marker2D" type="Marker2D" parent="PlayerContainer"]
+position = Vector2(175, 16)
+
+[node name="Marker2D2" type="Marker2D" parent="PlayerContainer"]
+position = Vector2(7, -77)
+
+[node name="Marker2D3" type="Marker2D" parent="PlayerContainer"]
+position = Vector2(135, -101)
+
+[node name="Marker2D4" type="Marker2D" parent="PlayerContainer"]
+position = Vector2(36, 23)
+
+[node name="UIContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -324.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ActionContainer" type="VBoxContainer" parent="UIContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Party-Members" type="Control" parent="UIContainer/ActionContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.81
+
+[node name="Party-member-1" type="Control" parent="UIContainer/ActionContainer/Party-Members"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 410.0
+offset_top = 8.0
+offset_right = -418.0
+offset_bottom = -142.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.0
+
+[node name="party-member-2" type="Control" parent="UIContainer/ActionContainer/Party-Members"]
+custom_minimum_size = Vector2(200, 100)
+anchors_preset = 0
+offset_left = 44.0
+offset_top = 76.0
+offset_right = 320.0
+offset_bottom = 194.0
+
+[node name="party-member-3" type="Control" parent="UIContainer/ActionContainer/Party-Members"]
+custom_minimum_size = Vector2(200, 100)
+anchors_preset = 0
+offset_left = 790.0
+offset_top = 71.0
+offset_right = 1111.0
+offset_bottom = 185.0
+
+[node name="party-member-4" type="Control" parent="UIContainer/ActionContainer/Party-Members"]
+custom_minimum_size = Vector2(200, 100)
+anchors_preset = 0
+offset_left = 392.0
+offset_top = 153.0
+offset_right = 731.0
+offset_bottom = 263.0
+
+[node name="ActionOptions" type="VBoxContainer" parent="UIContainer/ActionContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("3_48504")
+
+[node name="Active_Player_Border" type="PanelContainer" parent="UIContainer/ActionContainer/ActionOptions"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+
+[node name="selected_player" type="PanelContainer" parent="UIContainer/ActionContainer/ActionOptions/Active_Player_Border"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="back_button" type="Button" parent="UIContainer/ActionContainer/ActionOptions/Active_Player_Border"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Return to Selection"
+
+[node name="Menu" type="VBoxContainer" parent="UIContainer/ActionContainer/ActionOptions"]
+visible = false
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MoveSelection" type="Control" parent="UIContainer/ActionContainer/ActionOptions/Menu"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+
+[node name="Fight" type="Button" parent="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection"]
+layout_mode = 0
+offset_left = 535.0
+offset_top = 30.0
+offset_right = 601.0
+offset_bottom = 86.0
+size_flags_horizontal = 4
+text = "Fight"
+
+[node name="Def" type="Button" parent="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection"]
+layout_mode = 0
+offset_left = 534.0
+offset_top = 100.0
+offset_right = 604.0
+offset_bottom = 140.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Def"
+
+[node name="Run" type="Button" parent="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection"]
+layout_mode = 0
+offset_left = 679.0
+offset_top = 32.0
+offset_right = 720.0
+offset_bottom = 85.0
+text = "Run"
+
+[node name="Bag" type="Button" parent="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection"]
+layout_mode = 0
+offset_left = 623.0
+offset_top = 30.0
+offset_right = 662.0
+offset_bottom = 85.0
+text = "Bag"
+
+[node name="Skill" type="Button" parent="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection"]
+layout_mode = 0
+offset_left = 470.0
+offset_top = 28.0
+offset_right = 514.0
+offset_bottom = 89.0
+text = "Skill"
+
+[node name="Flow" type="Button" parent="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection"]
+layout_mode = 0
+offset_left = 415.0
+offset_top = 30.0
+offset_right = 459.0
+offset_bottom = 90.0
+text = "Flow"
+
+[node name="active-party-member" type="Control" parent="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection"]
+visible = false
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 427.0
+offset_top = -40.0
+offset_right = -421.0
+offset_bottom = -187.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.0
+
+[node name="InventorySelection" type="VBoxContainer" parent="UIContainer/ActionContainer/ActionOptions/Menu"]
+visible = false
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AttackSelection" type="VBoxContainer" parent="UIContainer/ActionContainer/ActionOptions/Menu"]
+visible = false
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TargetSelection" type="HBoxContainer" parent="UIContainer/ActionContainer/ActionOptions/Menu"]
+visible = false
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Minigame" type="Control" parent="UIContainer/ActionContainer/ActionOptions/Menu"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BattleLog" type="RichTextLabel" parent="UIContainer/ActionContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 8
+size_flags_stretch_ratio = 0.0
+
+[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Active_Player_Border/back_button" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Fight" to="." method="_on_fight_pressed"]
+[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Def" to="." method="_on_def_pressed"]
+[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Run" to="." method="_on_run_pressed"]
+[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Bag" to="." method="_on_bag_pressed"]
+[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Skill" to="." method="_on_skill_pressed"]
+[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Flow" to="." method="_on_flow_pressed"]

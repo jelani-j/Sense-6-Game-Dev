@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://q6as3assiu7x"]
+[gd_scene load_steps=3 format=3 uid="uid://q6as3assiu7x"]
 
-[ext_resource type="Script" uid="uid://f3dcpo7ydln5" path="res://Scenes/Combat/Battle_Ui.gd" id="1_b6fm1"]
+[ext_resource type="Script" uid="uid://f3dcpo7ydln5" path="res://Scenes/Combat/Battle_UI_Visuals/Battle_Ui.gd" id="1_wxodm"]
+[ext_resource type="Script" uid="uid://cbqktkthsdokj" path="res://Scenes/Combat/Battle_UI_Visuals/action_handling.gd" id="3_48504"]
 
 [node name="BattleUI" type="Control"]
 layout_mode = 3
@@ -15,7 +16,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_b6fm1")
+script = ExtResource("1_wxodm")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -146,6 +147,7 @@ visible = false
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_vertical = 3
+script = ExtResource("3_48504")
 
 [node name="Active_Player_Border" type="PanelContainer" parent="UIContainer/ActionContainer/ActionOptions"]
 custom_minimum_size = Vector2(0, 90)
@@ -275,10 +277,10 @@ layout_mode = 2
 size_flags_vertical = 8
 size_flags_stretch_ratio = 0.0
 
-[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Active_Player_Border/back_button" to="." method="_on_back_button_pressed"]
-[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Fight" to="." method="_on_fight_pressed"]
-[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Def" to="." method="_on_def_pressed"]
-[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Run" to="." method="_on_run_pressed"]
-[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Bag" to="." method="_on_bag_pressed"]
-[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Skill" to="." method="_on_skill_pressed"]
-[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Flow" to="." method="_on_flow_pressed"]
+[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Active_Player_Border/back_button" to="UIContainer/ActionContainer/ActionOptions" method="_on_back_button_pressed"]
+[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Fight" to="UIContainer/ActionContainer/ActionOptions" method="_on_fight_pressed"]
+[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Def" to="UIContainer/ActionContainer/ActionOptions" method="_on_def_pressed"]
+[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Run" to="UIContainer/ActionContainer/ActionOptions" method="_on_run_pressed"]
+[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Bag" to="UIContainer/ActionContainer/ActionOptions" method="_on_bag_pressed"]
+[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Skill" to="UIContainer/ActionContainer/ActionOptions" method="_on_skill_pressed"]
+[connection signal="pressed" from="UIContainer/ActionContainer/ActionOptions/Menu/MoveSelection/Flow" to="UIContainer/ActionContainer/ActionOptions" method="_on_flow_pressed"]
