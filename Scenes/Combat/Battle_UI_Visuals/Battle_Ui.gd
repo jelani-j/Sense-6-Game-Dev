@@ -50,8 +50,6 @@ func start_battle(player_data: Array[PlayerData], monser_data: Array[MonsterData
 	
 
 func _battle_visual_listener(phase):
-	print("battle visual listner being reached")
-	print(phase)
 	match phase:
 		0: #member selection phase
 			child_clear(attack_selection)
@@ -62,13 +60,24 @@ func _battle_visual_listener(phase):
 			move_selection.hide()
 			attack_selection.show()
 			child_clear(attack_selection)
-		#2: # skill
-		#3: # item
-		#4: # run
+		2: # skill
+			move_selection.hide()
+			attack_selection.show()
+			print("Need to work on visuals here + minigame transfer state")
+		3: # item
+			move_selection.hide()
+			inventory_selection.show()
+			#battle_visuals.action_options.show()
+			#battle_visuals.menu_options.show()
+			active_player_border.show()
+		4: # run
+			print("run function hasnt been implemented yet...")
 		5: # defend
 			move_selection.hide()
 			screen_panel_transition()
-			
+		6: # Target selection
+			attack_selection.hide()
+			target_selection.show()
 
 
 ## Spawning Entities ##
@@ -108,6 +117,7 @@ func child_clear(node: Node):
 
 func screen_panel_transition():
 	child_clear(active_player_slot)
+	attack_selection.hide()
 	action_options.hide()
 	menu_options.hide()
 	active_player_border.hide()
